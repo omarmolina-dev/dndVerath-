@@ -1,0 +1,508 @@
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Crimson+Pro:ital,wght@0,300;0,400;1,300&display=swap');
+
+  .verath-root {
+    font-family: 'Crimson Pro', Georgia, serif;
+    color: var(--color-text-primary);
+    padding: 0;
+  }
+
+  .world-header {
+    text-align: center;
+    padding: 2rem 1rem 1.5rem;
+    border-bottom: 0.5px solid var(--color-border-tertiary);
+    margin-bottom: 2rem;
+  }
+
+  .world-title {
+    font-family: 'Cinzel', serif;
+    font-size: 28px;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    margin: 0 0 4px;
+  }
+
+  .world-subtitle {
+    font-size: 14px;
+    color: var(--color-text-secondary);
+    letter-spacing: 0.08em;
+    font-style: italic;
+  }
+
+  .kingdoms-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+    padding: 0 1rem 2rem;
+  }
+
+  .kingdom-card {
+    border: 0.5px solid var(--color-border-tertiary);
+    border-radius: var(--border-radius-lg);
+    overflow: hidden;
+    background: var(--color-background-primary);
+    transition: transform 0.2s ease;
+  }
+
+  .kingdom-card:hover {
+    transform: translateY(-2px);
+  }
+
+  .card-banner {
+    padding: 1.25rem 1.25rem 1rem;
+    position: relative;
+  }
+
+  .kingdom-sigil {
+    width: 52px;
+    height: 52px;
+    margin-bottom: 10px;
+  }
+
+  .kingdom-name {
+    font-family: 'Cinzel', serif;
+    font-size: 18px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    margin: 0 0 2px;
+  }
+
+  .kingdom-tagline {
+    font-size: 13px;
+    font-style: italic;
+    opacity: 0.75;
+    margin: 0 0 10px;
+  }
+
+  .color-strip {
+    display: flex;
+    gap: 5px;
+    margin-bottom: 2px;
+  }
+
+  .color-dot {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    border: 0.5px solid rgba(0,0,0,0.15);
+  }
+
+  .card-body {
+    padding: 0 1.25rem 1.25rem;
+  }
+
+  .divider {
+    height: 0.5px;
+    background: var(--color-border-tertiary);
+    margin: 10px 0 12px;
+  }
+
+  .section-label {
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-text-tertiary);
+    margin: 0 0 6px;
+    font-family: 'Cinzel', serif;
+  }
+
+  .royals-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 10px;
+  }
+
+  .royals-list li {
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--color-text-primary);
+    display: flex;
+    align-items: baseline;
+    gap: 6px;
+  }
+
+  .royal-role {
+    font-size: 11px;
+    color: var(--color-text-tertiary);
+    font-variant: small-caps;
+    letter-spacing: 0.05em;
+    min-width: 70px;
+  }
+
+  .royal-name {
+    font-weight: 400;
+    font-size: 15px;
+  }
+
+  .royal-name em {
+    font-style: italic;
+    font-size: 12px;
+    color: var(--color-text-secondary);
+  }
+
+  .trait-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    margin-top: 8px;
+  }
+
+  .trait-pill {
+    font-size: 11px;
+    padding: 3px 9px;
+    border-radius: 20px;
+    letter-spacing: 0.03em;
+    border: 0.5px solid;
+  }
+
+  .wedding-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 11px;
+    padding: 4px 10px;
+    border-radius: var(--border-radius-md);
+    margin-top: 8px;
+    border: 0.5px solid;
+    font-family: 'Cinzel', serif;
+    letter-spacing: 0.05em;
+  }
+
+  .motto {
+    font-style: italic;
+    font-size: 13px;
+    color: var(--color-text-secondary);
+    border-left: 2px solid var(--color-border-secondary);
+    padding-left: 10px;
+    margin-top: 8px;
+    line-height: 1.5;
+  }
+</style>
+
+<div class="verath-root">
+  <div class="world-header">
+    <div class="world-title">VERATH</div>
+    <div class="world-subtitle">Los Siete Reinos — Realeza, Colores y Heráldica</div>
+  </div>
+
+  <div class="kingdoms-grid">
+
+    <!-- THARESSI -->
+    <div class="kingdom-card">
+      <div class="card-banner" style="background: #0a1f3a;">
+        <svg class="kingdom-sigil" viewBox="0 0 52 52">
+          <!-- Ancla estilizada con cristal de tormenta -->
+          <circle cx="26" cy="26" r="24" fill="none" stroke="#c9a84c" stroke-width="1.2"/>
+          <line x1="26" y1="10" x2="26" y2="42" stroke="#c9a84c" stroke-width="2"/>
+          <line x1="14" y1="18" x2="38" y2="18" stroke="#c9a84c" stroke-width="2"/>
+          <path d="M14 42 Q10 36 14 34 Q18 36 26 42 Q34 36 38 34 Q42 36 38 42" fill="none" stroke="#c9a84c" stroke-width="1.5"/>
+          <!-- Cristal en centro -->
+          <polygon points="26,13 30,18 26,23 22,18" fill="#4a9fd4" opacity="0.8"/>
+        </svg>
+        <div class="kingdom-name" style="color: #c9a84c;">THARESSI</div>
+        <div class="kingdom-tagline" style="color: #7a9bbf;">"El que controla las rutas, controla el mundo"</div>
+        <div class="color-strip">
+          <div class="color-dot" style="background:#0a1f3a;" title="Azul abismo"></div>
+          <div class="color-dot" style="background:#c9a84c;" title="Oro marino"></div>
+          <div class="color-dot" style="background:#4a9fd4;" title="Cristal de tormenta"></div>
+        </div>
+        <div style="font-size:10px; color:#5a7a9a; letter-spacing:0.08em; font-family:'Cinzel',serif;">AZUL ABISMO · ORO MARINO · CRISTAL</div>
+      </div>
+      <div class="card-body">
+        <div class="section-label">Realeza</div>
+        <ul class="royals-list">
+          <li><span class="royal-role">Rey</span><span class="royal-name">Vetharn Ossari <em>— El Almirante Eterno</em></span></li>
+          <li><span class="royal-role">Príncipe</span><span class="royal-name">Kaeloss Ossari <em>— heredero, navegante</em></span></li>
+          <li><span class="royal-role">Princesa</span><span class="royal-name">Seraveth Ossari <em>— diplomática</em></span></li>
+        </ul>
+        <div class="divider"></div>
+        <div class="section-label">Carácter del reino</div>
+        <div class="trait-pills">
+          <span class="trait-pill" style="background:#0a2040; color:#c9a84c; border-color:#1a3a60;">Comercio</span>
+          <span class="trait-pill" style="background:#0a2040; color:#c9a84c; border-color:#1a3a60;">Monopolio del Cristal</span>
+          <span class="trait-pill" style="background:#0a2040; color:#c9a84c; border-color:#1a3a60;">Guerra naval</span>
+        </div>
+        <div class="wedding-badge" style="background:#0a2040; color:#c9a84c; border-color:#c9a84c;">
+          💍 Boda I — Seraveth + Príncipe de Drukkaz
+        </div>
+        <div class="motto">"Las mareas no preguntan permiso. Tampoco nosotros."</div>
+      </div>
+    </div>
+
+    <!-- DRUKKAZ -->
+    <div class="kingdom-card">
+      <div class="card-banner" style="background: #1a1a1a;">
+        <svg class="kingdom-sigil" viewBox="0 0 52 52">
+          <!-- Montaña con ojo en el centro -->
+          <circle cx="26" cy="26" r="24" fill="none" stroke="#8a7a6a" stroke-width="1.2"/>
+          <polygon points="26,10 42,38 10,38" fill="none" stroke="#8a7a6a" stroke-width="1.8"/>
+          <polygon points="26,18 34,32 18,32" fill="#3a3028" stroke="#8a7a6a" stroke-width="1"/>
+          <!-- Ojo en la montaña interior -->
+          <ellipse cx="26" cy="26" rx="5" ry="3" fill="none" stroke="#d4a020" stroke-width="1"/>
+          <circle cx="26" cy="26" r="1.5" fill="#d4a020"/>
+          <!-- Líneas de veta -->
+          <line x1="10" y1="38" x2="18" y2="28" stroke="#5a4a3a" stroke-width="0.8" stroke-dasharray="2,2"/>
+          <line x1="42" y1="38" x2="34" y2="28" stroke="#5a4a3a" stroke-width="0.8" stroke-dasharray="2,2"/>
+        </svg>
+        <div class="kingdom-name" style="color: #8a7a6a;">DRUKKAZ</div>
+        <div class="kingdom-tagline" style="color: #5a5048;">"Algo respira en las profundidades"</div>
+        <div class="color-strip">
+          <div class="color-dot" style="background:#1a1a1a;"></div>
+          <div class="color-dot" style="background:#8a7a6a;"></div>
+          <div class="color-dot" style="background:#d4a020;"></div>
+        </div>
+        <div style="font-size:10px; color:#5a5048; letter-spacing:0.08em; font-family:'Cinzel',serif;">NEGRO CAVERNA · PIEDRA · ORO VETA</div>
+      </div>
+      <div class="card-body">
+        <div class="section-label">Realeza</div>
+        <ul class="royals-list">
+          <li><span class="royal-role">Rey</span><span class="royal-name">Gorrath Drukkarn <em>— El Deudor</em></span></li>
+          <li><span class="royal-role">Príncipe</span><span class="royal-name">Skorrven Drukkarn <em>— El que bajó al Nivel 7</em></span></li>
+          <li><span class="royal-role">Príncipe</span><span class="royal-name">Imrath Drukkarn <em>— el más joven, el más peligroso</em></span></li>
+        </ul>
+        <div class="divider"></div>
+        <div class="section-label">Carácter del reino</div>
+        <div class="trait-pills">
+          <span class="trait-pill" style="background:#2a2218; color:#d4a020; border-color:#3a3020;">Deuda</span>
+          <span class="trait-pill" style="background:#2a2218; color:#d4a020; border-color:#3a3020;">Secreto</span>
+          <span class="trait-pill" style="background:#2a2218; color:#d4a020; border-color:#3a3020;">Conspiración</span>
+        </div>
+        <div class="wedding-badge" style="background:#2a2218; color:#d4a020; border-color:#d4a020;">
+          💍 Boda I — Príncipe Imrath + Seraveth de Tharessi
+        </div>
+        <div class="motto">"Toda ayuda tiene precio. Toda deuda tiene fecha."</div>
+      </div>
+    </div>
+
+    <!-- YSSEVAL -->
+    <div class="kingdom-card">
+      <div class="card-banner" style="background: #0d2318;">
+        <svg class="kingdom-sigil" viewBox="0 0 52 52">
+          <!-- Árbol muriendo / recordando -->
+          <circle cx="26" cy="26" r="24" fill="none" stroke="#4a9a6a" stroke-width="1.2"/>
+          <!-- Tronco -->
+          <line x1="26" y1="40" x2="26" y2="22" stroke="#4a9a6a" stroke-width="2.5"/>
+          <!-- Ramas vivas izquierda -->
+          <path d="M26 30 Q18 24 14 18" fill="none" stroke="#4a9a6a" stroke-width="1.5"/>
+          <path d="M26 26 Q20 20 17 14" fill="none" stroke="#4a9a6a" stroke-width="1.2"/>
+          <!-- Ramas muertas derecha - más delgadas -->
+          <path d="M26 30 Q33 26 37 20" fill="none" stroke="#4a9a6a" stroke-width="0.8" stroke-dasharray="2,2" opacity="0.5"/>
+          <path d="M26 26 Q32 22 36 16" fill="none" stroke="#4a9a6a" stroke-width="0.6" stroke-dasharray="2,2" opacity="0.3"/>
+          <!-- Hoja de recuerdo brillante -->
+          <ellipse cx="14" cy="17" rx="3" ry="2" fill="#a0e0b0" transform="rotate(-30,14,17)"/>
+          <circle cx="26" cy="22" r="2" fill="#a0e0b0" opacity="0.6"/>
+        </svg>
+        <div class="kingdom-name" style="color: #4a9a6a;">YSSEVAL</div>
+        <div class="kingdom-tagline" style="color: #2a6a4a;">"El bosque recuerda. Nosotros olvidamos."</div>
+        <div class="color-strip">
+          <div class="color-dot" style="background:#0d2318;"></div>
+          <div class="color-dot" style="background:#4a9a6a;"></div>
+          <div class="color-dot" style="background:#a0e0b0;"></div>
+        </div>
+        <div style="font-size:10px; color:#2a6a4a; letter-spacing:0.08em; font-family:'Cinzel',serif;">VERDE SOMBRA · CORTEZA · HOJA DE LUZ</div>
+      </div>
+      <div class="card-body">
+        <div class="section-label">Realeza</div>
+        <ul class="royals-list">
+          <li><span class="royal-role">Rey</span><span class="royal-name">Aelareth Yss <em>— 440 años, recuerda los árboles que cayeron</em></span></li>
+          <li><span class="royal-role">Príncipe</span><span class="royal-name">Sorvael Yss <em>— lector de memorias</em></span></li>
+          <li><span class="royal-role">Princesa</span><span class="royal-name">Liraeth Yss <em>— habla con los Firbolg</em></span></li>
+        </ul>
+        <div class="divider"></div>
+        <div class="section-label">Carácter del reino</div>
+        <div class="trait-pills">
+          <span class="trait-pill" style="background:#0d2a1a; color:#4a9a6a; border-color:#1a4a2a;">Melancolía</span>
+          <span class="trait-pill" style="background:#0d2a1a; color:#4a9a6a; border-color:#1a4a2a;">Magia arcana</span>
+          <span class="trait-pill" style="background:#0d2a1a; color:#4a9a6a; border-color:#1a4a2a;">Aliado de Tharessi</span>
+        </div>
+        <div class="motto">"Cada árbol que muere era una biblioteca."</div>
+      </div>
+    </div>
+
+    <!-- VOKRATH -->
+    <div class="kingdom-card">
+      <div class="card-banner" style="background: #1c1010;">
+        <svg class="kingdom-sigil" viewBox="0 0 52 52">
+          <!-- Puño de hierro con espada -->
+          <circle cx="26" cy="26" r="24" fill="none" stroke="#8a2020" stroke-width="1.2"/>
+          <!-- Espada vertical -->
+          <line x1="26" y1="10" x2="26" y2="38" stroke="#c0c0c0" stroke-width="2.5"/>
+          <line x1="20" y1="18" x2="32" y2="18" stroke="#c0c0c0" stroke-width="1.8"/>
+          <!-- Mango -->
+          <rect x="24" y="35" width="4" height="6" rx="1" fill="#8a6a20"/>
+          <!-- Corona de laurel rota en mitad -->
+          <path d="M14 30 Q18 26 22 30 Q24 28 26 30" fill="none" stroke="#8a2020" stroke-width="1.2"/>
+          <path d="M30 30 Q32 28 34 30 Q38 26 38 30" fill="none" stroke="#8a2020" stroke-width="1.2" opacity="0.4" stroke-dasharray="2,2"/>
+        </svg>
+        <div class="kingdom-name" style="color: #c04040;">VOKRATH</div>
+        <div class="kingdom-tagline" style="color: #7a2020;">"Un ejército que se detiene, muere de paz"</div>
+        <div class="color-strip">
+          <div class="color-dot" style="background:#1c1010;"></div>
+          <div class="color-dot" style="background:#8a2020;"></div>
+          <div class="color-dot" style="background:#c0c0c0;"></div>
+        </div>
+        <div style="font-size:10px; color:#7a3030; letter-spacing:0.08em; font-family:'Cinzel',serif;">NEGRO CAMPO · ROJO GUERRA · PLATA ACERO</div>
+      </div>
+      <div class="card-body">
+        <div class="section-label">Realeza</div>
+        <ul class="royals-list">
+          <li><span class="royal-role">Rey</span><span class="royal-name">Vorrakh Steinn <em>— El Interminable</em></span></li>
+          <li><span class="royal-role">Príncipe</span><span class="royal-name">Draeken Steinn <em>— general a los 19 años</em></span></li>
+          <li><span class="royal-role">Príncipe</span><span class="royal-name">Horrath Steinn <em>— el que no quiere guerrear</em></span></li>
+          <li><span class="royal-role">Princesa</span><span class="royal-name">Veyska Steinn <em>— comandante de Manticores</em></span></li>
+        </ul>
+        <div class="divider"></div>
+        <div class="section-label">Carácter del reino</div>
+        <div class="trait-pills">
+          <span class="trait-pill" style="background:#2a1010; color:#c04040; border-color:#4a2020;">En guerra con Tharessi</span>
+          <span class="trait-pill" style="background:#2a1010; color:#c04040; border-color:#4a2020;">Economía de conquista</span>
+          <span class="trait-pill" style="background:#2a1010; color:#c04040; border-color:#4a2020;">Honor de combate</span>
+        </div>
+        <div class="motto">"La gloria no se hereda. Se sangra."</div>
+      </div>
+    </div>
+
+    <!-- AZURATH -->
+    <div class="kingdom-card">
+      <div class="card-banner" style="background: #100a1a;">
+        <svg class="kingdom-sigil" viewBox="0 0 52 52">
+          <!-- Volcán con Veth -->
+          <circle cx="26" cy="26" r="24" fill="none" stroke="#5a2a8a" stroke-width="1.2"/>
+          <!-- Volcán -->
+          <polygon points="26,12 40,38 12,38" fill="none" stroke="#5a2a8a" stroke-width="1.5"/>
+          <!-- Flujo de Veth -->
+          <path d="M26 22 Q24 28 22 32 Q24 30 26 32 Q28 30 30 32 Q28 28 26 22" fill="#2a0a4a" stroke="#8a40c0" stroke-width="0.8"/>
+          <!-- Gota de Veth arriba -->
+          <ellipse cx="26" cy="16" rx="2.5" ry="3.5" fill="#9050d0"/>
+          <!-- Marcas ritual en lados -->
+          <line x1="14" y1="32" x2="18" y2="30" stroke="#5a2a8a" stroke-width="0.8"/>
+          <line x1="38" y1="32" x2="34" y2="30" stroke="#5a2a8a" stroke-width="0.8"/>
+        </svg>
+        <div class="kingdom-name" style="color: #9060c0;">AZURATH</div>
+        <div class="kingdom-tagline" style="color: #5a3080;">"El Veth nos hizo. El Veth nos deshará."</div>
+        <div class="color-strip">
+          <div class="color-dot" style="background:#100a1a;"></div>
+          <div class="color-dot" style="background:#5a2a8a;"></div>
+          <div class="color-dot" style="background:#e09020;"></div>
+        </div>
+        <div style="font-size:10px; color:#5a3080; letter-spacing:0.08em; font-family:'Cinzel',serif;">NEGRO VETH · PÚRPURA VOLCÁN · ÁMBAR OJO</div>
+      </div>
+      <div class="card-body">
+        <div class="section-label">Realeza</div>
+        <ul class="royals-list">
+          <li><span class="royal-role">Rey</span><span class="royal-name">Ozrath Vel <em>— ojos ya completamente ámbar, avanzando</em></span></li>
+          <li><span class="royal-role">Príncipe</span><span class="royal-name">Suveth Vel <em>— primer Vethari de la familia real</em></span></li>
+          <li><span class="royal-role">Princesa</span><span class="royal-name">Naraith Vel <em>— sabe que el Veth se acaba, calla</em></span></li>
+        </ul>
+        <div class="divider"></div>
+        <div class="section-label">Carácter del reino</div>
+        <div class="trait-pills">
+          <span class="trait-pill" style="background:#180a28; color:#9060c0; border-color:#3a1a5a;">Aliado secreto de Drukkaz</span>
+          <span class="trait-pill" style="background:#180a28; color:#9060c0; border-color:#3a1a5a;">Recurso finito</span>
+          <span class="trait-pill" style="background:#180a28; color:#9060c0; border-color:#3a1a5a;">Transformación</span>
+        </div>
+        <div class="wedding-badge" style="background:#180a28; color:#9060c0; border-color:#9060c0;">
+          💍 Boda II — Naraith + Príncipe de Durrakh
+        </div>
+        <div class="motto">"Renunciamos para que el mundo no tenga que hacerlo."</div>
+      </div>
+    </div>
+
+    <!-- VEYRATH -->
+    <div class="kingdom-card">
+      <div class="card-banner" style="background: #0a1520;">
+        <svg class="kingdom-sigil" viewBox="0 0 52 52">
+          <!-- Espejo entre vivos y muertos -->
+          <circle cx="26" cy="26" r="24" fill="none" stroke="#4a7a8a" stroke-width="1.2"/>
+          <!-- Línea del velo -->
+          <line x1="10" y1="26" x2="42" y2="26" stroke="#4a7a8a" stroke-width="0.8" stroke-dasharray="3,2"/>
+          <!-- Flor viva arriba -->
+          <circle cx="26" cy="18" r="4" fill="none" stroke="#4a9aaa" stroke-width="1.2"/>
+          <circle cx="26" cy="18" r="1.5" fill="#4a9aaa"/>
+          <line x1="26" y1="14" x2="26" y2="22" stroke="#4a9aaa" stroke-width="0.8"/>
+          <line x1="22" y1="18" x2="30" y2="18" stroke="#4a9aaa" stroke-width="0.8"/>
+          <!-- Eco muerto abajo - espejo desvanecido -->
+          <circle cx="26" cy="34" r="4" fill="none" stroke="#4a9aaa" stroke-width="0.6" opacity="0.35" stroke-dasharray="2,2"/>
+          <circle cx="26" cy="34" r="1.5" fill="#4a9aaa" opacity="0.25"/>
+          <line x1="26" y1="30" x2="26" y2="38" stroke="#4a9aaa" stroke-width="0.5" opacity="0.3"/>
+          <line x1="22" y1="34" x2="30" y2="34" stroke="#4a9aaa" stroke-width="0.5" opacity="0.3"/>
+        </svg>
+        <div class="kingdom-name" style="color: #4a9aaa;">VEYRATH</div>
+        <div class="kingdom-tagline" style="color: #2a6a7a;">"Los muertos no se van. Solo cambian de sala."</div>
+        <div class="color-strip">
+          <div class="color-dot" style="background:#0a1520;"></div>
+          <div class="color-dot" style="background:#4a7a8a;"></div>
+          <div class="color-dot" style="background:#c0e8e0;"></div>
+        </div>
+        <div style="font-size:10px; color:#2a6a7a; letter-spacing:0.08em; font-family:'Cinzel',serif;">NEGRO VELO · TEAL PANTANO · BLANCO ECO</div>
+      </div>
+      <div class="card-body">
+        <div class="section-label">Realeza</div>
+        <ul class="royals-list">
+          <li><span class="royal-role">Reina</span><span class="royal-name">Sotharra Vel <em>— consulta a su marido muerto regularmente</em></span></li>
+          <li><span class="royal-role">Príncipe</span><span class="royal-name">Lyssath Vel <em>— mediador entre los vivos</em></span></li>
+          <li><span class="royal-role">Princesa</span><span class="royal-name">Orveth Vel <em>— ve los ecos sin entrar en trance</em></span></li>
+        </ul>
+        <div class="divider"></div>
+        <div class="section-label">Carácter del reino</div>
+        <div class="trait-pills">
+          <span class="trait-pill" style="background:#0a2030; color:#4a9aaa; border-color:#1a4a5a;">Shadowfell permeable</span>
+          <span class="trait-pill" style="background:#0a2030; color:#4a9aaa; border-color:#1a4a5a;">Hags como juezas</span>
+          <span class="trait-pill" style="background:#0a2030; color:#4a9aaa; border-color:#1a4a5a;">Odio con Durrakh</span>
+        </div>
+        <div class="motto">"El duelo es para los que creen que la muerte es una pared."</div>
+      </div>
+    </div>
+
+    <!-- DURRAKH -->
+    <div class="kingdom-card">
+      <div class="card-banner" style="background: #1a0f08;">
+        <svg class="kingdom-sigil" viewBox="0 0 52 52">
+          <!-- Cañón con inscripciones -->
+          <circle cx="26" cy="26" r="24" fill="none" stroke="#c05820" stroke-width="1.2"/>
+          <!-- Cañón -->
+          <path d="M14 10 L14 38 L26 44 L38 38 L38 10" fill="none" stroke="#c05820" stroke-width="1.5"/>
+          <line x1="14" y1="10" x2="38" y2="10" stroke="#c05820" stroke-width="1"/>
+          <!-- Inscripciones en la pared -->
+          <line x1="18" y1="18" x2="24" y2="18" stroke="#c05820" stroke-width="0.7"/>
+          <line x1="18" y1="22" x2="22" y2="22" stroke="#c05820" stroke-width="0.7"/>
+          <line x1="28" y1="18" x2="34" y2="18" stroke="#c05820" stroke-width="0.7"/>
+          <line x1="30" y1="22" x2="34" y2="22" stroke="#c05820" stroke-width="0.7"/>
+          <line x1="18" y1="28" x2="23" y2="28" stroke="#c05820" stroke-width="0.7"/>
+          <line x1="29" y1="28" x2="34" y2="28" stroke="#c05820" stroke-width="0.7"/>
+          <!-- Punto brillante: la inscripción que cambia -->
+          <circle cx="26" cy="32" r="2" fill="#e08040"/>
+        </svg>
+        <div class="kingdom-name" style="color: #c05820;">DURRAKH</div>
+        <div class="kingdom-tagline" style="color: #7a3810;">"Rompimos el mundo. Pasaremos la eternidad arreglándolo."</div>
+        <div class="color-strip">
+          <div class="color-dot" style="background:#1a0f08;"></div>
+          <div class="color-dot" style="background:#c05820;"></div>
+          <div class="color-dot" style="background:#e0d080;"></div>
+        </div>
+        <div style="font-size:10px; color:#7a3810; letter-spacing:0.08em; font-family:'Cinzel',serif;">TIERRA ROJA · NARANJA CAÑÓN · ARENA INSCRITA</div>
+      </div>
+      <div class="card-body">
+        <div class="section-label">Realeza</div>
+        <ul class="royals-list">
+          <li><span class="royal-role">Rey</span><span class="royal-name">Durrath Koss <em>— lleva 20 años leyendo las inscripciones</em></span></li>
+          <li><span class="royal-role">Príncipe</span><span class="royal-name">Korrakh Koss <em>— completó el Rito de la Chimera x3</em></span></li>
+          <li><span class="royal-role">Princesa</span><span class="royal-name">Rethva Koss <em>— la única que vio cambiar las inscripciones</em></span></li>
+        </ul>
+        <div class="divider"></div>
+        <div class="section-label">Carácter del reino</div>
+        <div class="trait-pills">
+          <span class="trait-pill" style="background:#2a1508; color:#c05820; border-color:#4a2510;">Culpa ancestral</span>
+          <span class="trait-pill" style="background:#2a1508; color:#c05820; border-color:#4a2510;">Guerreros sagrados</span>
+          <span class="trait-pill" style="background:#2a1508; color:#c05820; border-color:#4a2510;">Odio con Veyrath</span>
+        </div>
+        <div class="wedding-badge" style="background:#2a1508; color:#c05820; border-color:#c05820;">
+          💍 Boda II — Príncipe Korrakh + Naraith de Azurath
+        </div>
+        <div class="motto">"Un Durrakh no descansa hasta que el Quiebre sane."</div>
+      </div>
+    </div>
+
+  </div>
+</div>

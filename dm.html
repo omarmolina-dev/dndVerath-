@@ -1,0 +1,1276 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>VERATH — Grimorio del Narrador</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Cinzel:wght@400;600;700&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet"/>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --ink: #0e0a04;
+  --ink-light: #2a1f10;
+  --parchment: #f2e8d0;
+  --parchment-dark: #e0d0a8;
+  --parchment-darker: #c8b878;
+  --gold: #8a6a20;
+  --gold-light: #b89040;
+  --red-seal: #7a1a1a;
+  --red-light: #a02020;
+  --teal: #1a5050;
+  --secret-bg: #1a0808;
+  --secret-border: #6a1a1a;
+  --shadow: rgba(14,10,4,0.25);
+}
+
+body {
+  background: #12100a;
+  background-image:
+    radial-gradient(ellipse at 15% 15%, #221808 0%, transparent 55%),
+    radial-gradient(ellipse at 85% 85%, #0e0804 0%, transparent 55%),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+  min-height: 100vh;
+  font-family: 'Crimson Pro', Georgia, serif;
+}
+
+/* ========== NAVEGACIÓN ========== */
+#nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  background: linear-gradient(to bottom, rgba(10,8,4,0.97), rgba(10,8,4,0.88));
+  border-bottom: 1px solid var(--gold);
+  padding: 0 2rem;
+  display: flex;
+  align-items: center;
+  height: 56px;
+  gap: 0;
+}
+
+.nav-brand {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 13px;
+  color: var(--gold-light);
+  letter-spacing: 0.2em;
+  margin-right: auto;
+  white-space: nowrap;
+}
+
+.nav-brand span {
+  color: var(--red-seal);
+  font-size: 10px;
+  display: block;
+  letter-spacing: 0.3em;
+  font-family: 'Cinzel', serif;
+}
+
+.nav-tabs {
+  display: flex;
+  gap: 0;
+  height: 56px;
+}
+
+.nav-tab {
+  font-family: 'Cinzel', serif;
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #8a7a5a;
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  padding: 0 1.2rem;
+  height: 56px;
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+
+.nav-tab:hover { color: var(--gold-light); }
+.nav-tab.active {
+  color: var(--gold-light);
+  border-bottom-color: var(--red-seal);
+}
+
+/* ========== CONTENIDO PRINCIPAL ========== */
+main {
+  padding-top: 56px;
+  min-height: 100vh;
+}
+
+.tab-panel {
+  display: none;
+  padding: 3rem 1.5rem;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.tab-panel.active { display: block; }
+
+/* ========== PERGAMINO BASE ========== */
+.scroll {
+  background: var(--parchment);
+  position: relative;
+  padding: 3.5rem 4rem;
+  box-shadow:
+    0 0 0 1px var(--parchment-darker),
+    0 0 0 3px #0e0a04,
+    0 8px 60px rgba(0,0,0,0.7),
+    inset 0 0 100px rgba(160,120,40,0.06);
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23n)' opacity='0.045'/%3E%3C/svg%3E"),
+    linear-gradient(160deg, #faf0da 0%, #f2e8d0 45%, #e8d8b0 100%);
+  margin-bottom: 2rem;
+}
+
+.scroll::before {
+  content: '';
+  position: absolute;
+  inset: 14px;
+  border: 1px solid rgba(200,184,120,0.5);
+  pointer-events: none;
+}
+
+.scroll::after {
+  content: '';
+  position: absolute;
+  inset: 18px;
+  border: 0.5px solid rgba(138,106,32,0.25);
+  pointer-events: none;
+}
+
+/* ========== SELLO SECRETO DM ========== */
+.dm-seal {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--secret-bg);
+  border: 1px solid var(--secret-border);
+  color: #cc4444;
+  font-family: 'Cinzel', serif;
+  font-size: 9px;
+  letter-spacing: 0.3em;
+  padding: 4px 12px;
+  margin-bottom: 1.5rem;
+}
+
+/* ========== TÍTULOS ========== */
+.page-title {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 38px;
+  font-weight: 700;
+  color: var(--ink);
+  text-align: center;
+  letter-spacing: 0.1em;
+  line-height: 1.1;
+  margin-bottom: 0.4rem;
+  text-shadow: 1px 1px 0 rgba(138,106,32,0.2);
+}
+
+.page-subtitle {
+  font-family: 'Cinzel', serif;
+  font-size: 11px;
+  color: var(--gold);
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.ornament {
+  text-align: center;
+  color: var(--gold);
+  font-size: 18px;
+  letter-spacing: 0.4em;
+  opacity: 0.6;
+  margin: 0.4rem 0 1.2rem;
+}
+
+.header-rule {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  justify-content: center;
+  margin: 1rem 0 2rem;
+}
+.header-rule span {
+  height: 1px;
+  width: 60px;
+  background: linear-gradient(to right, transparent, var(--gold));
+}
+.header-rule span:last-child {
+  background: linear-gradient(to left, transparent, var(--gold));
+}
+.header-diamond {
+  width: 7px; height: 7px;
+  background: var(--gold);
+  transform: rotate(45deg);
+}
+
+/* ========== SECCIÓN ========== */
+.section { margin-bottom: 2.5rem; }
+
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 1.2rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 0.5px solid var(--parchment-darker);
+}
+
+.section-icon { font-size: 18px; }
+
+.section-title {
+  font-family: 'Cinzel', serif;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--ink);
+  letter-spacing: 0.1em;
+  flex: 1;
+}
+
+.section-line { flex: 1; height: 0.5px; background: var(--parchment-darker); }
+
+.section p {
+  font-size: 16px;
+  line-height: 1.85;
+  color: var(--ink-light);
+  margin-bottom: 0.8rem;
+}
+
+.section p strong { color: var(--ink); font-weight: 600; }
+
+/* ========== BLOQUE SECRETO ========== */
+.secret-block {
+  background: #1e0f0f;
+  border: 1px solid #5a1a1a;
+  border-left: 3px solid var(--red-seal);
+  padding: 1.2rem 1.5rem;
+  margin: 1.2rem 0;
+  position: relative;
+}
+
+.secret-label {
+  font-family: 'Cinzel', serif;
+  font-size: 9px;
+  letter-spacing: 0.3em;
+  color: #cc4444;
+  text-transform: uppercase;
+  margin-bottom: 0.6rem;
+}
+
+.secret-block p {
+  color: #e8c8a0 !important;
+  font-size: 15px;
+  line-height: 1.8;
+}
+
+/* ========== BLOQUE INTRO/CITA ========== */
+.lore-block {
+  background: rgba(138,106,32,0.06);
+  border: 0.5px solid var(--parchment-darker);
+  border-left: 3px solid var(--gold);
+  padding: 1.2rem 1.5rem;
+  margin-bottom: 2rem;
+  font-size: 16px;
+  line-height: 1.8;
+  color: var(--ink-light);
+  font-style: italic;
+}
+
+.lore-block strong { font-style: normal; color: var(--ink); }
+
+/* ========== TABLA ========== */
+.scroll-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1rem 0 1.5rem;
+  font-size: 14px;
+}
+
+.scroll-table th {
+  font-family: 'Cinzel', serif;
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold);
+  border-bottom: 1px solid var(--parchment-darker);
+  padding: 0.6rem 0.8rem;
+  text-align: left;
+  background: rgba(138,106,32,0.04);
+}
+
+.scroll-table td {
+  padding: 0.65rem 0.8rem;
+  border-bottom: 0.5px solid rgba(200,184,120,0.3);
+  color: var(--ink-light);
+  line-height: 1.5;
+}
+
+.scroll-table tr:last-child td { border-bottom: none; }
+.scroll-table td strong { color: var(--ink); }
+
+/* ========== TARJETAS DE REINOS ========== */
+.kingdoms-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin: 1.2rem 0;
+}
+
+.kingdom-card {
+  border: 1px solid var(--parchment-darker);
+  padding: 1rem 1.2rem;
+  background: rgba(138,106,32,0.03);
+  cursor: pointer;
+  transition: all 0.2s;
+  position: relative;
+}
+
+.kingdom-card:hover {
+  background: rgba(138,106,32,0.08);
+  border-color: var(--gold);
+}
+
+.kingdom-card-icon { font-size: 22px; margin-bottom: 0.4rem; }
+
+.kingdom-card-name {
+  font-family: 'Cinzel', serif;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--ink);
+  letter-spacing: 0.08em;
+}
+
+.kingdom-card-sub {
+  font-size: 12px;
+  color: var(--gold);
+  font-family: 'Cinzel', serif;
+  letter-spacing: 0.1em;
+  margin-bottom: 0.5rem;
+}
+
+.kingdom-card p {
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--ink-light);
+}
+
+/* ========== TARJETAS DE DIOSES ========== */
+.deity-card {
+  border: 1px solid var(--parchment-darker);
+  margin-bottom: 1.5rem;
+  overflow: hidden;
+}
+
+.deity-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 1rem 1.2rem;
+  background: rgba(138,106,32,0.05);
+  border-bottom: 1px solid var(--parchment-darker);
+  cursor: pointer;
+}
+
+.deity-icon { font-size: 24px; }
+
+.deity-info { flex: 1; }
+
+.deity-name {
+  font-family: 'Cinzel', serif;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--ink);
+  letter-spacing: 0.08em;
+}
+
+.deity-epithet {
+  font-size: 13px;
+  color: var(--gold);
+  font-style: italic;
+}
+
+.deity-status {
+  font-family: 'Cinzel', serif;
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  padding: 3px 8px;
+  border: 1px solid;
+}
+
+.status-vivo { color: #2a6a2a; border-color: #2a6a2a; background: rgba(42,106,42,0.08); }
+.status-desconocido { color: #6a5a2a; border-color: #6a5a2a; background: rgba(106,90,42,0.08); }
+
+.deity-body {
+  padding: 1.2rem;
+  display: none;
+}
+
+.deity-body.open { display: block; }
+
+.deity-chevron {
+  font-size: 12px;
+  color: var(--gold);
+  transition: transform 0.2s;
+}
+
+.deity-header.open .deity-chevron { transform: rotate(180deg); }
+
+/* ========== REALEZA ========== */
+.royals-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.royal-card {
+  border: 1px solid var(--parchment-darker);
+  padding: 1rem 1.2rem;
+}
+
+.royal-name {
+  font-family: 'Cinzel', serif;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--ink);
+  letter-spacing: 0.06em;
+  margin-bottom: 0.2rem;
+}
+
+.royal-title {
+  font-size: 12px;
+  color: var(--gold);
+  font-style: italic;
+  margin-bottom: 0.5rem;
+}
+
+.royal-card p {
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--ink-light);
+  margin-bottom: 0.4rem;
+}
+
+/* ========== BODAS ========== */
+.boda-card {
+  border: 1px solid var(--parchment-darker);
+  border-left: 3px solid var(--red-seal);
+  padding: 1.2rem 1.5rem;
+  margin-bottom: 1.2rem;
+}
+
+.boda-title {
+  font-family: 'Cinzel', serif;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--ink);
+  letter-spacing: 0.08em;
+  margin-bottom: 0.5rem;
+}
+
+/* ========== BARRA DE SECCIÓN ========== */
+.section-divider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 2.5rem 0 1.5rem;
+}
+
+.section-divider-line {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--parchment-darker));
+}
+
+.section-divider-line:last-child {
+  background: linear-gradient(to left, transparent, var(--parchment-darker));
+}
+
+.section-divider-label {
+  font-family: 'Cinzel', serif;
+  font-size: 10px;
+  letter-spacing: 0.3em;
+  color: var(--gold);
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+/* ========== BÚSQUEDA ========== */
+.search-bar {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 1.5rem;
+  align-items: center;
+}
+
+.search-input {
+  flex: 1;
+  background: rgba(242,232,208,0.05);
+  border: 1px solid #3a2a10;
+  color: #c8a860;
+  font-family: 'Crimson Pro', serif;
+  font-size: 15px;
+  padding: 8px 14px;
+  outline: none;
+}
+
+.search-input::placeholder { color: #6a5a38; }
+.search-input:focus { border-color: var(--gold); }
+
+/* ========== ÍNDICE ========== */
+.index-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 0.8rem;
+  margin-bottom: 2rem;
+}
+
+.index-btn {
+  background: rgba(242,232,208,0.04);
+  border: 1px solid #2a1e08;
+  color: #a08040;
+  font-family: 'Cinzel', serif;
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  padding: 10px 14px;
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.index-btn:hover {
+  background: rgba(138,106,32,0.12);
+  border-color: var(--gold);
+  color: var(--gold-light);
+}
+
+.index-btn-icon { font-size: 16px; }
+
+/* ========== NOTAS DEL DM ========== */
+.dm-note {
+  background: rgba(26,10,10,0.4);
+  border: 1px dashed #5a2a2a;
+  padding: 1rem 1.2rem;
+  margin: 1rem 0;
+  font-size: 14px;
+  color: #c8a090;
+  font-style: italic;
+  line-height: 1.7;
+}
+
+.dm-note strong { color: #e8b090; font-style: normal; }
+
+/* ========== RESPONSIVE ========== */
+@media (max-width: 640px) {
+  .tab-panel { padding: 2rem 1rem; }
+  .scroll { padding: 2rem 1.5rem; }
+  .kingdoms-grid, .royals-grid { grid-template-columns: 1fr; }
+  .page-title { font-size: 26px; }
+  .nav-tab { font-size: 8px; padding: 0 0.7rem; letter-spacing: 0.1em; }
+  .nav-brand { font-size: 11px; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAVEGACIÓN -->
+<nav id="nav">
+  <div class="nav-brand">
+    VERATH
+    <span>✦ GRIMORIO DEL NARRADOR ✦</span>
+  </div>
+  <div class="nav-tabs">
+    <button class="nav-tab active" onclick="showTab('inicio')">Inicio</button>
+    <button class="nav-tab" onclick="showTab('mundo')">El Mundo</button>
+    <button class="nav-tab" onclick="showTab('dioses')">Los Dioses</button>
+    <button class="nav-tab" onclick="showTab('realeza')">La Realeza</button>
+    <button class="nav-tab" onclick="showTab('secretos')">Secretos</button>
+  </div>
+</nav>
+
+<main>
+
+<!-- ===== INICIO ===== -->
+<div id="tab-inicio" class="tab-panel active">
+  <div class="scroll">
+    <div class="dm-seal">⚠ DOCUMENTO RESTRINGIDO — SOLO NARRADOR ⚠</div>
+    <div class="ornament">✦ ✧ ✦</div>
+    <div class="page-title">VERATH</div>
+    <div class="page-subtitle">Grimorio del Narrador — Lore Completo</div>
+    <div class="header-rule">
+      <span></span><div class="header-diamond"></div><span></span>
+    </div>
+
+    <div class="lore-block">
+      <strong>Verath fue partido en dos hace 800 años por el Quiebre del Eje</strong> — algo cayó del cielo, partió el continente original y llenó el centro de un mar de tormenta perpetua. Nadie sabe exactamente qué fue. Cada reino tiene su versión, y todas se contradicen. Siete personas absorbieron un fragmento de la energía que mantenía el mundo cohesionado. No los corrompió. Los <strong>completó en una dirección que ya existía en ellos</strong>, y ya no pueden volver atrás.
+    </div>
+
+    <div class="section">
+      <div class="section-header">
+        <span class="section-icon">🗺</span>
+        <span class="section-title">NAVEGACIÓN RÁPIDA</span>
+      </div>
+      <div class="index-grid">
+        <button class="index-btn" onclick="showTab('mundo')"><span class="index-btn-icon">🌍</span> Los Reinos</button>
+        <button class="index-btn" onclick="showTab('dioses')"><span class="index-btn-icon">⚱️</span> Los Dioses</button>
+        <button class="index-btn" onclick="showTab('realeza')"><span class="index-btn-icon">👑</span> La Realeza</button>
+        <button class="index-btn" onclick="showTab('secretos')"><span class="index-btn-icon">🔴</span> Secretos DM</button>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-header">
+        <span class="section-icon">⚡</span>
+        <span class="section-title">EL MAR DEL QUIEBRE</span>
+        <span class="section-line"></span>
+      </div>
+      <p>No es un mar normal. Es un mar de <strong>tormenta eterna</strong> con relámpagos que golpean el agua cada pocos segundos. Navegar de noche es suicidio. Solo ciertos barcos con <strong>quillas de cristal de tormenta</strong> — mineral extraído de las islas centrales — pueden cruzarlo sin ser destruidos. Cruzar el mar es un privilegio, no una ruta.</p>
+      <p>Las <strong>Islas del Eje</strong> — donde cayó lo que partió el mundo — nadie regresa de ahí. Hay tres expediciones documentadas. Los barcos llegaron vacíos a la orilla occidental.</p>
+      <div class="secret-block">
+        <div class="secret-label">✦ Secreto del Narrador</div>
+        <p>Llevar físicamente a uno de los Siete a las Islas del Eje revierte el proceso. El fragmento se separa del cuerpo. El humano que queda debajo muere en segundos — su biología lleva 800 años siendo sostenida por el fragmento. Nadie sabe esto excepto los tres Siete que siguen vivos, y ninguno lo dice.</p>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-header">
+        <span class="section-icon">⚓</span>
+        <span class="section-title">CRIATURAS DEL MAR</span>
+        <span class="section-line"></span>
+      </div>
+      <p><strong>Los Velhari</strong> — humanoides de piel translúcida que viven en las islas pequeñas del mar. No hablan ningún idioma conocido pero entienden todos. Comercian en silencio usando objetos. Nadie sabe si son anteriores al Quiebre.</p>
+      <p><strong>Dragon Turtle "Vorrakh"</strong> — existe desde antes del Quiebre según los textos. Tiene 400 años de registros de barcos hundidos. Los marineros le dejan ofrendas.</p>
+      <p><strong>Tempest Giants</strong> — viven en las nubes de tormenta permanente. Cuando actúan, hunden ejércitos enteros.</p>
+      <p><strong>Aboleth de Profundidad</strong> — varios, se comunican telepáticamente a través del fondo del mar.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ===== EL MUNDO ===== -->
+<div id="tab-mundo" class="tab-panel">
+  <div class="scroll">
+    <div class="dm-seal">⚠ DOCUMENTO RESTRINGIDO — SOLO NARRADOR ⚠</div>
+    <div class="page-title">Los Reinos</div>
+    <div class="page-subtitle">Continentes de Valdrek y Draeven</div>
+    <div class="header-rule">
+      <span></span><div class="header-diamond"></div><span></span>
+    </div>
+
+    <div class="section-divider">
+      <div class="section-divider-line"></div>
+      <span class="section-divider-label">Continente Oeste — Valdrek</span>
+      <div class="section-divider-line"></div>
+    </div>
+
+    <div class="kingdoms-grid">
+      <div class="kingdom-card" onclick="toggleKingdom('tharessi')">
+        <div class="kingdom-card-icon">🌊</div>
+        <div class="kingdom-card-name">THARESSI</div>
+        <div class="kingdom-card-sub">Imperio de Rutas Marítimas</div>
+        <p>Venecia mezclada con nación isleña. Quien controla las rutas, controla Tharessi. Monopolio del cristal de tormenta.</p>
+      </div>
+      <div class="kingdom-card" onclick="toggleKingdom('drukkaz')">
+        <div class="kingdom-card-icon">⛰️</div>
+        <div class="kingdom-card-name">DRUKKAZ</div>
+        <div class="kingdom-card-sub">Civilización Sobre lo Incomprensible</div>
+        <p>Capas y capas de civilización encima de ruinas. Y en las ruinas más profundas, algo que se mueve.</p>
+      </div>
+      <div class="kingdom-card" onclick="toggleKingdom('ysseval')">
+        <div class="kingdom-card-icon">🌿</div>
+        <div class="kingdom-card-name">YSSEVAL</div>
+        <div class="kingdom-card-sub">El Bosque que Muere</div>
+        <p>Un lugar que fue más grande, más poderoso. El bosque se encoge lentamente. Los árboles más viejos tienen memoria del Quiebre.</p>
+      </div>
+    </div>
+
+    <!-- Detalles reinos Valdrek -->
+    <div id="detail-tharessi" style="display:none;" class="deity-body open">
+      <div class="section">
+        <div class="section-header">
+          <span class="section-icon">🌊</span>
+          <span class="section-title">THARESSI — El Imperio de Rutas</span>
+        </div>
+        <p><strong>Rasgo único:</strong> El litoral tiene arrecifes de cristal de tormenta que crecen naturalmente — monopolio que Vokrath quiere destruir, no conquistar.</p>
+        <p><strong>Humanos Tharess</strong> — piel cobriza, cultura oral. Los contratos se sellan con canciones que ambas partes memorizan.</p>
+        <p><strong>Los Arkai</strong> — humanoides con branquias vestigiales. Aguantan 10 minutos bajo agua. No saben con qué se mezclaron sus ancestros.</p>
+        <p><strong>Los Peth</strong> — halflings portuarios con tatuajes de navegación que funcionan como mapas vivos en su piel.</p>
+        <p><strong>Fauna:</strong> Leviatán de arrecife (herbívoro, come cristal), Aves Korrath (gaviotas negras de 3m, predicen tormentas), Korveth (medusa del tamaño de una casa, símbolo nacional).</p>
+        <div class="secret-block">
+          <div class="secret-label">✦ Secreto del Narrador</div>
+          <p>Los Arkai se mezclaron con algo del mar que los Aboleth de profundidad reconocen instintivamente. Si un Aboleth ve a un Arkai, lo trata diferente — no con hostilidad sino con algo que parece reconocimiento.</p>
+        </div>
+      </div>
+    </div>
+
+    <div id="detail-drukkaz" style="display:none;" class="deity-body open">
+      <div class="section">
+        <div class="section-header">
+          <span class="section-icon">⛰️</span>
+          <span class="section-title">DRUKKAZ — Las Profundidades</span>
+        </div>
+        <p><strong>Rasgo único:</strong> Las montañas tienen venas de mineral viviente — roca que crece, cierra túneles, forma estructuras que parecen intencionadas. Los geólogos llevan 400 años debatiendo si la montaña está viva.</p>
+        <p><strong>Enanos Drukkari</strong> — 1.60m, cultura de deuda total. Todo se registra, toda ayuda se cobra, todo insulto se salda. No es maldad, es su sistema legal completo.</p>
+        <p><strong>Gnomos de Veta</strong> — viven en las venas de mineral viviente. Sus ojos brillan levemente en la oscuridad.</p>
+        <p><strong>Los Sokrath</strong> — humanoides de piedra porosa. Viven 800 años. Cuando hablan, todos escuchan. Niegan ser oráculos.</p>
+        <p><strong>Ley fundamental:</strong> Nadie baja del Nivel Siete sin permiso escrito del rey y los tres clanes mayores.</p>
+        <div class="secret-block">
+          <div class="secret-label">✦ Secreto del Narrador</div>
+          <p>Lo que se mueve en las profundidades del Nivel Siete es un fragmento de la conciencia de Druukh que se desprendió durante el Quiebre y desarrolló voluntad propia. Druukh lo sabe. No sabe cómo reabsorberlo sin destruir la montaña. Lleva 800 años esperando una solución que no llega.</p>
+        </div>
+      </div>
+    </div>
+
+    <div id="detail-ysseval" style="display:none;" class="deity-body open">
+      <div class="section">
+        <div class="section-header">
+          <span class="section-icon">🌿</span>
+          <span class="section-title">YSSEVAL — La Memoria del Bosque</span>
+        </div>
+        <p><strong>Rasgo único:</strong> El bosque tiene memoria literal. Los árboles más viejos almacenan recuerdos de lo que ocurrió cerca. Los elfos los leen tocando la corteza en estado meditativo. Los árboles con recuerdos del Quiebre están muriendo.</p>
+        <p><strong>Elfos Yssevari</strong> — piel verde pálida, pelo blanco o plateado. Cultura de duelo constante — rituales para casi todo tipo de pérdida.</p>
+        <p><strong>Firbolg</strong> — jardineros del bosque. Llevan generaciones intentando detener la contracción. Ninguno ha dormido más de 4 horas en 200 años.</p>
+        <p><strong>Leshki</strong> — 60cm de altura, parecen niños con rasgos de insecto. Son los primeros en notar cuando un árbol empieza a morir. Su llanto suena como madera quebrándose.</p>
+        <div class="secret-block">
+          <div class="secret-label">✦ Secreto del Narrador</div>
+          <p>Yssara está en colapso cognitivo. Los árboles mueren porque el canal de transferencia de memoria está saturado. La contracción del bosque físico es consecuencia directa del colapso cognitivo de Yssara.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-divider">
+      <div class="section-divider-line"></div>
+      <span class="section-divider-label">Continente Este — Draeven</span>
+      <div class="section-divider-line"></div>
+    </div>
+
+    <div class="kingdoms-grid">
+      <div class="kingdom-card" onclick="toggleKingdom('vokrath')">
+        <div class="kingdom-card-icon">⚔️</div>
+        <div class="kingdom-card-name">VOKRATH</div>
+        <div class="kingdom-card-sub">El Imperio que No Puede Parar</div>
+        <p>Llevan 200 años en expansión y su economía depende de la guerra. Si para, colapsan.</p>
+      </div>
+      <div class="kingdom-card" onclick="toggleKingdom('azurath')">
+        <div class="kingdom-card-icon">🌑</div>
+        <div class="kingdom-card-name">AZURATH</div>
+        <div class="kingdom-card-sub">El Recurso Finito</div>
+        <p>Civilización construida alrededor del Veth — sustancia bajo los volcanes. Es finita. Se está acabando.</p>
+      </div>
+      <div class="kingdom-card" onclick="toggleKingdom('veyrath')">
+        <div class="kingdom-card-icon">🌸</div>
+        <div class="kingdom-card-name">VEYRATH</div>
+        <div class="kingdom-card-sub">Relación Funcional con la Muerte</div>
+        <p>La frontera entre el plano material y el Shadowfell es permeable. Ver el eco de tu abuelo es cotidiano aquí.</p>
+      </div>
+      <div class="kingdom-card" onclick="toggleKingdom('durrakh')">
+        <div class="kingdom-card-icon">🏜️</div>
+        <div class="kingdom-card-name">DURRAKH</div>
+        <div class="kingdom-card-sub">La Deuda con el Pasado</div>
+        <p>Creen que sus ancestros causaron el Quiebre. Toda su cultura es un intento de pagar esa deuda.</p>
+      </div>
+    </div>
+
+    <div id="detail-vokrath" style="display:none;" class="deity-body open">
+      <div class="section">
+        <div class="section-header"><span class="section-icon">⚔️</span><span class="section-title">VOKRATH</span></div>
+        <p><strong>Campos Grises</strong> — campos de batalla que no sanan. El pasto no crece, la tierra está negra. Los Undead aparecen espontáneamente ahí. Vokrath construye monumentos en ellos.</p>
+        <p><strong>Kraaveth (Hobgoblins)</strong> — ciudadanos completos. La alianza tiene 150 años y es genuina.</p>
+        <p><strong>Vorrkai (Half-Orcs)</strong> — clase militar más baja pero con más movilidad social. Un Vorrkai que asciende en rango es más respetado que un noble que no ha peleado.</p>
+        <p><strong>Caballos de Campo Gris</strong> — ojos completamente negros. No pueden alejarse más de 3 días de un Campo Gris o mueren.</p>
+        <div class="secret-block">
+          <div class="secret-label">✦ Secreto del Narrador</div>
+          <p>El nombre "Vorrakh" — el Dragon Turtle del Mar del Quiebre — apareció en registros de Drukkaz anteriores al Quiebre. El nombre del dios de la guerra Vorrakh también aparece ahí. Son el mismo registro. Nadie ha conectado esto.</p>
+        </div>
+      </div>
+    </div>
+
+    <div id="detail-azurath" style="display:none;" class="deity-body open">
+      <div class="section">
+        <div class="section-header"><span class="section-icon">🌑</span><span class="section-title">AZURATH — El Veth</span></div>
+        <p><strong>El Veth</strong> filtra hacia la superficie en fisuras volcánicas como un líquido negro luminoso. Las plantas que crecen cerca mutan. Los animales que lo beben cambian. Los humanos que lo tocan demasiado desarrollan marcas negras que eventualmente los vuelven algo más.</p>
+        <p><strong>Humanos Azurath</strong> — piel muy oscura, ojos ámbar casi universales (efecto generacional del Veth). 40 palabras distintas para tipos de pérdida.</p>
+        <p><strong>Vethari (Genasi de Fuego)</strong> — considerados la siguiente etapa de lo que el Veth hace a las personas.</p>
+        <p><strong>Serpientes Veth</strong> — negras con patrón ámbar. Su veneno no mata — transforma.</p>
+        <div class="secret-block">
+          <div class="secret-label">✦ Secreto del Narrador</div>
+          <p>El Veth es literalmente la esencia vital de Azuth consumiéndose. Si muere del todo, el Veth desaparece y con él toda la civilización de Azurath. La princesa Naraith lo sospecha y calla porque decirlo iniciaría el colapso social antes de encontrar alternativa.</p>
+        </div>
+      </div>
+    </div>
+
+    <div id="detail-veyrath" style="display:none;" class="deity-body open">
+      <div class="section">
+        <div class="section-header"><span class="section-icon">🌸</span><span class="section-title">VEYRATH — El Umbral</span></div>
+        <p><strong>Zonas de Eco</strong> — lugares donde el tejido entre el Plano Material y el Shadowfell es tan delgado que los ecos de personas muertas aparecen brevemente. No son fantasmas peligrosos — son imágenes repetidas de momentos.</p>
+        <p><strong>Yuan-Ti Purebloods</strong> — ciudadanos integrados en roles de mediación entre vivos y muertos.</p>
+        <p><strong>Hags</strong> — ciudadanas, mediadoras, juezas. Las que viven fuera de las ciudades rechazaron las reglas de la sociedad. Esas sí son peligrosas.</p>
+        <div class="secret-block">
+          <div class="secret-label">✦ Secreto del Narrador</div>
+          <p>Los ecos que la gente ve no son solo impresiones del pasado — son fragmentos de la consciencia de Lyssavar. Cuando alguien ve el eco de un ser querido, Lyssavar los ve a ellos. Lleva 800 años acumulando información sobre los vivos y todavía no ha decidido qué hacer con ella.</p>
+        </div>
+      </div>
+    </div>
+
+    <div id="detail-durrakh" style="display:none;" class="deity-body open">
+      <div class="section">
+        <div class="section-header"><span class="section-icon">🏜️</span><span class="section-title">DURRAKH — La Deuda</span></div>
+        <p><strong>Las Inscripciones</strong> — los cañones tienen kilómetros de texto en un idioma no descifrado. Los Durrakh creen que es la confesión de sus ancestros. Un académico de Drukkaz cree que las inscripciones cambian lentamente.</p>
+        <p><strong>Humanos Durrakh</strong> — piel rojiza terrosa, marcas rituales que cuentan su linaje. Directos porque creen que el tiempo es demasiado valioso para rodeos.</p>
+        <p><strong>Karrakh (Goliaths)</strong> — comparten la creencia de la deuda ancestral aunque su versión de la historia difiere.</p>
+        <div class="secret-block">
+          <div class="secret-label">✦ Secreto del Narrador</div>
+          <p>Las inscripciones SÍ cambian. No son una confesión — son instrucciones. Para qué, nadie lo sabe todavía. La alianza con Azurath se basa parcialmente en que Azurath tiene lingüistas que están más cerca de descifrarlas que nadie.</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ===== DIOSES ===== -->
+<div id="tab-dioses" class="tab-panel">
+  <div class="scroll">
+    <div class="dm-seal">⚠ DOCUMENTO RESTRINGIDO — SOLO NARRADOR ⚠</div>
+    <div class="page-title">Los Siete Fragmentos</div>
+    <div class="page-subtitle">La Verdad Detrás de los Dioses</div>
+    <div class="header-rule"><span></span><div class="header-diamond"></div><span></span></div>
+
+    <div class="lore-block">
+      Cuando el Quiebre partió la realidad, siete personas absorbieron un fragmento sin buscarlo. El poder no llegó limpio — llegó con forma, y esa forma completó a cada uno <strong>en una dirección que ya existía en ellos</strong>. Físicamente son humanos al límite de lo posible. No tienen alas ni halos — tienen <strong>presencia</strong>, y esa presencia aplasta sin que puedan apagarla.
+    </div>
+
+    <table class="scroll-table">
+      <thead>
+        <tr>
+          <th>#</th><th>Nombre</th><th>Fragmento</th><th>Estado</th><th>Secreto Clave</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>1</td><td><strong>Vethann</strong></td><td>El Tiempo</td><td>Vivo</td><td>No recuerda su nombre humano</td></tr>
+        <tr><td>2</td><td><strong>Sorra</strong></td><td>La Vida</td><td>Viva</td><td>200 años sin tocar a nadie</td></tr>
+        <tr><td>3</td><td><strong>Druukh</strong></td><td>La Piedra</td><td>Vivo</td><td>Oculto voluntariamente en Drukkaz</td></tr>
+        <tr><td>4</td><td><strong>Yssara</strong></td><td>La Memoria</td><td>Desconocido</td><td>Posiblemente atrapada en sobrecarga</td></tr>
+        <tr><td>5</td><td><strong>Vorrakh</strong></td><td>La Guerra</td><td>Desconocido</td><td>Su nombre aparece antes del Quiebre</td></tr>
+        <tr><td>6</td><td><strong>Azuth</strong></td><td>El Fuego Interior</td><td>Desconocido</td><td>El Veth es su esencia. Si se acaba, murió</td></tr>
+        <tr><td>7</td><td><strong>Lyssavar</strong></td><td>El Umbral</td><td>Desconocido</td><td>Posiblemente en Veyrath, observando</td></tr>
+      </tbody>
+    </table>
+
+    <!-- VETHANN -->
+    <div class="deity-card">
+      <div class="deity-header" onclick="toggleDeity(this)">
+        <span class="deity-icon">🕰️</span>
+        <div class="deity-info">
+          <div class="deity-name">VETHANN — El que Ve Todo a la Vez</div>
+          <div class="deity-epithet">La Iglesia del Instante Eterno · Tharessi</div>
+        </div>
+        <span class="deity-status status-vivo">VIVO</span>
+        <span class="deity-chevron">▼</span>
+      </div>
+      <div class="deity-body">
+        <p><strong>Forma física:</strong> Hombre de cuarenta años aparentes, cabello blanco sin ser anciano. Sus ojos apuntan levemente hacia arriba como si viera dos metros por encima de la realidad. Nunca termina una frase antes de que la empieces.</p>
+        <p><strong>Teología:</strong> Vethann existe fuera del tiempo lineal. Ve pasado y futuro como imagen estática. No interviene porque para él todo ya ocurrió, y la intervención divina, según vio hace 600 años, empeora invariablemente todo.</p>
+        <p><strong>Ritual — La Vigilia del Olvido Elegido:</strong> Tres días sin dormir narrando cada recuerdo en orden cronológico. Al tercer día el agua absorbe el recuerdo más valioso — el clérigo no elige cuál. Requiere entregar un objeto de alguien perdido.</p>
+        <p><strong>Poder otorgado:</strong> Visión de consecuencias a corto plazo con precisión casi perfecta. Con cada uso el rango temporal se extiende, pero consume años de vida.</p>
+        <div class="secret-block">
+          <div class="secret-label">✦ Secreto del Narrador</div>
+          <p>Vethann vio algo específico en el futuro hace 600 años que lo convenció de retirarse completamente. Ese algo todavía no ha ocurrido. Cuando ocurra, los jugadores lo van a notar porque será la primera vez que Vethann actúe en seis siglos.</p>
+        </div>
+        <p style="margin-top:0.8rem; font-size:13px; color:var(--gold);"><strong>Símbolo:</strong> Reloj de arena donde la arena sube y baja simultáneamente. &nbsp;|&nbsp; <strong>Colores:</strong> Dorado envejecido y gris ceniza.</p>
+      </div>
+    </div>
+
+    <!-- SORRA -->
+    <div class="deity-card">
+      <div class="deity-header" onclick="toggleDeity(this)">
+        <span class="deity-icon">🌱</span>
+        <div class="deity-info">
+          <div class="deity-name">SORRA — La que Da y Quita</div>
+          <div class="deity-epithet">El Culto de la Mano Abierta · Ysseval</div>
+        </div>
+        <span class="deity-status status-vivo">VIVA</span>
+        <span class="deity-chevron">▼</span>
+      </div>
+      <div class="deity-body">
+        <p><strong>Forma física:</strong> Mujer joven que irradia vitalidad tan intensa que las plantas crecen más rápido en su presencia y las heridas empiezan a cerrarse. El problema: los alimentos se descomponen en horas y los animales pequeños mueren si se acercan demasiado.</p>
+        <p><strong>Teología:</strong> Camina entre la gente disfrazada, sana a quien encuentra y desaparece. Sus clérigos la imitan: nunca se instalan más de un mes en un lugar. Los vínculos permanentes son cobrar lo que debe darse gratis.</p>
+        <p><strong>Ritual — El Intercambio de Carga:</strong> Requiere tres personas. El testigo entrega el objeto más significativo que posee y pierde diez años de vida — visibles inmediatamente. El receptor sana completamente. El clérigo queda incapaz de sentir alegría por un tiempo proporcional a la gravedad de lo curado.</p>
+        <div class="secret-block">
+          <div class="secret-label">✦ Secreto del Narrador</div>
+          <p>Hace 200 años Sorra sanó a alguien que no debía sobrevivir. Las consecuencias fueron catastróficas para decenas de personas. Desde entonces está escondida, paralizada por la culpa, incapaz de tocar a nadie. Ya no confía en su propio juicio sobre quién merece vivir.</p>
+        </div>
+        <p style="margin-top:0.8rem; font-size:13px; color:var(--gold);"><strong>Símbolo:</strong> Dos manos superpuestas — una abierta, una cerrada. &nbsp;|&nbsp; <strong>Colores:</strong> Verde hoja y blanco hueso.</p>
+      </div>
+    </div>
+
+    <!-- DRUUKH -->
+    <div class="deity-card">
+      <div class="deity-header" onclick="toggleDeity(this)">
+        <span class="deity-icon">⛰️</span>
+        <div class="deity-info">
+          <div class="deity-name">DRUUKH — El que Eligió Quedarse</div>
+          <div class="deity-epithet">La Fe del Peso Antiguo · Drukkaz</div>
+        </div>
+        <span class="deity-status status-vivo">VIVO</span>
+        <span class="deity-chevron">▼</span>
+      </div>
+      <div class="deity-body">
+        <p><strong>Forma física:</strong> Hombre imposiblemente denso — parece pesar el triple de lo que debería. Venas en patrones geométricos. Cuando camina, el suelo vibra casi imperceptiblemente, como si lo reconociera. Habla despacio porque no ve razón para apresurarse.</p>
+        <p><strong>Teología:</strong> No habita la montaña — eligió quedarse en Drukkaz hace 800 años y no ha salido desde. Sus seguidores creen que está en comunión perpetua con la tierra. La verdad es más simple: Druukh simplemente encontró un lugar donde estar.</p>
+        <p><strong>Ritual — La Deuda Grabada:</strong> El clérigo incrusta un objeto de metal o piedra en el altar con sus propias manos, sin herramientas. Druukh siempre cobra más de lo que el clérigo ofreció: una parte del cuerpo se vuelve paulatinamente pétrea. No duele. El Sumo Sacerdote actual tiene ambas manos, antebrazos y mandíbula mineralizados.</p>
+        <div class="secret-block">
+          <div class="secret-label">✦ Secreto del Narrador</div>
+          <p>Lo que se mueve en el Nivel Siete de Drukkaz es un fragmento de la conciencia de Druukh que se desprendió durante el Quiebre y desarrolló voluntad propia. Druukh lo sabe. No sabe cómo reabsorberlo sin destruir la montaña. Lleva 800 años esperando una solución que no llega.</p>
+        </div>
+        <p style="margin-top:0.8rem; font-size:13px; color:var(--gold);"><strong>Símbolo:</strong> Un ojo dentro de una montaña. &nbsp;|&nbsp; <strong>Colores:</strong> Negro caverna y dorado veta.</p>
+      </div>
+    </div>
+
+    <!-- YSSARA -->
+    <div class="deity-card">
+      <div class="deity-header" onclick="toggleDeity(this)">
+        <span class="deity-icon">🍂</span>
+        <div class="deity-info">
+          <div class="deity-name">YSSARA — La Memoria Sin Fondo</div>
+          <div class="deity-epithet">La Orden de las Hojas que Recuerdan · Ysseval</div>
+        </div>
+        <span class="deity-status status-desconocido">DESCONOCIDO</span>
+        <span class="deity-chevron">▼</span>
+      </div>
+      <div class="deity-body">
+        <p><strong>Forma física:</strong> Mujer cuya edad es imposible de determinar — su cara cambia sutilmente dependiendo del ángulo. Tiene cicatrices de heridas que nunca sufrió pero absorbió de otros. Sus pupilas a veces reflejan escenas que no están frente a ella.</p>
+        <p><strong>Teología:</strong> Absorbió durante el Quiebre cada memoria de cada ser vivo en ese momento. Los árboles de Ysseval son su sistema de archivo externo.</p>
+        <p><strong>Ritual — La Cesión Profunda:</strong> El clérigo narra sin interrupción el recuerdo más doloroso de su vida completa. Lo pierde para siempre — incluyendo todo lo que ese evento le enseñó. A cambio accede durante una hora a la memoria completa de cualquier ser que haya muerto en 5km en los últimos 100 años.</p>
+        <div class="secret-block">
+          <div class="secret-label">✦ Secreto del Narrador</div>
+          <p>Yssara está en colapso cognitivo desde hace 400 años. Tiene demasiada memoria acumulada y su capacidad de transferencia a los árboles está saturada. Los árboles mueren porque ya no puede transferirles nada. No está muerta — está ahogada en 800 años de humanidad y no puede salir.</p>
+        </div>
+        <p style="margin-top:0.8rem; font-size:13px; color:var(--gold);"><strong>Símbolo:</strong> Una hoja con venas que forman un rostro. &nbsp;|&nbsp; <strong>Colores:</strong> Verde oscuro y plateado.</p>
+      </div>
+    </div>
+
+    <!-- VORRAKH -->
+    <div class="deity-card">
+      <div class="deity-header" onclick="toggleDeity(this)">
+        <span class="deity-icon">⚔️</span>
+        <div class="deity-info">
+          <div class="deity-name">VORRAKH — La Guerra Sin Fin</div>
+          <div class="deity-epithet">La Hermandad de la Llama Gris · Vokrath</div>
+        </div>
+        <span class="deity-status status-desconocido">DESCONOCIDO</span>
+        <span class="deity-chevron">▼</span>
+      </div>
+      <div class="deity-body">
+        <p><strong>Forma física:</strong> Hombre que parece estar siempre a punto de moverse aunque esté quieto. Cada músculo en tensión mínima permanente. Sus ojos evalúan constantemente — no con hostilidad, sino con la costumbre absoluta de alguien que ha pasado su existencia midiendo amenazas.</p>
+        <p><strong>Teología:</strong> No glorifica la violencia — glorifica el conflicto como estado de ser. La tensión entre opuestos genera movimiento, y el movimiento es vida. La paz perfecta es muerte perfecta.</p>
+        <p><strong>Ritual — El Juicio de la Herida Verdadera:</strong> El clérigo debe presentarse con una herida real y reciente. Destruye frente al altar el objeto de mayor valor que posee — irreversiblemente. Narra el combate con honestidad total. La herida no sana nunca. Los clérigos de alto rango tienen prohibición absoluta de recibir curación mágica.</p>
+        <div class="secret-block">
+          <div class="secret-label">✦ Secreto del Narrador</div>
+          <p>El nombre de Vorrakh aparece en registros de Drukkaz anteriores al Quiebre del Eje. Imposible si era humano. O los registros están mal fechados, o Vorrakh no era completamente humano antes de absorber el fragmento. El Dragon Turtle del Mar del Quiebre también se llama Vorrakh. Nadie ha investigado seriamente la conexión.</p>
+        </div>
+        <p style="margin-top:0.8rem; font-size:13px; color:var(--gold);"><strong>Símbolo:</strong> Una espada partida que sigue siendo blandida. &nbsp;|&nbsp; <strong>Colores:</strong> Rojo sangre y plata desgastada.</p>
+      </div>
+    </div>
+
+    <!-- AZUTH -->
+    <div class="deity-card">
+      <div class="deity-header" onclick="toggleDeity(this)">
+        <span class="deity-icon">🔥</span>
+        <div class="deity-info">
+          <div class="deity-name">AZUTH — El Fuego que Sangra la Tierra</div>
+          <div class="deity-epithet">La Iglesia del Veth Eterno · Azurath</div>
+        </div>
+        <span class="deity-status status-desconocido">DESCONOCIDO</span>
+        <span class="deity-chevron">▼</span>
+      </div>
+      <div class="deity-body">
+        <p><strong>Forma física:</strong> Hombre cuya temperatura corporal es perceptiblemente más alta que cualquier humano normal. Ojos completamente ámbar, sin blanco visible. Cuando respira, el aire que exhala es ligeramente luminoso en la oscuridad.</p>
+        <p><strong>Teología:</strong> El Veth no es un recurso — es la esencia de Azuth filtrándose desde su existencia hacia arriba. La transformación que produce no es daño sino ascensión.</p>
+        <p><strong>Ritual — La Marca de la Renuncia:</strong> El clérigo fabrica con sus manos un objeto para alguien que ama, lo entrega al altar sin que esa persona sepa que existió. Luego Veth puro se vierte sobre su brazo durante horas de dolor extremo. La marca resultante cambia de forma respondiendo a sus acciones. Los clérigos de alto rango son siempre visibles en la oscuridad.</p>
+        <div class="secret-block">
+          <div class="secret-label">✦ Secreto del Narrador</div>
+          <p>Azuth probablemente está en agonía o muerto. El Veth siendo finito y agotable indica que lo que filtra es literalmente su esencia vital consumiéndose. Si muere del todo, el Veth desaparece y con él toda la civilización de Azurath. La princesa Naraith lo sospecha y calla porque decirlo iniciaría el colapso social antes de encontrar alternativa.</p>
+        </div>
+        <p style="margin-top:0.8rem; font-size:13px; color:var(--gold);"><strong>Símbolo:</strong> Una gota negra con llama ámbar en su interior. &nbsp;|&nbsp; <strong>Colores:</strong> Negro volcánico y ámbar.</p>
+      </div>
+    </div>
+
+    <!-- LYSSAVAR -->
+    <div class="deity-card">
+      <div class="deity-header" onclick="toggleDeity(this)">
+        <span class="deity-icon">🌒</span>
+        <div class="deity-info">
+          <div class="deity-name">LYSSAVAR — El que Existe en Dos Lados</div>
+          <div class="deity-epithet">La Iglesia del Umbral · Veyrath</div>
+        </div>
+        <span class="deity-status status-desconocido">DESCONOCIDO</span>
+        <span class="deity-chevron">▼</span>
+      </div>
+      <div class="deity-body">
+        <p><strong>Forma física:</strong> Un hombre completamente normal excepto por una cosa: su sombra no coincide con su cuerpo. Nunca. La sombra apunta en la dirección equivocada, tiene postura diferente, o simplemente no está donde debería. Él no puede verla. Nadie se lo ha dicho.</p>
+        <p><strong>Teología:</strong> El Quiebre lo partió y nunca pudo reunificarse del todo. No es un dios de la muerte sino del umbral, del espacio entre.</p>
+        <p><strong>Ritual — La Vigilia de Dos Velas:</strong> Una noche completa en zona de eco con dos velas — una blanca encendida, una negra apagada. La blanca se apaga sola, la negra se enciende sola. El clérigo entrega el objeto más irreemplazable que posee. Algo en el Shadowfell aprende su nombre verdadero, sus miedos, sus secretos. Ese algo no actúa inmediatamente. Pero sabe.</p>
+        <div class="secret-block">
+          <div class="secret-label">✦ Secreto del Narrador</div>
+          <p>Los ecos que la gente ve en Veyrath son fragmentos de la consciencia de Lyssavar que usa para observar a sus seguidores. Cuando alguien ve el eco de un ser querido, Lyssavar los ve a ellos. Lleva 800 años acumulando información sobre los vivos y todavía no ha decidido qué hacer con ella.</p>
+        </div>
+        <p style="margin-top:0.8rem; font-size:13px; color:var(--gold);"><strong>Símbolo:</strong> Dos medias lunas espalda contra espalda — una llena, una vacía. &nbsp;|&nbsp; <strong>Colores:</strong> Verde pantano y blanco eco.</p>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ===== REALEZA ===== -->
+<div id="tab-realeza" class="tab-panel">
+  <div class="scroll">
+    <div class="dm-seal">⚠ DOCUMENTO RESTRINGIDO — SOLO NARRADOR ⚠</div>
+    <div class="page-title">La Realeza</div>
+    <div class="page-subtitle">Reyes, Príncipes y Las Dos Bodas</div>
+    <div class="header-rule"><span></span><div class="header-diamond"></div><span></span></div>
+
+    <div class="section-divider">
+      <div class="section-divider-line"></div>
+      <span class="section-divider-label">Continente Oeste — Valdrek</span>
+      <div class="section-divider-line"></div>
+    </div>
+
+    <div class="royals-grid">
+      <div class="royal-card">
+        <div class="kingdom-card-icon">🌊</div>
+        <div class="royal-name">Rey Aldrath Veysin</div>
+        <div class="royal-title">Almirante-Rey de Tharessi</div>
+        <p>El título de rey es relativamente nuevo. Muchos consideran ilegítimo a quien no sea almirante. Aldrath ganó la corona en el mar.</p>
+        <p><strong>Hija:</strong> Seraveth — prometida a Imrath de Drukkaz. Diplomática brillante que no confía en que el matrimonio vaya a funcionar.</p>
+      </div>
+      <div class="royal-card">
+        <div class="kingdom-card-icon">⛰️</div>
+        <div class="royal-name">Rey Durrath Stonevein</div>
+        <div class="royal-title">Rey de las Profundidades, Drukkaz</div>
+        <p>Viejo. Muy viejo. Ha gobernado cuarenta años y cada año pesa más. La cultura de deuda le ha cobrado todo.</p>
+        <p><strong>Hijo:</strong> Imrath — prometido a Seraveth. Bajó al Nivel Siete hace dos años. Regresó. Algo en él cambió y nadie sabe exactamente qué.</p>
+        <div class="secret-block" style="margin-top:0.8rem;">
+          <div class="secret-label">✦ Secreto</div>
+          <p style="font-size:13px;">Imrath vio el fragmento de Druukh en el Nivel Siete. No lo tocó. Pero el fragmento lo reconoció.</p>
+        </div>
+      </div>
+      <div class="royal-card">
+        <div class="kingdom-card-icon">🌿</div>
+        <div class="royal-name">Reina Lysse Evandri</div>
+        <div class="royal-title">La Reina Sin Trono, Ysseval</div>
+        <p>En Ysseval el liderazgo se gana por longevidad y sabiduría, no herencia. Lysse tiene 340 años y lleva 120 gobernando.</p>
+        <p><strong>Problema:</strong> Lleva 120 años viendo el bosque encogerse. Está desesperada de una forma muy tranquila y muy peligrosa.</p>
+      </div>
+    </div>
+
+    <div class="section-divider">
+      <div class="section-divider-line"></div>
+      <span class="section-divider-label">Continente Este — Draeven</span>
+      <div class="section-divider-line"></div>
+    </div>
+
+    <div class="royals-grid">
+      <div class="royal-card">
+        <div class="kingdom-card-icon">⚔️</div>
+        <div class="royal-name">Emperador Korroth Ashvaine</div>
+        <div class="royal-title">Comandante Supremo de Vokrath</div>
+        <p>No se llama rey — se llama Comandante. Lleva 30 años en guerra y genuinamente no sabe hacer otra cosa.</p>
+        <p><strong>Hijo:</strong> Korrakh — el prometido de Naraith de Azurath. Más inteligente que su padre. Más peligroso por eso.</p>
+      </div>
+      <div class="royal-card">
+        <div class="kingdom-card-icon">🌑</div>
+        <div class="royal-name">Rey Azathar el Viejo</div>
+        <div class="royal-title">Guardián del Veth, Azurath</div>
+        <p>Está muriendo. No del Veth — de vejez. Su hija Naraith lleva cinco años tomando decisiones de facto.</p>
+        <p><strong>Hija:</strong> Naraith — la más peligrosa de toda la realeza. Sabe que el Veth se acaba y está dispuesta a hacer cualquier cosa para salvar a su pueblo.</p>
+        <div class="secret-block" style="margin-top:0.8rem;">
+          <div class="secret-label">✦ Secreto</div>
+          <p style="font-size:13px;">Naraith ya contactó a Durrakh y les ofreció información sobre las inscripciones a cambio de tierras para su pueblo cuando Azurath colapse. Korrakh de Vokrath es el sello político. Ella lo usa.</p>
+        </div>
+      </div>
+      <div class="royal-card">
+        <div class="kingdom-card-icon">🌸</div>
+        <div class="royal-name">Mediadora Sothavel</div>
+        <div class="royal-title">Primera Voz de Veyrath</div>
+        <p>No es reina — es mediadora entre los vivos y la estructura de gobierno. Anciana, ciega de un ojo, tranquila de una forma que incomoda.</p>
+      </div>
+      <div class="royal-card">
+        <div class="kingdom-card-icon">🏜️</div>
+        <div class="royal-name">Sumo Deudor Kraath</div>
+        <div class="royal-title">Portador de la Deuda, Durrakh</div>
+        <p>El título significa que carga con la deuda de todos. Literalmente — tiene marcas rituales que cubren el 70% de su cuerpo contando la deuda ancestral.</p>
+        <p><strong>Motivación real:</strong> Cree que las inscripciones de los cañones son instrucciones para prevenir el siguiente Quiebre. Necesita a Azurath para descifrarlas.</p>
+      </div>
+    </div>
+
+    <div class="section-divider">
+      <div class="section-divider-line"></div>
+      <span class="section-divider-label">Las Dos Bodas — Política y Secretos</span>
+      <div class="section-divider-line"></div>
+    </div>
+
+    <div class="boda-card">
+      <div class="boda-title">🌊 ⛰️ Boda I — Seraveth (Tharessi) + Imrath (Drukkaz)</div>
+      <p><strong>Razones públicas:</strong> Alianza entre el reino de las rutas marítimas y el reino de las profundidades.</p>
+      <p><strong>Razones reales:</strong> Tharessi necesita aliados terrestres porque Vokrath les está ganando la guerra naval lentamente. Drukkaz quiere acceso al cristal de tormenta para sus propios barcos.</p>
+      <div class="secret-block" style="margin-top:0.8rem;">
+        <div class="secret-label">✦ Secreto del Narrador</div>
+        <p>Imrath bajó al Nivel Siete hace dos años y regresó cambiado. Seraveth lo sabe — lo conoció antes y nota la diferencia. Nadie más en la diplomacia lo sabe. El fragmento de Druukh en el Nivel Siete lo reconoció. Imrath tiene acceso a información que no debería tener sobre las profundidades, y ocasionalmente dice cosas que no puede saber.</p>
+      </div>
+    </div>
+
+    <div class="boda-card">
+      <div class="boda-title">🌑 🏜️ Boda II — Naraith (Azurath) + Korrakh (Vokrath)</div>
+      <p><strong>Razones públicas:</strong> Fin del aislamiento de Azurath. Alianza estratégica con la potencia militar más grande de Draeven.</p>
+      <p><strong>Razones reales:</strong> Naraith necesita tierras para refugiar a su pueblo cuando Azurath colapse. Durrakh cree que Azurath tiene información sobre el Quiebre del Eje que necesitan para las inscripciones.</p>
+      <div class="secret-block" style="margin-top:0.8rem;">
+        <div class="secret-label">✦ Secreto del Narrador</div>
+        <p>Esta boda es el sello de una conspiración de tres reinos — Azurath, Durrakh y Vokrath — que los demás reinos todavía no detectaron. Naraith usa a Korrakh. Durrakh usa a Naraith. Vokrath cree que los usa a todos pero es el que menos información tiene de los tres.</p>
+      </div>
+    </div>
+
+    <div class="dm-note">
+      <strong>Nota para la sesión cero / primera sesión:</strong> Las dos bodas pueden ocurrir simultáneamente o en arcos separados. La Boda I es la más inmediata como gancho narrativo — Imrath cambiado es visible y perturbador. La Boda II es la bomba de tiempo político que explota más tarde.
+    </div>
+  </div>
+</div>
+
+<!-- ===== SECRETOS ===== -->
+<div id="tab-secretos" class="tab-panel">
+  <div class="scroll">
+    <div class="dm-seal">⚠ MÁXIMA CONFIDENCIALIDAD — NARRADOR ÚNICAMENTE ⚠</div>
+    <div class="page-title">Los Secretos</div>
+    <div class="page-subtitle">Verdades que los Jugadores No Deben Saber</div>
+    <div class="header-rule"><span></span><div class="header-diamond"></div><span></span></div>
+
+    <div class="section">
+      <div class="section-header">
+        <span class="section-icon">💀</span>
+        <span class="section-title">CÓMO MATAR A UN DIOS</span>
+        <span class="section-line"></span>
+      </div>
+      <div class="secret-block">
+        <div class="secret-label">✦ El Único Método Conocido</div>
+        <p>Llevar físicamente a uno de los Siete a las <strong>Islas del Eje</strong> revierte el proceso. El fragmento se separa del cuerpo. El humano que queda debajo muere en segundos — su biología lleva 800 años siendo sostenida por el fragmento. Nadie sabe esto excepto los tres Siete que siguen vivos, y ninguno de los tres lo dice voluntariamente.</p>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-header">
+        <span class="section-icon">🔴</span>
+        <span class="section-title">SECRETOS POR CATEGORÍA</span>
+        <span class="section-line"></span>
+      </div>
+
+      <table class="scroll-table">
+        <thead>
+          <tr><th>Categoría</th><th>La Verdad Oculta</th><th>Cuándo Revelar</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Vethann</strong></td>
+            <td>Vio algo específico hace 600 años que todavía no ocurre. Cuando ocurra será la primera vez que actúe en seis siglos.</td>
+            <td>Clímax de campaña</td>
+          </tr>
+          <tr>
+            <td><strong>Sorra</strong></td>
+            <td>Sanó a alguien que no debía sobrevivir hace 200 años. Paralizada por la culpa. No confía en su propio juicio.</td>
+            <td>Arco medio</td>
+          </tr>
+          <tr>
+            <td><strong>Druukh / Nivel 7</strong></td>
+            <td>Lo que se mueve es un fragmento de conciencia de Druukh con voluntad propia. Druukh no puede reabsorberlo sin destruir la montaña.</td>
+            <td>Exploración de Drukkaz</td>
+          </tr>
+          <tr>
+            <td><strong>Yssara</strong></td>
+            <td>Colapso cognitivo desde hace 400 años. Los árboles mueren porque el canal de transferencia está saturado. No está muerta — ahogada.</td>
+            <td>Arco Ysseval</td>
+          </tr>
+          <tr>
+            <td><strong>Azuth / Veth</strong></td>
+            <td>El Veth es su esencia vital consumiéndose. Probablemente en agonía o muerto. Naraith lo sabe y calla.</td>
+            <td>Arco Azurath</td>
+          </tr>
+          <tr>
+            <td><strong>Lyssavar</strong></td>
+            <td>Los ecos de Veyrath son fragmentos de su consciencia. Lleva 800 años observando a los vivos y acumulando información.</td>
+            <td>Arco Veyrath</td>
+          </tr>
+          <tr>
+            <td><strong>Vorrakh</strong></td>
+            <td>Su nombre aparece en registros anteriores al Quiebre. El Dragon Turtle del mar también se llama Vorrakh. Posiblemente no era humano.</td>
+            <td>Investigación avanzada</td>
+          </tr>
+          <tr>
+            <td><strong>Imrath</strong></td>
+            <td>El fragmento de Druukh en el Nivel Siete lo reconoció. Tiene acceso a información que no debería tener.</td>
+            <td>Boda I / Drukkaz</td>
+          </tr>
+          <tr>
+            <td><strong>Naraith</strong></td>
+            <td>Conspiración triple Azurath-Durrakh-Vokrath. Usa a Korrakh como herramienta política. El colapso de Azurath es inminente.</td>
+            <td>Boda II / Arco político</td>
+          </tr>
+          <tr>
+            <td><strong>Inscripciones Durrakh</strong></td>
+            <td>SÍ cambian. No son confesión — son instrucciones. Para qué, nadie lo sabe.</td>
+            <td>Investigación profunda</td>
+          </tr>
+          <tr>
+            <td><strong>Los Arkai</strong></td>
+            <td>Se mezclaron con algo que los Aboleth reconocen. Los Aboleth los tratan diferente — no con hostilidad sino con reconocimiento.</td>
+            <td>Mar / Tharessi</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="section">
+      <div class="section-header">
+        <span class="section-icon">🗓</span>
+        <span class="section-title">ESTRUCTURA DE REVELACIÓN SUGERIDA</span>
+        <span class="section-line"></span>
+      </div>
+      <p><strong>Sesiones 1-5 (Presentación):</strong> Los jugadores conocen el mundo desde la perspectiva de ciudadanos comunes. Las religiones son reales y funcionan. Los dioses son figuras veneradas pero distantes. Las bodas son noticias políticas.</p>
+      <p><strong>Sesiones 6-15 (Grietas):</strong> Algo en Drukkaz se mueve. Los árboles de Ysseval mueren más rápido que antes. El Veth en Azurath tiene zonas secas. Imrath dice cosas que no puede saber. Las grietas son visibles para quienes miran.</p>
+      <p><strong>Sesiones 16-25 (Verdad):</strong> Los jugadores empiezan a entender que los dioses no son lo que dicen ser. Que la conspiración política es más grande de lo que parecía. Que las Islas del Eje son el centro de todo.</p>
+      <p><strong>Clímax:</strong> Vethann actúa por primera vez en 600 años. Lo que vio finalmente ocurre.</p>
+    </div>
+  </div>
+</div>
+
+</main>
+
+<script>
+function showTab(name) {
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('tab-' + name).classList.add('active');
+  const tabs = document.querySelectorAll('.nav-tab');
+  const names = ['inicio','mundo','dioses','realeza','secretos'];
+  tabs[names.indexOf(name)].classList.add('active');
+  window.scrollTo(0,0);
+}
+
+function toggleDeity(header) {
+  const body = header.nextElementSibling;
+  const isOpen = body.classList.contains('open');
+  body.classList.toggle('open', !isOpen);
+  header.classList.toggle('open', !isOpen);
+}
+
+function toggleKingdom(id) {
+  const el = document.getElementById('detail-' + id);
+  if (!el) return;
+  el.style.display = el.style.display === 'none' ? 'block' : 'none';
+}
+</script>
+</body>
+</html>
