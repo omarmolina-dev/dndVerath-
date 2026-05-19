@@ -4,646 +4,534 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>VERATH — Guía del Viajero</title>
-<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Cinzel:wght@400;600&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Cinzel:wght@400;600;700&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet"/>
 <style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --ink:#1a1208;--ink-l:#3a2a18;--ink-f:#5a4a38;
+  --parch:#f5ecd7;--parch-d:#e8d9b8;--parch-dk:#d4c090;
+  --gold:#8a6a20;--gold-l:#b89040;--gold-b:#c9a84c;
+  --red:#7a1a1a;--teal:#1a5a5a;
+}
+html{scroll-behavior:smooth}
+body{
+  background:#1e140a;
+  background-image:radial-gradient(ellipse at 15% 15%,#2e1e0e 0%,transparent 55%),radial-gradient(ellipse at 85% 85%,#0e0a06 0%,transparent 55%);
+  min-height:100vh;font-family:'Crimson Pro',Georgia,serif;color:var(--ink);
+}
 
-  :root {
-    --ink: #1a1208;
-    --ink-light: #3a2a18;
-    --parchment: #f5ecd7;
-    --parchment-dark: #e8d9b8;
-    --parchment-darker: #d4c090;
-    --gold: #8a6a20;
-    --gold-light: #b89040;
-    --red-seal: #7a1a1a;
-    --teal-accent: #1a5a5a;
-    --shadow: rgba(26,18,8,0.18);
-  }
+/* NAV */
+.nav{
+  position:sticky;top:0;z-index:100;
+  background:rgba(18,10,4,0.97);border-bottom:1px solid var(--gold-b);
+  padding:.55rem 2rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;
+  backdrop-filter:blur(6px);
+}
+.nav-brand{font-family:'Cinzel Decorative',serif;font-size:17px;color:var(--gold-b);letter-spacing:.1em;text-decoration:none}
+.nav-links{display:flex;gap:.1rem;flex-wrap:wrap;justify-content:flex-end}
+.nav-a{
+  font-family:'Cinzel',serif;font-size:10px;letter-spacing:.12em;color:var(--parch-dk);
+  text-decoration:none;padding:5px 11px;border:.5px solid transparent;transition:all .2s;text-transform:uppercase;
+}
+.nav-a:hover,.nav-a.on{color:var(--gold-b);border-color:rgba(201,168,76,.4);background:rgba(201,168,76,.06)}
 
-  body {
-    background: #2a1f10;
-    background-image:
-      radial-gradient(ellipse at 20% 20%, #3a2a15 0%, transparent 60%),
-      radial-gradient(ellipse at 80% 80%, #1a1208 0%, transparent 60%);
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    padding: 3rem 1.5rem;
-    font-family: 'Crimson Pro', Georgia, serif;
-  }
+/* HERO */
+.hero{
+  background:var(--parch);
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='.035'/%3E%3C/svg%3E"),linear-gradient(160deg,#faf3e2 0%,#f5ecd7 45%,#ede0c0 100%);
+  padding:3.5rem 4rem 2.5rem;text-align:center;position:relative;border-bottom:2px solid var(--parch-dk);
+}
+.hero::before{content:'';position:absolute;inset:14px;border:1px solid var(--parch-dk);pointer-events:none;z-index:1}
+.hero::after{content:'';position:absolute;inset:18px;border:.5px solid rgba(138,106,32,.22);pointer-events:none;z-index:1}
+.h-orn{color:var(--gold);letter-spacing:.35em;font-size:16px;opacity:.7;margin-bottom:.4rem}
+.h-title{font-family:'Cinzel Decorative',serif;font-size:clamp(36px,7vw,60px);font-weight:700;color:var(--ink);letter-spacing:.12em;line-height:1;margin-bottom:.3rem}
+.h-sub{font-family:'Cinzel',serif;font-size:13px;color:var(--gold);letter-spacing:.25em;text-transform:uppercase;margin-bottom:1.1rem}
+.h-rule{display:flex;align-items:center;gap:10px;justify-content:center;margin:.7rem auto}
+.h-rule span{height:1px;width:90px;background:linear-gradient(to right,transparent,var(--gold))}
+.h-rule span.r{background:linear-gradient(to left,transparent,var(--gold))}
+.h-diamond{width:7px;height:7px;background:var(--gold);transform:rotate(45deg)}
 
-  .document {
-    background: var(--parchment);
-    max-width: 780px;
-    width: 100%;
-    padding: 4rem 4.5rem;
-    position: relative;
-    box-shadow:
-      0 0 0 1px var(--parchment-darker),
-      0 0 0 3px #2a1f10,
-      0 4px 40px rgba(0,0,0,0.6),
-      inset 0 0 80px rgba(180,140,60,0.08);
-    background-image:
-      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E"),
-      linear-gradient(160deg, #faf2df 0%, #f5ecd7 40%, #ede0c0 100%);
-  }
+/* CONTENIDO */
+.page{background:var(--parch);background-image:linear-gradient(160deg,#faf3e2 0%,#f5ecd7 45%,#ede0c0 100%);padding:0 4rem 4rem;position:relative}
+.page::before{content:'';position:absolute;left:14px;right:14px;bottom:14px;top:0;border-left:1px solid var(--parch-dk);border-right:1px solid var(--parch-dk);border-bottom:1px solid var(--parch-dk);pointer-events:none;z-index:1}
 
-  /* Bordes decorativos de pergamino */
-  .document::before {
-    content: '';
-    position: absolute;
-    inset: 18px;
-    border: 1px solid var(--parchment-darker);
-    pointer-events: none;
-  }
+/* TABS */
+.tab-nav{display:flex;gap:0;border-bottom:1px solid var(--parch-dk);margin-bottom:2rem;flex-wrap:wrap;padding-top:2rem}
+.tab-btn{
+  font-family:'Cinzel',serif;font-size:11px;letter-spacing:.1em;padding:9px 18px;
+  background:none;border:none;border-bottom:2px solid transparent;color:var(--ink-f);
+  cursor:pointer;transition:all .2s;text-transform:uppercase;
+}
+.tab-btn:hover{color:var(--ink)}
+.tab-btn.on{color:var(--gold);border-bottom-color:var(--gold)}
+.tab-pane{display:none}.tab-pane.on{display:block}
 
-  .document::after {
-    content: '';
-    position: absolute;
-    inset: 22px;
-    border: 0.5px solid rgba(138,106,32,0.3);
-    pointer-events: none;
-  }
+/* SECCIONES */
+.sec{margin-bottom:2.5rem}
+.sec-hdr{display:flex;align-items:center;gap:10px;margin-bottom:1.1rem}
+.sec-num{font-family:'Cinzel',serif;font-size:11px;color:var(--gold);letter-spacing:.15em}
+.sec-title{font-family:'Cinzel',serif;font-size:17px;font-weight:600;color:var(--ink);letter-spacing:.08em}
+.sec-line{flex:1;height:.5px;background:var(--parch-dk)}
 
-  /* ENCABEZADO */
-  .header {
-    text-align: center;
-    padding-bottom: 2.5rem;
-    margin-bottom: 2.5rem;
-    border-bottom: 1px solid var(--parchment-darker);
-    position: relative;
-  }
+p.body{font-size:16px;line-height:1.82;color:var(--ink-l);margin-bottom:.85rem}
+p.body strong{color:var(--ink);font-weight:600}
 
-  .header-ornament {
-    color: var(--gold);
-    font-size: 22px;
-    letter-spacing: 0.3em;
-    margin-bottom: 0.5rem;
-    opacity: 0.7;
-  }
+.lore{
+  background:rgba(138,106,32,.06);border-left:3px solid var(--gold);
+  border-top:.5px solid var(--parch-dk);border-bottom:.5px solid var(--parch-dk);border-right:.5px solid var(--parch-dk);
+  padding:1.1rem 1.4rem;margin:1rem 0;font-size:16px;line-height:1.8;color:var(--ink-l);font-style:italic;
+}
+.lore strong{font-style:normal;color:var(--ink);font-weight:600}
 
-  .main-title {
-    font-family: 'Cinzel Decorative', serif;
-    font-size: 48px;
-    font-weight: 700;
-    color: var(--ink);
-    letter-spacing: 0.12em;
-    line-height: 1;
-    margin-bottom: 0.4rem;
-    text-shadow: 1px 1px 0 rgba(138,106,32,0.2);
-  }
+.warn{
+  background:rgba(122,26,26,.05);border-left:3px solid var(--red);
+  border-top:.5px solid rgba(122,26,26,.2);border-bottom:.5px solid rgba(122,26,26,.2);border-right:.5px solid rgba(122,26,26,.2);
+  padding:1rem 1.3rem;margin:1rem 0;
+}
+.warn-lbl{font-family:'Cinzel',serif;font-size:10px;letter-spacing:.15em;color:var(--red);margin-bottom:5px}
+.warn p{font-size:15px;line-height:1.7;color:var(--ink-l)}
 
-  .subtitle {
-    font-family: 'Cinzel', serif;
-    font-size: 13px;
-    color: var(--gold);
-    letter-spacing: 0.25em;
-    text-transform: uppercase;
-    margin-bottom: 1.2rem;
-  }
+/* REINOS GRID */
+.k-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1rem;margin:1rem 0}
+.k-card{border:.5px solid var(--parch-dk);overflow:hidden;background:rgba(255,255,255,.15)}
+.k-banner{padding:1.1rem 1.2rem .8rem}
+.k-name{font-family:'Cinzel',serif;font-size:15px;font-weight:600;letter-spacing:.07em;margin-bottom:3px}
+.k-tag{font-size:13px;font-style:italic;opacity:.7;margin-bottom:7px}
+.k-body{padding:0 1.2rem 1.1rem}
+.k-body p{font-size:13.5px;line-height:1.65;color:var(--ink-l)}
+.k-races{font-size:12px;color:var(--gold);margin-top:6px;font-style:italic}
+.dots{display:flex;gap:5px;margin-bottom:3px}
+.dot{width:12px;height:12px;border-radius:50%;border:.5px solid rgba(0,0,0,.12)}
+.dot-lbl{font-family:'Cinzel',serif;font-size:9px;color:var(--ink-f);letter-spacing:.08em}
 
-  .header-rule {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    justify-content: center;
-    margin-top: 1rem;
-  }
+/* TABLA RAZAS */
+.rtable{width:100%;border-collapse:collapse;font-size:14px;margin:.8rem 0}
+.rtable th{font-family:'Cinzel',serif;font-size:10px;letter-spacing:.1em;color:var(--gold);padding:6px 10px;border-bottom:1px solid var(--parch-dk);text-align:left;font-weight:400}
+.rtable td{padding:7px 10px;color:var(--ink-l);border-bottom:.5px solid rgba(212,192,144,.4);vertical-align:top;line-height:1.5}
+.rtable td:first-child{font-weight:600;color:var(--ink);white-space:nowrap}
+.rtable tr:last-child td{border-bottom:none}
+.badge{display:inline-block;font-family:'Cinzel',serif;font-size:9px;letter-spacing:.08em;padding:2px 7px;border:.5px solid var(--gold);color:var(--gold);border-radius:20px;vertical-align:middle;margin-left:5px}
 
-  .header-rule span {
-    height: 1px;
-    width: 80px;
-    background: linear-gradient(to right, transparent, var(--gold));
-  }
+/* RELIGIONES */
+.rel-card{border:.5px solid var(--parch-dk);margin-bottom:1.2rem;overflow:hidden}
+.rel-banner{padding:1rem 1.2rem;border-bottom:.5px solid var(--parch-dk)}
+.rel-name{font-family:'Cinzel',serif;font-size:14px;font-weight:600;color:var(--ink);letter-spacing:.07em;margin-bottom:2px}
+.rel-god{font-size:13px;color:var(--gold);font-style:italic;margin-bottom:6px}
+.rel-body{padding:.9rem 1.2rem}
+.rel-body p{font-size:14px;line-height:1.65;color:var(--ink-l);margin-bottom:.5rem}
+.cost-tag{
+  display:inline-block;font-size:12px;padding:3px 10px;
+  background:rgba(122,26,26,.07);border:.5px solid rgba(122,26,26,.3);
+  color:var(--red);border-radius:3px;margin-top:4px;
+}
 
-  .header-rule span:last-child {
-    background: linear-gradient(to left, transparent, var(--gold));
-  }
+/* BATHRAK */
+.bath-card{
+  border:.5px solid rgba(26,122,90,.4);
+  background:rgba(10,40,30,.03);
+  margin-bottom:1.2rem;overflow:hidden;
+}
+.bath-banner{background:rgba(10,50,35,.08);padding:1.1rem 1.2rem;border-bottom:.5px solid rgba(26,122,90,.3)}
+.bath-title{font-family:'Cinzel',serif;font-size:16px;font-weight:600;color:#1a5a3a;letter-spacing:.08em;margin-bottom:3px}
+.bath-sub{font-size:13px;color:#2a7a4a;font-style:italic}
+.bath-body{padding:1rem 1.2rem}
+.bath-body p{font-size:14.5px;line-height:1.72;color:var(--ink-l);margin-bottom:.7rem}
+.trait-row{padding:.7rem 0;border-bottom:.5px solid rgba(212,192,144,.4)}
+.trait-row:last-child{border-bottom:none}
+.trait-name{font-family:'Cinzel',serif;font-size:11px;letter-spacing:.1em;color:#1a5a3a;margin-bottom:3px}
+.trait-desc{font-size:13.5px;color:var(--ink-l);line-height:1.6}
 
-  .header-diamond {
-    width: 8px;
-    height: 8px;
-    background: var(--gold);
-    transform: rotate(45deg);
-  }
+/* MISTERIOS */
+.myst-list{list-style:none;margin:.8rem 0}
+.myst-list li{padding:9px 0 9px 18px;border-bottom:.5px solid rgba(212,192,144,.4);font-size:15px;line-height:1.65;color:var(--ink-l);position:relative}
+.myst-list li::before{content:'◆';position:absolute;left:0;color:var(--gold);font-size:8px;top:13px}
+.myst-list li:last-child{border-bottom:none}
+.myst-list strong{color:var(--ink);font-weight:600}
 
-  /* INTRO */
-  .intro-block {
-    background: rgba(138,106,32,0.06);
-    border: 0.5px solid var(--parchment-darker);
-    border-left: 3px solid var(--gold);
-    padding: 1.2rem 1.5rem;
-    margin-bottom: 2.5rem;
-    font-size: 17px;
-    line-height: 1.75;
-    color: var(--ink-light);
-    font-style: italic;
-  }
+/* GRID CONSEJOS */
+.tip-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-top:.8rem}
+.tip-box{background:rgba(26,90,90,.05);border:.5px solid rgba(26,90,90,.2);padding:1rem 1.1rem}
+.tip-title{font-family:'Cinzel',serif;font-size:11px;letter-spacing:.1em;color:var(--teal);margin-bottom:7px}
+.tip-box p{font-size:14px;line-height:1.65;color:var(--ink-l)}
 
-  .intro-block strong {
-    font-style: normal;
-    color: var(--ink);
-    font-weight: 600;
-  }
+/* FOOTER */
+.footer{margin-top:3rem;padding-top:1.5rem;border-top:1px solid var(--parch-dk);text-align:center}
+.f-orn{font-family:'Cinzel',serif;font-size:11px;color:var(--gold);letter-spacing:.2em;margin-bottom:4px;opacity:.7}
+.f-txt{font-size:13px;color:var(--ink-f);font-style:italic;opacity:.7}
 
-  /* SECCIONES */
-  .section {
-    margin-bottom: 2.5rem;
-  }
-
-  .section-header {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    margin-bottom: 1.2rem;
-  }
-
-  .section-number {
-    font-family: 'Cinzel', serif;
-    font-size: 11px;
-    color: var(--gold);
-    letter-spacing: 0.15em;
-    min-width: 24px;
-  }
-
-  .section-title {
-    font-family: 'Cinzel', serif;
-    font-size: 16px;
-    font-weight: 600;
-    color: var(--ink);
-    letter-spacing: 0.08em;
-  }
-
-  .section-line {
-    flex: 1;
-    height: 0.5px;
-    background: var(--parchment-darker);
-  }
-
-  .section p {
-    font-size: 16px;
-    line-height: 1.8;
-    color: var(--ink-light);
-    margin-bottom: 0.8rem;
-  }
-
-  .section p strong {
-    color: var(--ink);
-    font-weight: 600;
-  }
-
-  /* REINOS GRID */
-  .kingdoms-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px;
-    margin-top: 1rem;
-  }
-
-  .kingdom-entry {
-    border: 0.5px solid var(--parchment-darker);
-    padding: 12px 14px;
-    background: rgba(255,255,255,0.2);
-    position: relative;
-  }
-
-  .kingdom-entry::before {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 0;
-    bottom: 0;
-    width: 3px;
-  }
-
-  .k-tharessi::before { background: #1a4a8a; }
-  .k-drukkaz::before { background: #4a4030; }
-  .k-ysseval::before { background: #2a6a3a; }
-  .k-vokrath::before { background: #7a1a1a; }
-  .k-azurath::before { background: #5a2a8a; }
-  .k-veyrath::before { background: #1a5a6a; }
-  .k-durrakh::before { background: #8a3a10; }
-
-  .kingdom-name-small {
-    font-family: 'Cinzel', serif;
-    font-size: 13px;
-    font-weight: 600;
-    color: var(--ink);
-    margin-bottom: 3px;
-    letter-spacing: 0.06em;
-  }
-
-  .kingdom-desc {
-    font-size: 13px;
-    color: var(--ink-light);
-    line-height: 1.5;
-  }
-
-  .kingdom-races {
-    font-size: 12px;
-    color: var(--gold);
-    margin-top: 5px;
-    font-style: italic;
-  }
-
-  /* ALERTA / NOTA DEL DM */
-  .dm-note {
-    background: rgba(122,26,26,0.05);
-    border: 0.5px solid rgba(122,26,26,0.25);
-    border-left: 3px solid var(--red-seal);
-    padding: 1rem 1.3rem;
-    margin: 1.5rem 0;
-    font-size: 15px;
-    line-height: 1.7;
-    color: var(--ink-light);
-  }
-
-  .dm-note-title {
-    font-family: 'Cinzel', serif;
-    font-size: 11px;
-    letter-spacing: 0.15em;
-    color: var(--red-seal);
-    margin-bottom: 6px;
-  }
-
-  /* TABLA DE RAZAS */
-  .races-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 0.8rem;
-    font-size: 14px;
-  }
-
-  .races-table th {
-    font-family: 'Cinzel', serif;
-    font-size: 11px;
-    letter-spacing: 0.1em;
-    color: var(--gold);
-    text-align: left;
-    padding: 6px 10px;
-    border-bottom: 1px solid var(--parchment-darker);
-    font-weight: 400;
-  }
-
-  .races-table td {
-    padding: 7px 10px;
-    color: var(--ink-light);
-    border-bottom: 0.5px solid rgba(212,192,144,0.4);
-    vertical-align: top;
-    line-height: 1.5;
-  }
-
-  .races-table tr:last-child td {
-    border-bottom: none;
-  }
-
-  .races-table td:first-child {
-    font-weight: 600;
-    color: var(--ink);
-    white-space: nowrap;
-  }
-
-  /* MISTERIOS */
-  .mystery-list {
-    list-style: none;
-    margin-top: 0.8rem;
-  }
-
-  .mystery-list li {
-    padding: 10px 0 10px 20px;
-    border-bottom: 0.5px solid rgba(212,192,144,0.4);
-    font-size: 15px;
-    line-height: 1.6;
-    color: var(--ink-light);
-    position: relative;
-  }
-
-  .mystery-list li::before {
-    content: '◆';
-    position: absolute;
-    left: 0;
-    color: var(--gold);
-    font-size: 9px;
-    top: 13px;
-  }
-
-  .mystery-list li:last-child {
-    border-bottom: none;
-  }
-
-  .mystery-list strong {
-    color: var(--ink);
-    font-weight: 600;
-  }
-
-  /* FOOTER */
-  .footer {
-    margin-top: 3rem;
-    padding-top: 1.5rem;
-    border-top: 1px solid var(--parchment-darker);
-    text-align: center;
-  }
-
-  .footer-ornament {
-    font-family: 'Cinzel', serif;
-    font-size: 11px;
-    color: var(--gold);
-    letter-spacing: 0.2em;
-    margin-bottom: 0.5rem;
-    opacity: 0.7;
-  }
-
-  .footer-text {
-    font-size: 13px;
-    color: var(--ink-light);
-    font-style: italic;
-    opacity: 0.7;
-  }
-
-  /* COLUMNAS */
-  .two-col {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1.5rem;
-  }
-
-  .highlight-box {
-    background: rgba(26,90,90,0.05);
-    border: 0.5px solid rgba(26,90,90,0.2);
-    padding: 1rem 1.2rem;
-  }
-
-  .highlight-box-title {
-    font-family: 'Cinzel', serif;
-    font-size: 12px;
-    letter-spacing: 0.1em;
-    color: var(--teal-accent);
-    margin-bottom: 8px;
-  }
-
-  .highlight-box p {
-    font-size: 14px !important;
-  }
-
-  @media (max-width: 600px) {
-    .document { padding: 2.5rem 2rem; }
-    .main-title { font-size: 32px; }
-    .kingdoms-grid { grid-template-columns: 1fr; }
-    .two-col { grid-template-columns: 1fr; }
-  }
+@media(max-width:640px){
+  .hero,.page{padding-left:1.5rem;padding-right:1.5rem}
+  .tip-grid{grid-template-columns:1fr}
+  .nav{padding:.55rem 1rem}
+  .nav-brand{font-size:13px}
+}
 </style>
 </head>
 <body>
-<div class="document">
 
-  <div class="header">
-    <div class="header-ornament">✦ &nbsp; ✦ &nbsp; ✦</div>
-    <div class="main-title">VERATH</div>
-    <div class="subtitle">Guía del Viajero — Lo que todo aventurero debe saber</div>
-    <div class="header-rule">
-      <span></span>
-      <div class="header-diamond"></div>
-      <span></span>
+<nav class="nav">
+  <a class="nav-brand" href="#">VERATH</a>
+  <div class="nav-links">
+    <a class="nav-a on" href="#mundo">El Mundo</a>
+    <a class="nav-a" href="#reinos">Reinos</a>
+    <a class="nav-a" href="#razas">Razas</a>
+    <a class="nav-a" href="#religiones">Religiones</a>
+    <a class="nav-a" href="#misterios">Misterios</a>
+    <a class="nav-a" href="#personaje">Tu Personaje</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="h-orn">✦ &nbsp; ✦ &nbsp; ✦</div>
+  <div class="h-title">VERATH</div>
+  <div class="h-sub">Guía del Viajero — Lo que todo aventurero debe saber</div>
+  <div class="h-rule"><span></span><div class="h-diamond"></div><span class="r"></span></div>
+</div>
+
+<!-- CONTENIDO -->
+<div class="page">
+  <div class="tab-nav">
+    <button class="tab-btn on" onclick="showTab('mundo',this)">El Mundo</button>
+    <button class="tab-btn" onclick="showTab('reinos',this)">Los Reinos</button>
+    <button class="tab-btn" onclick="showTab('razas',this)">Razas</button>
+    <button class="tab-btn" onclick="showTab('religiones',this)">Religiones</button>
+    <button class="tab-btn" onclick="showTab('misterios',this)">Misterios</button>
+    <button class="tab-btn" onclick="showTab('personaje',this)">Tu Personaje</button>
+  </div>
+
+  <!-- TAB: MUNDO -->
+  <div class="tab-pane on" id="tab-mundo">
+    <div class="sec" id="mundo">
+      <div class="sec-hdr"><span class="sec-num">I</span><span class="sec-title">El Quiebre del Eje</span><div class="sec-line"></div></div>
+      <div class="lore">Hace <strong>ochocientos años</strong>, algo cayó del cielo. Nadie sabe qué fue. Lo que sí sabe todo el mundo es lo que dejó: un continente partido en dos, un mar de tormenta eterna en el centro, y siete civilizaciones que reconstruyeron lo que pudieron sobre las ruinas.</div>
+      <p class="body">A ese evento se le llama el <strong>Quiebre del Eje</strong>. Es el año cero del calendario común. Todo lo que ocurrió antes se llama <em>la Era Anterior</em>, y los registros de ese tiempo son fragmentarios, contradictorios y profundamente inquietantes.</p>
+      <p class="body">Cada reino tiene su propia versión de por qué ocurrió. Ninguna versión coincide con otra. Algunos dicen que fue un castigo divino. Otros dicen que fue un accidente. Uno solo dice que fue su culpa.</p>
+      <div class="warn"><div class="warn-lbl">⚠ Lo que tu personaje NO sabe</div><p>En el centro del mar de tormenta están las <strong>Islas del Eje</strong>: el punto exacto donde cayó lo que sea que cayó. Tres expediciones documentadas intentaron llegar. Los barcos regresaron vacíos, limpios, sin una sola señal de lucha.</p></div>
+    </div>
+    <div class="sec">
+      <div class="sec-hdr"><span class="sec-num">II</span><span class="sec-title">El Mar del Quiebre</span><div class="sec-line"></div></div>
+      <p class="body">Entre los dos continentes existe el <strong>Mar del Quiebre</strong>: un mar de tormenta permanente donde los relámpagos caen sin parar y las rutas de navegación cambian cada semana. Cruzarlo es caro, peligroso y lento.</p>
+      <p class="body">Solo los barcos equipados con <strong>quillas de cristal de tormenta</strong> — un mineral único que crece en los arrecifes de Tharessi — pueden cruzarlo con alguna garantía de sobrevivir. Eso convierte a Tharessi en el reino más estratégicamente valioso del mundo.</p>
+      <p class="body">En el mar vive <strong>Gorrakh</strong>, una Tortuga Dragón de cuatrocientos años que cobra peaje en oro o en vidas. Los marineros le dejan ofrendas. En las profundidades, los Aboleth llevan siglos observando. Y en algún lugar debajo de todo, algo más grande duerme.</p>
     </div>
   </div>
 
-  <div class="intro-block">
-    Bienvenido a <strong>Verath</strong>. Este documento contiene todo lo que tu personaje conocería si hubiera vivido en este mundo. No es un manual completo — es lo que sabe la gente común. Los secretos más profundos tendrás que descubrirlos en la mesa.
-  </div>
+  <!-- TAB: REINOS -->
+  <div class="tab-pane" id="tab-reinos">
+    <div class="sec" id="reinos">
+      <div class="sec-hdr"><span class="sec-num">III</span><span class="sec-title">Los Siete Reinos</span><div class="sec-line"></div></div>
+      <p class="body">Verath tiene dos masas de tierra. Al oeste, el continente <strong>Valdrek</strong>. Al este, <strong>Draeven</strong>. Siete reinos en total, cada uno con su cultura, su idioma y su forma de ver el Quiebre.</p>
+      <div class="k-grid">
 
-  <!-- EL QUIEBRE -->
-  <div class="section">
-    <div class="section-header">
-      <span class="section-number">I</span>
-      <span class="section-title">El Quiebre del Eje</span>
-      <div class="section-line"></div>
-    </div>
+        <div class="k-card">
+          <div class="k-banner" style="background:#0a1f3a">
+            <div class="dots"><div class="dot" style="background:#0a1f3a"></div><div class="dot" style="background:#c9a84c"></div><div class="dot" style="background:#4a9fd4"></div></div>
+            <div class="dot-lbl" style="color:#5a7a9a">AZUL ABISMO · ORO MARINO · CRISTAL</div>
+            <div class="k-name" style="color:#c9a84c;margin-top:6px">THARESSI</div>
+            <div class="k-tag" style="color:#7a9bbf">"El que controla las rutas, controla el mundo"</div>
+          </div>
+          <div class="k-body">
+            <p>Imperio de costas y puertos. Su monopolio del cristal de tormenta los hace indispensables — y un objetivo. En guerra abierta con Vokrath por el Mar del Quiebre.</p>
+            <div class="k-races">Humanos Tharess · Arkai · Halflings Peth</div>
+          </div>
+        </div>
 
-    <p>Hace <strong>ochocientos años</strong>, algo cayó del cielo. Nadie sabe qué fue. Lo que sí sabe todo el mundo es lo que dejó: un continente partido en dos, un mar de tormenta eterna en el centro, y siete civilizaciones que reconstruyeron lo que pudieron sobre las ruinas.</p>
+        <div class="k-card">
+          <div class="k-banner" style="background:#1a1a1a">
+            <div class="dots"><div class="dot" style="background:#1a1a1a"></div><div class="dot" style="background:#8a7a6a"></div><div class="dot" style="background:#d4a020"></div></div>
+            <div class="dot-lbl" style="color:#5a5048">NEGRO CAVERNA · PIEDRA · ORO VETA</div>
+            <div class="k-name" style="color:#8a7a6a;margin-top:6px">DRUKKAZ</div>
+            <div class="k-tag" style="color:#5a5048">"Algo respira en las profundidades"</div>
+          </div>
+          <div class="k-body">
+            <p>Reino de montañas y túneles. Cultura de deuda: todo se cobra, todo se registra. Oficialmente neutral. En las profundidades del Nivel Siete, algo se mueve.</p>
+            <div class="k-races">Enanos Drukkari · Gnomos de Veta · Sokrath · Duergar</div>
+          </div>
+        </div>
 
-    <p>A ese evento se le llama el <strong>Quiebre del Eje</strong>. Es el año cero del calendario común. Todo lo que ocurrió antes se llama <em>la Era Anterior</em>, y los registros de ese tiempo son fragmentarios, contradictorios, y profundamente inquietantes.</p>
+        <div class="k-card">
+          <div class="k-banner" style="background:#0d2318">
+            <div class="dots"><div class="dot" style="background:#0d2318"></div><div class="dot" style="background:#4a9a6a"></div><div class="dot" style="background:#a0e0b0"></div></div>
+            <div class="dot-lbl" style="color:#2a6a4a">VERDE SOMBRA · CORTEZA · HOJA DE LUZ</div>
+            <div class="k-name" style="color:#4a9a6a;margin-top:6px">YSSEVAL</div>
+            <div class="k-tag" style="color:#2a6a4a">"El bosque recuerda. Nosotros olvidamos."</div>
+          </div>
+          <div class="k-body">
+            <p>Bosque eterno que se está muriendo lentamente. Sus árboles almacenan memorias. Los elfos más viejos recuerdan árboles que ya no están. Aliado incómodo de Tharessi.</p>
+            <div class="k-races">Elfos del Bosque · Elfos Altos · Firbolg · Leshki</div>
+          </div>
+        </div>
 
-    <p>Cada reino tiene su propia versión de por qué ocurrió. Ninguna versión coincide con otra. Algunos dicen que fue un castigo divino. Otros dicen que fue un accidente. Uno solo dice que fue su culpa.</p>
+        <div class="k-card">
+          <div class="k-banner" style="background:#1c1010">
+            <div class="dots"><div class="dot" style="background:#1c1010"></div><div class="dot" style="background:#8a2020"></div><div class="dot" style="background:#c0c0c0"></div></div>
+            <div class="dot-lbl" style="color:#7a3030">NEGRO CAMPO · ROJO GUERRA · PLATA ACERO</div>
+            <div class="k-name" style="color:#c04040;margin-top:6px">VOKRATH</div>
+            <div class="k-tag" style="color:#7a2020">"Un ejército que se detiene, muere de paz"</div>
+          </div>
+          <div class="k-body">
+            <p>Imperio militarista cuya economía depende de la guerra. Si la conquista se detiene, colapsan. Sus Campos Grises — tierras de batallas antiguas — escupen muertos sin descanso.</p>
+            <div class="k-races">Humanos Vokrath · Semiorcos Vorrkai · Trasgoides Kraaveth</div>
+          </div>
+        </div>
 
-    <div class="dm-note">
-      <div class="dm-note-title">⚠ Lo que tu personaje NO sabe</div>
-      En el centro del mar de tormenta están las <strong>Islas del Eje</strong>: el punto exacto donde cayó lo que sea que cayó. Tres expediciones documentadas intentaron llegar. Los barcos regresaron vacíos. Nadie sabe qué hay ahí. Nadie que haya ido ha vuelto para contarlo.
-    </div>
-  </div>
+        <div class="k-card">
+          <div class="k-banner" style="background:#100a1a">
+            <div class="dots"><div class="dot" style="background:#100a1a"></div><div class="dot" style="background:#5a2a8a"></div><div class="dot" style="background:#e09020"></div></div>
+            <div class="dot-lbl" style="color:#5a3080">NEGRO VETH · PÚRPURA VOLCÁN · ÁMBAR OJO</div>
+            <div class="k-name" style="color:#9060c0;margin-top:6px">AZURATH</div>
+            <div class="k-tag" style="color:#5a3080">"El Veth nos hizo. El Veth nos deshará."</div>
+          </div>
+          <div class="k-body">
+            <p>Desierto volcánico con toda su civilización bajo tierra. El Veth — líquido negro luminoso — es su recurso sagrado y su condena. Se está acabando.</p>
+            <div class="k-races">Humanos Azurath · Genasi de Fuego Vethari · Forjados Azer · Tieflings</div>
+          </div>
+        </div>
 
-  <!-- EL MAR -->
-  <div class="section">
-    <div class="section-header">
-      <span class="section-number">II</span>
-      <span class="section-title">El Mar del Quiebre</span>
-      <div class="section-line"></div>
-    </div>
+        <div class="k-card">
+          <div class="k-banner" style="background:#0a1520">
+            <div class="dots"><div class="dot" style="background:#0a1520"></div><div class="dot" style="background:#4a7a8a"></div><div class="dot" style="background:#c0e8e0"></div></div>
+            <div class="dot-lbl" style="color:#2a6a7a">NEGRO VELO · VERDE PANTANO · BLANCO ECO</div>
+            <div class="k-name" style="color:#4a9aaa;margin-top:6px">VEYRATH</div>
+            <div class="k-tag" style="color:#2a6a7a">"Los muertos no se van. Solo cambian de sala."</div>
+          </div>
+          <div class="k-body">
+            <p>Pantano luminoso donde la frontera entre vivos y muertos es tan delgada que puedes ver ecos de personas fallecidas en tu vida cotidiana. Para ellos es completamente normal.</p>
+            <div class="k-races">Humanos Veyrath · Yuan-ti Purasangre · Brujas (ciudadanas) · <strong>Bathrak</strong></div>
+          </div>
+        </div>
 
-    <p>Entre los dos continentes existe el <strong>Mar del Quiebre</strong>: un mar de tormenta permanente donde los relámpagos caen sin parar y las rutas de navegación cambian cada semana. Cruzarlo es caro, peligroso y lento.</p>
+        <div class="k-card" style="grid-column:1/-1">
+          <div class="k-banner" style="background:#1a0f08">
+            <div class="dots"><div class="dot" style="background:#1a0f08"></div><div class="dot" style="background:#c05820"></div><div class="dot" style="background:#e0d080"></div></div>
+            <div class="dot-lbl" style="color:#7a3810">TIERRA ROJA · NARANJA CAÑÓN · ARENA INSCRITA</div>
+            <div class="k-name" style="color:#c05820;margin-top:6px">DURRAKH</div>
+            <div class="k-tag" style="color:#7a3810">"Rompimos el mundo. Pasaremos la eternidad arreglándolo."</div>
+          </div>
+          <div class="k-body">
+            <p>Nación de guerreros nómadas que creen que sus ancestros causaron el Quiebre. Sus cañones están cubiertos de inscripciones antiguas que nadie ha descifrado del todo — y que según algunos, cambian lentamente.</p>
+            <div class="k-races">Humanos Durrakh · Goliat Karrakh · Clanes Gnoll aliados</div>
+          </div>
+        </div>
 
-    <p>Solo los barcos equipados con <strong>quillas de cristal de tormenta</strong> — un mineral único que crece en los arrecifes de Tharessi — pueden cruzarlo con alguna garantía de sobrevivir. Eso convierte a Tharessi en el reino más estratégicamente valioso del mundo, y también en el objetivo principal de Vokrath.</p>
-
-    <p>En el mar viven cosas. <strong>Gorrakh</strong>, una Dragon Trotuga de cuatrocientos años, cobra peaje en oro o en vidas. Los marineros le dejan ofrendas. En las profundidades, los Aboleth llevan siglos observando. Y en algún lugar debajo de todo, algo más grande duerme.</p>
-  </div>
-
-  <!-- LOS SIETE REINOS -->
-  <div class="section">
-    <div class="section-header">
-      <span class="section-number">III</span>
-      <span class="section-title">Los Siete Reinos</span>
-      <div class="section-line"></div>
-    </div>
-
-    <p>Verath tiene dos masas de tierra. Al oeste, el continente <strong>Valdrek</strong>. Al este, <strong>Draeven</strong>. Siete reinos en total, cada uno con su cultura, su idioma, su religión y su forma de ver el Quiebre.</p>
-
-    <div class="kingdoms-grid">
-
-      <div class="kingdom-entry k-tharessi">
-        <div class="kingdom-name-small">THARESSI — Continente Oeste</div>
-        <div class="kingdom-desc">Imperio de costas y puertos. Quien controla las rutas marítimas controla el comercio de medio mundo. Actualmente en guerra naval abierta con Vokrath. Su arma más valiosa no es un ejército: es el monopolio del cristal de tormenta.</div>
-        <div class="kingdom-races">Humanos, Arkai (anfibios), Halflings Peth</div>
       </div>
-
-      <div class="kingdom-entry k-drukkaz">
-        <div class="kingdom-name-small">DRUKKAZ — Continente Oeste</div>
-        <div class="kingdom-desc">Reino de montañas y túneles infinitos. Cultura de deuda: todo se cobra, todo se registra. Oficialmente neutral. En realidad, conspira con todo el mundo y no le debe lealtad a nadie. En las profundidades, algo se mueve. Los que bajaron a investigar no regresaron iguales.</div>
-        <div class="kingdom-races">Enanos, Gnomos de Veta, Sokrath (humanoides de piedra), Duergar en lo profundo</div>
-      </div>
-
-      <div class="kingdom-entry k-ysseval">
-        <div class="kingdom-name-small">YSSEVAL — Continente Oeste</div>
-        <div class="kingdom-desc">Bosque eterno que se está muriendo. Muy lentamente, pero muriéndose. Los árboles almacenan memorias y los elfos saben leerlas — pero los árboles más viejos, los que recuerdan el Quiebre, están apagándose uno por uno. Aliado incómodo de Tharessi.</div>
-        <div class="kingdom-races">Elfos del Bosque, Elfos Altos, Firbolg, Leshki (pequeños, raíces)</div>
-      </div>
-
-      <div class="kingdom-entry k-vokrath">
-        <div class="kingdom-name-small">VOKRATH — Continente Este</div>
-        <div class="kingdom-desc">Imperio militarista que no puede parar de expandirse porque su economía depende de la guerra. Si la conquista se detiene, Vokrath colapsa. En guerra abierta con Tharessi por el control del Mar del Quiebre. Sus Campos Grises — tierras de batallas antiguas — nunca sanan y escupen muertos sin descanso.</div>
-        <div class="kingdom-races">Humanos Vokrath, Half-Orcs Vorrkai, Hobgoblins Kraaveth</div>
-      </div>
-
-      <div class="kingdom-entry k-azurath">
-        <div class="kingdom-name-small">AZURATH — Continente Este</div>
-        <div class="kingdom-desc">Desierto volcánico donde toda la civilización está construida bajo tierra. Poseen el Veth: un líquido negro y luminoso que usan como combustible, medicina y tinta sagrada. El Veth está cambiando a su gente — sus ojos se vuelven ámbar, sus cuerpos cambian — y el Veth se está acabando.</div>
-        <div class="kingdom-races">Humanos Azurath, Genasi de Fuego (Vethari), Azer, Tieflings</div>
-      </div>
-
-      <div class="kingdom-entry k-veyrath">
-        <div class="kingdom-name-small">VEYRATH — Continente Este</div>
-        <div class="kingdom-desc">Pantano luminoso donde la frontera entre los vivos y los muertos es tan delgada que puedes ver ecos de personas fallecidas en tu vida cotidiana. No es terrorífico para ellos: es normal. Su cultura entera gira alrededor de una relación funcional con la muerte que al resto del mundo le parece perturbadora.</div>
-        <div class="kingdom-races">Humanos Veyrath, Yuan-Ti Purebloods, Hags (ciudadanas, no monstruos)</div>
-      </div>
-
-      <div class="kingdom-entry k-durrakh" style="grid-column: 1 / -1;">
-        <div class="kingdom-name-small">DURRAKH — Continente Este</div>
-        <div class="kingdom-desc">Nación de guerreros nómadas en cañones de tierra roja. Creen que sus ancestros causaron el Quiebre del Eje, y que cada generación debe expiar esa culpa. Sus cañones están cubiertos de inscripciones antiguas en un idioma que nadie ha descifrado del todo — y que, según algunos, cambian lentamente.</div>
-        <div class="kingdom-races">Humanos Durrakh, Goliaths Karrakh, algunos clanes Gnoll aliados</div>
-      </div>
-
-    </div>
-  </div>
-
-  <!-- RAZAS PARA PERSONAJES -->
-  <div class="section">
-    <div class="section-header">
-      <span class="section-number">IV</span>
-      <span class="section-title">Razas disponibles para personajes</span>
-      <div class="section-line"></div>
-    </div>
-
-    <p>Puedes jugar cualquier raza del manual de D&D 5e. Aquí te damos contexto de cómo encajan las más comunes en Verath, y algunas razas únicas del mundo.</p>
-
-    <table class="races-table">
-      <tr>
-        <th>Raza</th>
-        <th>Dónde encajan</th>
-        <th>Notas</th>
-      </tr>
-      <tr>
-        <td>Humano</td>
-        <td>Todos los reinos</td>
-        <td>La raza más común. Su aspecto varía enormemente según el reino: cobrizo en Tharessi, grisáceo en Vokrath, muy oscuro en Azurath, pálido-verdoso en Veyrath.</td>
-      </tr>
-      <tr>
-        <td>Elfo</td>
-        <td>Ysseval principalmente</td>
-        <td>Los elfos de Ysseval tienen piel verde pálida y pelo blanco. Los elfos altos son académicos. Salir de Ysseval es raro y generalmente significa algo grave.</td>
-      </tr>
-      <tr>
-        <td>Enano</td>
-        <td>Drukkaz</td>
-        <td>Más altos de lo esperado. Cultura de deuda total. Un enano fuera de Drukkaz casi siempre tiene una deuda que pagar o una que cobrar.</td>
-      </tr>
-      <tr>
-        <td>Semi-Orco</td>
-        <td>Vokrath, Tharessi</td>
-        <td>En Vokrath son los Vorrkai: ciudadanos de segunda clase con movilidad social vía el ejército. En Tharessi son comerciantes y marineros.</td>
-      </tr>
-      <tr>
-        <td>Tiefling</td>
-        <td>Azurath, Vokrath</td>
-        <td>En Azurath son completamente normales, sin estigma. En Vokrath son tolerados con desconfianza. En Ysseval son rarísimos y generan curiosidad.</td>
-      </tr>
-      <tr>
-        <td>Gnomo</td>
-        <td>Drukkaz</td>
-        <td>Los Gnomos de Veta de Drukkaz tienen ojos que brillan tenuemente y sienten vibración en la roca. Inventores y curiosos por naturaleza.</td>
-      </tr>
-      <tr>
-        <td>Semi-Elfo</td>
-        <td>Ysseval, Tharessi</td>
-        <td>Muy comunes en las fronteras entre Ysseval y los reinos humanos. Suelen ser diplomáticos, comerciantes o simplemente gente que no encaja del todo en ningún lado.</td>
-      </tr>
-      <tr>
-        <td>Genasi de Fuego</td>
-        <td>Azurath</td>
-        <td>Llamados Vethari. En Azurath son la clase sacerdotal. Se cree que son humanos que absorbieron demasiado Veth a lo largo de generaciones.</td>
-      </tr>
-      <tr>
-        <td>Goliath</td>
-        <td>Durrakh, Drukkaz</td>
-        <td>Los Karrakh de Durrakh comparten la creencia en la deuda ancestral. Los de Drukkaz sirven como guardias de frontera.</td>
-      </tr>
-      <tr>
-        <td>Yuan-Ti Purasangre</td>
-        <td>Veyrath</td>
-        <td>Ciudadanos normales en Veyrath. Fuera de ahí generan desconfianza. Muchos trabajan como mediadores porque su naturaleza entre dos formas les da perspectiva.</td>
-      </tr>
-      <tr>
-        <td>Arkai ✦</td>
-        <td>Tharessi (única)</td>
-        <td><em>Raza original de Verath.</em> Humanoides con branquias vestigiales y dedos ligeramente palmeados. Aguantan 10 minutos bajo el agua. Nadie recuerda con qué se mezclaron sus ancestros.</td>
-      </tr>
-      <tr>
-        <td>Sokrath ✦</td>
-        <td>Drukkaz (única)</td>
-        <td><em>Raza original de Verath.</em> Humanoides de piedra porosa. Lentos. Viven 800 años. No hablan mucho — pero cuando lo hacen, todos escuchan. Considerados oráculos aunque ellos mismos lo niegan.</td>
-      </tr>
-    </table>
-
-    <div class="dm-note" style="margin-top:1rem;">
-      <div class="dm-note-title">✦ Razas originales de Verath</div>
-      Si quieres jugar un Arkai o un Sokrath, habla conmigo. Usamos como base las reglas de Triton y Goliath respectivamente, con modificaciones menores para reflejar sus rasgos únicos.
     </div>
   </div>
 
-  <!-- MISTERIOS -->
-  <div class="section">
-    <div class="section-header">
-      <span class="section-number">V</span>
-      <span class="section-title">Lo que todo el mundo susurra</span>
-      <div class="section-line"></div>
+  <!-- TAB: RAZAS -->
+  <div class="tab-pane" id="tab-razas">
+    <div class="sec" id="razas">
+      <div class="sec-hdr"><span class="sec-num">IV</span><span class="sec-title">Razas jugables</span><div class="sec-line"></div></div>
+      <p class="body">Puedes jugar cualquier raza del manual de D&D 5e. Aquí te damos contexto de cómo encajan en Verath. Las marcadas con ✦ son razas originales del mundo.</p>
+
+      <table class="rtable">
+        <tr><th>Raza</th><th>Dónde encajan</th><th>Contexto en Verath</th></tr>
+        <tr><td>Humano</td><td>Todos los reinos</td><td>Apariencia radicalmente distinta por reino: cobrizo en Tharessi, grisáceo en Vokrath, muy oscuro en Azurath, pálido-verdoso en Veyrath.</td></tr>
+        <tr><td>Elfo</td><td>Ysseval</td><td>Piel verde pálida, pelo blanco o plateado, viven 600 años. Salir de Ysseval es raro y generalmente significa algo grave.</td></tr>
+        <tr><td>Enano</td><td>Drukkaz</td><td>Más altos de lo esperado. Cultura de deuda total. Un enano fuera de Drukkaz casi siempre tiene una deuda que pagar o cobrar.</td></tr>
+        <tr><td>Semiorco</td><td>Vokrath, Tharessi</td><td>En Vokrath son los Vorrkai: movilidad social vía ejército. En Tharessi son marineros y comerciantes.</td></tr>
+        <tr><td>Tiefling</td><td>Azurath, Vokrath</td><td>En Azurath son completamente normales, sin estigma. En Vokrath son tolerados con desconfianza.</td></tr>
+        <tr><td>Gnomo</td><td>Drukkaz</td><td>Los Gnomos de Veta tienen ojos que brillan tenuemente y sienten vibración en la roca a 300 metros.</td></tr>
+        <tr><td>Semielfo</td><td>Ysseval, Tharessi</td><td>Muy comunes en fronteras. Suelen ser diplomáticos o simplemente gente que no encaja del todo en ningún lado.</td></tr>
+        <tr><td>Genasi de Fuego</td><td>Azurath</td><td>Llamados Vethari. Clase sacerdotal. Se cree que son humanos que absorbieron demasiado Veth a lo largo de generaciones.</td></tr>
+        <tr><td>Goliat</td><td>Durrakh, Drukkaz</td><td>Los Karrakh de Durrakh comparten la creencia en la deuda ancestral. Los de Drukkaz son guardias de frontera.</td></tr>
+        <tr><td>Yuan-ti Purasangre</td><td>Veyrath</td><td>Ciudadanos normales en Veyrath. Fuera de ahí generan desconfianza. Muchos trabajan como mediadores.</td></tr>
+        <tr><td>Arkai ✦<span class="badge">Única</span></td><td>Tharessi</td><td>Humanoides con branquias vestigiales y dedos palmeados. Aguantan 10 minutos bajo el agua. Nadie recuerda con qué se mezclaron sus ancestros.</td></tr>
+        <tr><td>Sokrath ✦<span class="badge">Única</span></td><td>Drukkaz</td><td>Humanoides de piedra porosa. Lentos. Viven 800 años. Cuando hablan, todos escuchan. Considerados oráculos aunque ellos lo niegan.</td></tr>
+        <tr><td>Bathrak ✦<span class="badge">Única</span></td><td>Veyrath</td><td>Humanoides anfibios del pantano. Tribu oculta con profunda conexión al Shadowfell. Ver sección completa abajo.</td></tr>
+      </table>
+
+      <!-- BATHRAK -->
+      <div class="sec-hdr" style="margin-top:2rem"><span class="sec-num">✦</span><span class="sec-title">Los Bathrak — La Gente del Agua Quieta</span><div class="sec-line"></div></div>
+
+      <div class="bath-card">
+        <div class="bath-banner">
+          <div class="bath-title">BATHRAK</div>
+          <div class="bath-sub">Tribu oculta de Veyrath · Subraza jugable</div>
+        </div>
+        <div class="bath-body">
+          <p>Antes del Quiebre, el pantano de Veyrath era un lago interior transparente. Los Bathrak vivían en sus orillas y bajo su superficie desde tiempos que ningún registro humano alcanza. Cuando el Quiebre volvió el lago en pantano, sobrevivieron. Se adaptaron. Y decidieron que nadie tenía que saber que seguían ahí.</p>
+          <p>Llevan <strong>ochocientos años siendo el secreto mejor guardado de Veyrath</strong>. Los humanos Veyrath saben que existen pero lo consideran algo privado, casi sagrado, y no lo mencionan a extranjeros.</p>
+          <p>Son humanoides anfibios de entre 1.40m y 1.65m. Su piel varía entre verde oliva oscuro, marrón lodoso y negro pantano, con manchas únicas por individuo. Sus ojos son completamente dorados o completamente negros, sin pupila visible. No tienen voz humana — producen resonancias bajas, casi subsónicas, que los humanos sienten más que escuchan.</p>
+
+          <div style="margin-top:1rem;border-top:.5px solid rgba(26,122,90,.3);padding-top:1rem">
+            <div style="font-family:'Cinzel',serif;font-size:11px;color:#1a5a3a;letter-spacing:.12em;margin-bottom:.8rem">RASGOS RACIALES</div>
+            <div class="trait-row"><div class="trait-name">ANFIBIOSIS</div><div class="trait-desc">Puedes respirar aire y agua con igual facilidad. Sin penalizaciones en combate acuático.</div></div>
+            <div class="trait-row"><div class="trait-name">VISIÓN EN LA OSCURIDAD</div><div class="trait-desc">Ves en oscuridad total hasta 18 metros como luz tenue. Desventaja en Percepción visual con luz solar directa intensa.</div></div>
+            <div class="trait-row"><div class="trait-name">PIEL DEL PANTANO</div><div class="trait-desc">Ventaja en tiradas para escapar de agarres. Resistencia al daño por ácido.</div></div>
+            <div class="trait-row"><div class="trait-name">RESONANCIA BATHRAK</div><div class="trait-desc">Una vez por turno puedes emitir una resonancia subsónica. Criaturas de tu elección en 3 metros: salvación de Constitución (CD 8 + competencia + CON) o quedan Aturdidas hasta tu siguiente turno. Usos iguales a tu bonificador de competencia por descanso largo.</div></div>
+            <div class="trait-row"><div class="trait-name">MEMORIA DEL AGUA</div><div class="trait-desc">Al tocar agua natural puedes hacer una tirada de Historia (CD 14) para percibir el eco más reciente impreso en ella. Una vez por cuerpo de agua.</div></div>
+          </div>
+
+          <div style="margin-top:1.2rem;display:grid;grid-template-columns:1fr 1fr;gap:1rem">
+            <div style="border:.5px solid rgba(26,122,90,.3);padding:.9rem 1rem;background:rgba(10,50,30,.04)">
+              <div style="font-family:'Cinzel',serif;font-size:11px;color:#1a5a3a;letter-spacing:.1em;margin-bottom:.6rem">CAMINANTE DE SUPERFICIE</div>
+              <p style="font-size:13px;color:var(--ink-l);line-height:1.6">+2 DES, +1 CAR · Idiomas: Común, Bathrak · Competencia: Sigilo, Persuasión<br><br><em>Mimetismo de Superficie:</em> Ventaja en Engaño al fingir ser humano por voz.</p>
+            </div>
+            <div style="border:.5px solid rgba(26,122,90,.3);padding:.9rem 1rem;background:rgba(10,50,30,.04)">
+              <div style="font-family:'Cinzel',serif;font-size:11px;color:#1a5a3a;letter-spacing:.1em;margin-bottom:.6rem">GUARDIÁN DEL AGUA QUIETA</div>
+              <p style="font-size:13px;color:var(--ink-l);line-height:1.6">+2 SAB, +1 CON · Idiomas: Bathrak, Infracomún · Competencia: Percepción, Religión<br><br><em>Visión del Umbral:</em> Ves criaturas en el Plano Etéreo adyacente hasta 9m. Una vez por descanso largo: Hablar con los Muertos sin componentes.</p>
+            </div>
+          </div>
+
+          <div class="warn" style="margin-top:1rem">
+            <div class="warn-lbl">NOTA PARA JUGADORES</div>
+            <p>Un Bathrak fuera del pantano es algo extremadamente raro. Habla con tu DM sobre tu razón. El Rito del Eco — siete días solo en la zona de mayor concentración de ecos del pantano — es parte de todo Bathrak adulto. No hablan de lo que vieron. Nadie que pasó el rito ha querido hacerlo jamás.</p>
+          </div>
+        </div>
+      </div>
     </div>
-
-    <p>Hay cosas que la gente común sabe, o cree saber, o teme. Preguntas que circulan en tabernas, puertos y mercados. Tu personaje habría escuchado alguna de estas:</p>
-
-    <ul class="mystery-list">
-      <li><strong>¿Qué hay en las Islas del Eje?</strong> Nadie que haya ido regresó para contarlo. Los barcos sí regresan — vacíos, limpios, sin una sola señal de lucha. Solo vacíos.</li>
-      <li><strong>¿Qué se mueve en las profundidades de Drukkaz?</strong> Los enanos no lo nombran. Los que bajaron al Nivel Siete regresaron cambiados, o no regresaron. El rey tiene una ley escrita: nadie baja sin permiso real y de los tres clanes.</li>
-      <li><strong>¿Por qué muere el bosque de Ysseval?</strong> Los elfos llevan dos siglos estudiándolo. No tienen respuesta. Los árboles más viejos, los que recuerdan el Quiebre, son los primeros en apagarse.</li>
-      <li><strong>¿Qué es el Veth realmente?</strong> Azurath lo llama el corazón del mundo. Los académicos de Ysseval tienen otra teoría. La teoría los hizo persona no grata en Azurath de por vida.</li>
-      <li><strong>¿Las inscripciones de Durrakh realmente cambian?</strong> Un solo académico lo documentó. Fue desacreditado. Murió tres meses después en circunstancias confusas. Sus notas desaparecieron.</li>
-      <li><strong>¿Qué pasó con el rey de Veyrath?</strong> La reina Sotharra dice que consulta a su marido muerto regularmente. Nadie en Veyrath lo cuestiona. El resto del mundo no sabe qué pensar.</li>
-      <li><strong>¿Por qué la guerra entre Tharessi y Vokrath no termina?</strong> Llevan cuarenta años. Tharessi tiene los barcos. Vokrath tiene los ejércitos. Ninguno puede ganar. Ninguno puede rendirse.</li>
-    </ul>
   </div>
 
-  <!-- CONSEJOS PARA PERSONAJES -->
-  <div class="section">
-    <div class="section-header">
-      <span class="section-number">VI</span>
-      <span class="section-title">Consejos para crear tu personaje</span>
-      <div class="section-line"></div>
-    </div>
+  <!-- TAB: RELIGIONES -->
+  <div class="tab-pane" id="tab-religiones">
+    <div class="sec" id="religiones">
+      <div class="sec-hdr"><span class="sec-num">V</span><span class="sec-title">Los Siete Dioses — Lo que sabe la gente</span><div class="sec-line"></div></div>
+      <div class="lore">Hace ochocientos años, durante el Quiebre, <strong>siete personas sobrevivieron cuando no deberían haber sobrevivido</strong>. Se levantaron del suelo siendo algo diferente. El mundo los llama dioses. Son completamente humanos en apariencia — pero humanos llevados al límite absoluto de lo que un ser humano puede ser. Ninguno puede apagar lo que son.</div>
+      <p class="body">Cuatro de los siete no han dado señales en décadas o siglos. Sus iglesias siguen funcionando. Sus clérigos siguen recibiendo poder. Nadie sabe si eso significa que están vivos, dormidos, o que algo más está respondiendo las oraciones.</p>
 
-    <div class="two-col">
-      <div class="highlight-box">
-        <div class="highlight-box-title">PIENSA EN TU ORIGEN</div>
-        <p>¿De qué reino vienes? ¿Cómo ves el Quiebre del Eje — como mito, como historia, como culpa? ¿Has cruzado el Mar del Quiebre alguna vez? Cruzarlo cuesta dinero y riesgo. No todo el mundo lo hace.</p>
+      <div class="rel-card">
+        <div class="rel-banner" style="background:rgba(138,106,32,.06)">
+          <div class="rel-name">🕰 LA IGLESIA DEL INSTANTE ETERNO</div>
+          <div class="rel-god">Vethann — El que Ve Todo a la Vez · Reino: Tharessi</div>
+        </div>
+        <div class="rel-body">
+          <p>Vethann existe fuera del tiempo lineal. Ve pasado y futuro como una imagen estática. Por eso no interviene — para él, todo ya ocurrió. Sus clérigos no rezan: <em>observan</em>. Registran eventos cotidianos y los interpretan como fragmentos de un mensaje mayor.</p>
+          <p><strong>Ritual:</strong> Tres días sin dormir narrando cada recuerdo de tu vida en orden. Al tercer día, el altar absorbe el recuerdo que más valoras — sin que puedas elegir cuál. Despiertas sin saber qué perdiste, solo sabiendo que hay un hueco donde algo importante estuvo. Se debe entregar además un objeto de alguien que ya no existe en tu vida.</p>
+          <div class="cost-tag">💸 Costo: El recuerdo más valioso de tu vida + objeto de alguien perdido</div>
+        </div>
       </div>
-      <div class="highlight-box">
-        <div class="highlight-box-title">PIENSA EN TU LEALTAD</div>
-        <p>¿Apoyas a Tharessi o a Vokrath en la guerra? ¿O simplemente intentas sobrevivir? ¿Confías en Drukkaz? ¿Sabes algo sobre la conspiración secreta que involucra a Azurath?</p>
+
+      <div class="rel-card">
+        <div class="rel-banner" style="background:rgba(42,106,58,.05)">
+          <div class="rel-name">🌱 EL CULTO DE LA MANO ABIERTA</div>
+          <div class="rel-god">Sorra — La que Da y Quita · Reino: Ysseval</div>
+        </div>
+        <div class="rel-body">
+          <p>Sorra camina entre la gente disfrazada, sana a quien encuentra y desaparece antes de que agradezcan. Sus clérigos viajan constantemente, nunca se quedan más de un mes en un lugar. Establecer vínculos con quienes curan es considerado cobrar lo que debe darse gratis.</p>
+          <p><strong>Ritual:</strong> Requiere tres personas: clérigo, receptor y <em>testigo voluntario</em>. El testigo entrega el objeto que más valora en el mundo y declara en voz alta por qué lo valora, sin omitir nada. Si el altar juzga la declaración incompleta, el objeto se destruye de todas formas. Si es aceptado, el testigo pierde diez años de vida — visibles inmediatamente en su cuerpo.</p>
+          <div class="cost-tag">💸 Costo: 10 años de vida del testigo + objeto más significativo que posee</div>
+        </div>
       </div>
-      <div class="highlight-box">
-        <div class="highlight-box-title">PIENSA EN TU RELACIÓN CON LO EXTRAÑO</div>
-        <p>¿Tu personaje acepta los ecos de muertos de Veyrath como algo normal, o le perturbán? ¿Qué piensa de las Hags como juezas? ¿Del Veth? El mundo tiene muchas cosas raras — ¿cuántas ha visto tu personaje?</p>
+
+      <div class="rel-card">
+        <div class="rel-banner" style="background:rgba(26,18,8,.04)">
+          <div class="rel-name">⛰ LA FE DEL PESO ANTIGUO</div>
+          <div class="rel-god">Druukh — El que Eligió Quedarse · Reino: Drukkaz</div>
+        </div>
+        <div class="rel-body">
+          <p>Druukh eligió quedarse en Drukkaz hace 800 años y no ha salido desde entonces. La montaña lo reconoce porque él la reconoce a ella. Cada oración es un contrato grabado en piedra. Druukh siempre cobra.</p>
+          <p><strong>Ritual:</strong> El clérigo incrusta un objeto de valor en el altar de piedra viva con sus propias manos, sin herramientas. Declara lo que pide y lo que ofrece. Druukh siempre cobra más de lo ofrecido — el exceso se manifiesta como una parte del cuerpo que se vuelve paulatinamente pétrea. No duele. Simplemente deja de ser carne.</p>
+          <div class="cost-tag">💸 Costo: Parte del cuerpo que se mineraliza permanentemente + objeto de metal o piedra</div>
+        </div>
       </div>
-      <div class="highlight-box">
-        <div class="highlight-box-title">PIENSA EN UN SECRETO</div>
-        <p>Todos los buenos personajes tienen algo que no dicen. Una deuda con Drukkaz. Una familia en Azurath con marcas de Veth. Un ancestro en los registros de Durrakh. Algo pequeño que podría importar mucho.</p>
+
+      <div class="rel-card">
+        <div class="rel-banner" style="background:rgba(42,90,42,.04)">
+          <div class="rel-name">🍂 LA ORDEN DE LAS HOJAS QUE RECUERDAN</div>
+          <div class="rel-god">Yssara — La Memoria Sin Fondo · Reino: Ysseval</div>
+        </div>
+        <div class="rel-body">
+          <p>Yssara absorbió durante el Quiebre cada memoria de cada ser vivo en ese momento. Los árboles de Ysseval son su sistema de archivo. Sus clérigos son bibliotecarios de experiencias ajenas.</p>
+          <p><strong>Ritual:</strong> El clérigo debe narrar en voz alta, sin interrupción, <em>el recuerdo más doloroso de su vida completa</em> — no el más traumático, el más doloroso, el que evita conscientemente — incluyendo cada detalle que normalmente suprime. El árbol-altar lo absorbe junto con un objeto de alguien muerto. El clérigo pierde ese recuerdo y todo lo que ese evento le enseñó sobre quién es.</p>
+          <div class="cost-tag">💸 Costo: Recuerdo más doloroso de tu vida + objeto de alguien muerto cercano a ti</div>
+        </div>
+      </div>
+
+      <div class="rel-card">
+        <div class="rel-banner" style="background:rgba(90,10,10,.04)">
+          <div class="rel-name">⚔ LA HERMANDAD DE LA LLAMA GRIS</div>
+          <div class="rel-god">Vorrakh — La Guerra Sin Fin · Reino: Vokrath</div>
+        </div>
+        <div class="rel-body">
+          <p>Vorrakh no glorifica la violencia — glorifica el conflicto como estado de ser. La paz perfecta es muerte perfecta. Sus clérigos son filósofos del conflicto que resultan ser increíblemente peligrosos.</p>
+          <p><strong>Ritual:</strong> El clérigo se presenta con una herida real y reciente. Destruye frente al altar el objeto de mayor valor que posee — rompiéndolo, quemándolo, con sus propias manos de forma irreversible. Luego narra el combate que causó la herida con honestidad absoluta, incluyendo el miedo y los errores. La herida <em>no sana nunca</em>. Se vuelve una cicatriz permanente que ninguna magia puede cerrar.</p>
+          <div class="cost-tag">💸 Costo: Herida permanente que nunca sana + destrucción irreversible de tu objeto más valioso</div>
+        </div>
+      </div>
+
+      <div class="rel-card">
+        <div class="rel-banner" style="background:rgba(60,20,90,.04)">
+          <div class="rel-name">🔥 LA IGLESIA DEL VETH ETERNO</div>
+          <div class="rel-god">Azuth — El Fuego que Sangra la Tierra · Reino: Azurath</div>
+        </div>
+        <div class="rel-body">
+          <p>El Veth es la esencia de Azuth filtrándose a través del suelo como regalo perpetuo. La transformación que produce — ojos ámbar, marcas en la piel — no es daño sino ascensión.</p>
+          <p><strong>Ritual:</strong> El clérigo entrega al altar un objeto fabricado por sus propias manos para alguien que ama — esa persona nunca sabrá que existió. Luego extiende el brazo y un sacerdote vierte Veth puro directamente sobre la piel. El proceso dura horas y es de dolor extremo. La marca permanente que queda hace al clérigo <em>visible en la oscuridad para siempre</em>. Nunca puede esconderse completamente en la noche.</p>
+          <div class="cost-tag">💸 Costo: Marca de Veth permanente (visible en oscuridad siempre) + objeto hecho para alguien que nunca sabrá que existió</div>
+        </div>
+      </div>
+
+      <div class="rel-card">
+        <div class="rel-banner" style="background:rgba(10,60,70,.04)">
+          <div class="rel-name">🌒 LA IGLESIA DEL UMBRAL</div>
+          <div class="rel-god">Lyssavar — El que Existe en Dos Lados · Reino: Veyrath</div>
+        </div>
+        <div class="rel-body">
+          <p>Lyssavar no eligió estar entre los vivos y los muertos — el Quiebre lo partió. Esa fractura es lo que hace permeable el velo en Veyrath. Sus clérigos no guían almas: mantienen la puerta entreabierta.</p>
+          <p><strong>Ritual:</strong> Una noche entera en una zona de eco con dos velas — una blanca encendida, una negra apagada — que se intercambian solas sin intervención. El clérigo entrega el objeto más valioso que posee, algo que no puede reemplazarse emocionalmente. Al amanecer ha desaparecido. Durante la noche, algo en el Shadowfell aprende el nombre verdadero del clérigo, sus miedos y sus secretos. Ese algo no actúa inmediatamente. Pero sabe.</p>
+          <div class="cost-tag">💸 Costo: Tu nombre verdadero y secretos conocidos por algo del Shadowfell + objeto emocionalmente irreemplazable</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB: MISTERIOS -->
+  <div class="tab-pane" id="tab-misterios">
+    <div class="sec" id="misterios">
+      <div class="sec-hdr"><span class="sec-num">VI</span><span class="sec-title">Lo que todo el mundo susurra</span><div class="sec-line"></div></div>
+      <p class="body">Hay cosas que la gente común sabe, o cree saber, o teme. Tu personaje habría escuchado alguna de estas en tabernas, puertos y mercados:</p>
+      <ul class="myst-list">
+        <li><strong>¿Qué hay en las Islas del Eje?</strong> Nadie que haya ido regresó para contarlo. Los barcos sí regresan — vacíos, limpios, sin una señal de lucha.</li>
+        <li><strong>¿Qué se mueve en las profundidades de Drukkaz?</strong> Los enanos no lo nombran. Los que bajaron al Nivel Siete regresaron cambiados, o no regresaron. El rey tiene una ley: nadie baja sin permiso.</li>
+        <li><strong>¿Por qué muere el bosque de Ysseval?</strong> Los elfos llevan dos siglos estudiándolo sin respuesta. Los árboles más viejos, los que recuerdan el Quiebre, son los primeros en apagarse.</li>
+        <li><strong>¿Qué es el Veth realmente?</strong> Azurath lo llama el corazón del mundo. Los académicos de Ysseval tienen otra teoría. Esa teoría los hizo personas non gratas en Azurath de por vida.</li>
+        <li><strong>¿Las inscripciones de Durrakh realmente cambian?</strong> Un solo académico lo documentó. Fue desacreditado. Murió tres meses después en circunstancias confusas. Sus notas desaparecieron.</li>
+        <li><strong>¿Qué pasó con el rey de Veyrath?</strong> La reina Sotharra dice que consulta a su marido muerto regularmente. Nadie en Veyrath lo cuestiona. El resto del mundo no sabe qué pensar.</li>
+        <li><strong>¿Por qué hay Bathrak fuera del pantano?</strong> Si ves uno, significa que algo muy serio ocurrió o está por ocurrir. Su círculo no los envía sin razón.</li>
+        <li><strong>¿Por qué la guerra entre Tharessi y Vokrath no termina?</strong> Llevan cuarenta años. Tharessi tiene los barcos. Vokrath tiene los ejércitos. Ninguno puede ganar. Ninguno puede rendirse.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- TAB: PERSONAJE -->
+  <div class="tab-pane" id="tab-personaje">
+    <div class="sec" id="personaje">
+      <div class="sec-hdr"><span class="sec-num">VII</span><span class="sec-title">Consejos para crear tu personaje</span><div class="sec-line"></div></div>
+      <p class="body">Un buen personaje en Verath tiene raíces. Sabe de dónde viene, qué piensa del Quiebre, y qué tiene miedo de descubrir.</p>
+      <div class="tip-grid">
+        <div class="tip-box"><div class="tip-title">PIENSA EN TU ORIGEN</div><p>¿De qué reino vienes? ¿Has cruzado el Mar del Quiebre? Cruzarlo cuesta dinero y riesgo — no todo el mundo lo hace. ¿Cómo ves el Quiebre del Eje: como mito, como historia, como culpa?</p></div>
+        <div class="tip-box"><div class="tip-title">PIENSA EN TU LEALTAD</div><p>¿Apoyas a Tharessi o a Vokrath? ¿O sobrevives sin tomar partido? ¿Confías en Drukkaz? ¿Sabes algo sobre las conspiraciones secretas que conectan a varios reinos?</p></div>
+        <div class="tip-box"><div class="tip-title">PIENSA EN TU DIOS</div><p>¿Tu personaje sigue alguna de las siete iglesias? Si es clérigo, ¿qué entregó en su ritual de iniciación? ¿Lo haría de nuevo si supiera el costo completo por adelantado?</p></div>
+        <div class="tip-box"><div class="tip-title">PIENSA EN UN SECRETO</div><p>Una deuda con Drukkaz. Una familia en Azurath con marcas de Veth. Un ancestro en los registros de Durrakh. Un recuerdo que le fue robado por un árbol de Ysseval. Algo pequeño que podría importar mucho.</p></div>
       </div>
     </div>
   </div>
 
   <div class="footer">
-    <div class="footer-ornament">✦ &nbsp; VERATH &nbsp; ✦</div>
-    <div class="footer-text">Lo que sabes es solo el principio. Lo que no sabes puede matarte.</div>
-    <div class="footer-text" style="margin-top:6px; font-size:11px; opacity:0.5;">Documento para jugadores — Año 800 del Quiebre del Eje</div>
+    <div class="f-orn">✦ &nbsp; VERATH &nbsp; ✦</div>
+    <div class="f-txt">Lo que sabes es solo el principio. Lo que no sabes puede matarte.</div>
+    <div class="f-txt" style="margin-top:5px;font-size:11px;opacity:.5">Documento para jugadores — Año 800 del Quiebre del Eje</div>
   </div>
-
 </div>
+
+<script>
+function showTab(id, btn){
+  document.querySelectorAll('.tab-pane').forEach(p=>p.classList.remove('on'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('on'));
+  document.getElementById('tab-'+id).classList.add('on');
+  btn.classList.add('on');
+  // nav links
+  document.querySelectorAll('.nav-a').forEach(a=>a.classList.remove('on'));
+}
+// Smooth scroll nav
+document.querySelectorAll('.nav-a').forEach(a=>{
+  a.addEventListener('click',function(e){
+    document.querySelectorAll('.nav-a').forEach(x=>x.classList.remove('on'));
+    this.classList.add('on');
+  });
+});
+</script>
 </body>
 </html>
