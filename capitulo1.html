@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>VERATH — Capítulo I: La Noche de Resaca</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Cinzel:wght@400;600;700&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--ink:#1a1208;--ink-l:#3a2a18;--ink-f:#5a4a38;--parch:#f5ecd7;--parch-d:#e8d9b8;--parch-dk:#d4c090;--gold:#8a6a20;--gold-b:#c9a84c;--red:#7a1a1a;}
+html{scroll-behavior:smooth}
+body{background:#1a1006;background-image:radial-gradient(ellipse at 20% 20%,#2a1a08 0%,transparent 55%),radial-gradient(ellipse at 80% 80%,#0a0804 0%,transparent 55%);min-height:100vh;font-family:'Crimson Pro',Georgia,serif;display:flex;justify-content:center;padding:3rem 1.5rem;}
+.book{max-width:720px;width:100%;background:var(--parch);background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='.04'/%3E%3C/svg%3E"),linear-gradient(170deg,#faf3e2 0%,#f5ecd7 50%,#ede0c0 100%);padding:5rem 5.5rem;position:relative;box-shadow:0 0 0 1px var(--parch-dk),0 0 0 3px #1a1006,0 8px 60px rgba(0,0,0,.7),inset 0 0 100px rgba(180,140,60,.05);}
+.book::before{content:'';position:absolute;inset:18px;border:1px solid var(--parch-dk);pointer-events:none}
+.book::after{content:'';position:absolute;inset:22px;border:.5px solid rgba(138,106,32,.2);pointer-events:none}
+.ch-ornament{text-align:center;color:var(--gold);font-size:20px;letter-spacing:.4em;opacity:.6;margin-bottom:1rem}
+.ch-label{font-family:'Cinzel',serif;font-size:11px;letter-spacing:.25em;color:var(--gold);text-align:center;text-transform:uppercase;margin-bottom:.4rem}
+.ch-title{font-family:'Cinzel Decorative',serif;font-size:clamp(22px,4vw,34px);font-weight:700;color:var(--ink);text-align:center;line-height:1.2;margin-bottom:.3rem}
+.ch-subtitle{font-family:'Cinzel',serif;font-size:13px;color:var(--ink-f);text-align:center;letter-spacing:.12em;font-style:italic;margin-bottom:2rem}
+.ch-rule{display:flex;align-items:center;gap:10px;justify-content:center;margin:1.2rem 0 2.5rem}
+.ch-rule span{height:1px;width:80px;background:linear-gradient(to right,transparent,var(--gold))}
+.ch-rule span.r{background:linear-gradient(to left,transparent,var(--gold))}
+.ch-diamond{width:7px;height:7px;background:var(--gold);transform:rotate(45deg)}
+.drop-cap::first-letter{font-family:'Cinzel Decorative',serif;font-size:4.2em;line-height:.75;float:left;margin-right:.08em;margin-top:.05em;color:var(--ink);font-weight:700;}
+p.prose{font-size:17.5px;line-height:1.95;color:var(--ink-l);margin-bottom:1.4rem;text-align:justify;hyphens:auto;}
+p.prose em{color:var(--ink);font-style:italic}
+p.prose strong{color:var(--ink);font-weight:600;font-style:normal}
+.scene-break{text-align:center;margin:2.5rem 0;color:var(--gold);letter-spacing:.4em;font-size:14px;opacity:.6}
+.scene-title{font-family:'Cinzel',serif;font-size:12px;letter-spacing:.18em;color:var(--gold);text-align:center;text-transform:uppercase;margin:2.5rem 0 1.5rem;display:flex;align-items:center;gap:10px;}
+.scene-title::before,.scene-title::after{content:'';flex:1;height:.5px;background:var(--parch-dk)}
+.narr-note{border-left:3px solid var(--gold);background:rgba(138,106,32,.05);border-top:.5px solid var(--parch-dk);border-bottom:.5px solid var(--parch-dk);border-right:.5px solid var(--parch-dk);padding:1rem 1.4rem;margin:1.8rem 0;font-size:15.5px;line-height:1.8;color:var(--ink-f);font-style:italic;}
+.narr-note strong{font-style:normal;color:var(--ink);font-weight:600}
+.dm-box{background:rgba(122,26,26,.05);border:.5px solid rgba(122,26,26,.25);border-left:3px solid var(--red);padding:1rem 1.3rem;margin:2rem 0;}
+.dm-lbl{font-family:'Cinzel',serif;font-size:10px;letter-spacing:.15em;color:var(--red);margin-bottom:5px}
+.dm-box p{font-size:14.5px;line-height:1.72;color:var(--ink-l)}
+.dm-box ul{padding-left:1.2rem;margin-top:.5rem}
+.dm-box li{font-size:14px;line-height:1.65;color:var(--ink-l);margin-bottom:.3rem}
+.ch-footer{margin-top:4rem;padding-top:1.5rem;border-top:1px solid var(--parch-dk);display:flex;justify-content:space-between;align-items:center}
+.ch-footer .f-num{font-family:'Cinzel',serif;font-size:12px;color:var(--gold);letter-spacing:.15em}
+.ch-footer .f-title{font-family:'Cinzel',serif;font-size:11px;color:var(--ink-f);letter-spacing:.1em;font-style:italic}
+.back-link{display:block;text-align:center;margin-bottom:1.5rem}
+.back-link a{font-family:'Cinzel',serif;font-size:11px;letter-spacing:.15em;color:var(--gold-b);text-decoration:none;opacity:.7;transition:opacity .2s}
+.back-link a:hover{opacity:1}
+@media(max-width:640px){.book{padding:3rem 2rem}}
+</style>
+</head>
+<body>
+<div class="book">
+
+<div class="back-link"><a href="index.html">← VOLVER A VERATH</a></div>
+<div class="ch-ornament">✦ &nbsp; ✦ &nbsp; ✦</div>
+<div class="ch-label">Crónicas de Verath · Año 800 del Quiebre</div>
+<div class="ch-title">La Noche de Resaca</div>
+<div class="ch-subtitle">Capítulo I — En el que el mundo decide que cinco extraños se necesitan</div>
+<div class="ch-rule"><span></span><div class="ch-diamond"></div><span class="r"></span></div>
+
+<div class="scene-title">I · El que no debería recordar</div>
+
+<p class="prose drop-cap">El pantano no suelta lo que ama. Eso lo saben todos los Bathrak desde antes de aprender a nadar — el agua quieta guarda, el agua quieta protege, y cuando algo desaparece dentro de ella, la culpa siempre es del que se fue, nunca del pantano que lo tragó. Pero esa noche, en algún lugar entre el sueño y lo que vino después, el pantano soltó a uno de los suyos. Y él no recordaba por qué.</p>
+
+<p class="prose">Lo que quedaba en su memoria era fragmentos: una neblina que no olía a agua sino a algo más viejo, más seco, como pergamino quemado mezclado con tierra removida. Había estado con su compañía — su capitán, sus hermanos de círculo — y luego no había estado. La neblina llegó despacio, como llegan las cosas que saben que no puedes huir de ellas.</p>
+
+<p class="prose">Usó el único conjuro que los Caminantes aprenden antes que cualquier otro: <em>Detectar Magia.</em> El mundo se volvió ruido. Entidades. Docenas de ellas rodeando la neblina por todos lados, invisibles para el ojo pero hirientes para el sentido mágico — como intentar escuchar una conversación y descubrir que no son voces sino gritos muy lejanos, muy antiguos. Su capitán desapareció primero. Luego los dos compañeros que quedaban simplemente se detuvieron. De pie. Rígidos. Los ojos en blanco como huevos de piedra, el rigor de los muertos instalado en cuerpos que seguían de pie, que seguían <em>ahí</em>, que ya no eran nadie.</p>
+
+<p class="prose">Corrió. No porque fuera cobarde — los Bathrak no tienen esa categoría — sino porque algo en su entrenamiento, más profundo que el pensamiento, le dijo que quedarse era exactamente lo que la neblina quería. Y mientras corría vio, en el borde de su visión, una silueta. Una rana. Pequeña, de pie, con los dedos extendidos en el patrón de un conjuro que él no reconocía pero que reconocía haber sentido antes, en las frecuencias más bajas del Rito del Eco. La silueta lo miró. Y desapareció.</p>
+
+<div class="narr-note">
+
+<p class="prose">Un carruaje. Lo escuchó antes de verlo — ruedas sobre piedra mojada, el jadeo de algo que no eran caballos tirando de un peso que no debía moverse. Se escondió entre las raíces de un árbol muerto y lo vio pasar: figuras humanoides moviéndose con la rigidez específica de quien carga algo que no quiere cargar, y sobre el carruaje, de una forma que el idioma de superficie no tiene palabra exacta para describir, una cabeza. Que gritaba.</p>
+
+<p class="prose"><em>"Buscamos ayudaaaa."</em> No en el tono del que pide. En el tono del que anuncia. Espectral. Resonante de la manera equivocada, la manera que hace que los sacos vocales de un Bathrak tiemblen en frecuencias que normalmente reservan para el peligro máximo. El carruaje pasó. La cabeza siguió gritando mientras se alejaba. Y él se quedó entre las raíces tratando de decidir si lo que acababa de ver era real o si era un fragmento del Rito que se había negado a quedarse atrás.</p>
+
+<p class="prose">Después de eso: nada. Un hueco donde debería haber recuerdos. Y luego Resaca, con sus tablas húmedas y su olor a sal y a comercio y a gente que tiene demasiados secretos para un solo cuerpo. Despertó sin saber cómo había llegado. Sin saber cuánto tiempo había pasado. Sin saber si sus compañeros con los ojos en blanco seguían de pie en algún rincón del pantano, o si el rigor mortis finalmente los había dejado caer.</p>
+
+<div class="scene-title">II · Los que no quedaron</div>
+
+<p class="prose drop-cap">Hay una dignidad específica en reprobar una prueba militar. No es la dignidad del héroe — es la dignidad del que se sienta en una taberna y decide que la noche todavía puede salvarse con suficiente alcohol y suficiente compañía. <strong>Aerion</strong>, el elfo bardo, y <strong>Solare</strong>, el clérigo humano, llegaron a <em>El Casco Partido</em> con esa dignidad intacta y la firme voluntad de deshacerla vaso por vaso. Junto a ellos, callado y con la costumbre del que carga misiones demasiado grandes para compartirlas, el druida semielfo de Ysseval.</p>
+
+<p class="prose">Aerion llevaba la máscara como siempre. Siempre la llevaba — no por elección sino por necesidad, porque la máscara no era un accesorio sino una condición: una cosa viva pegada a su cara que decidía por él qué emoción mostrar al mundo, que reía cuando él no quería reír y lloraba en los momentos más inoportunos. Esa noche la máscara mostraba resignación con un toque de ironía. Aerion consideró que era apropiadamente honesto dado el resultado de las pruebas. Solare, al lado, bebía con la seriedad de alguien cuya fe en dioses misericordiosos estaba siendo moderadamente puesta a prueba por el ejército de Resaca.</p>
+
+<p class="prose">Fue la armadura lo que cambió el ambiente. En los colores que todo el que frecuenta tabernas con cierta regularidad aprende a reconocer — colores de nobleza, colores de alguien que no necesita pasar desapercibido porque el mundo ya sabe moverse a su alrededor. El hombre que los llevaba preguntó, con la delicadeza estudiada de alguien que ha practicado mucho preguntar cosas delicadas, sobre el Forajido Sombrío. No era una pregunta de curiosidad. Era una pregunta de propósito.</p>
+
+<p class="prose">Aerion hizo un truco con monedas. Era inevitable — Aerion era un bufón, y los bufones llenan los silencios incómodos con gestos brillantes que frecuentemente producen resultados desastrosos. Las monedas fueron, las monedas volvieron, y al final del truco un dedo señalaba con seguridad absoluta a un anciano completamente inocente que llevaba sus propias monedas en el bolsillo y no tenía nada que ver con el Forajido Sombrío ni con ningún otro forajido de ningún renombre. El hombre de la armadura miró al anciano. El anciano miró al hombre de la armadura. Aerion miró al techo con la expresión de quien calcula cuánto tiempo tiene antes de que la situación empeore.</p>
+
+<p class="prose">El hombre se fue sin su respuesta. Y entonces <strong>Silas</strong> bajó.</p>
+
+<p class="prose">El Forajido Sombrío no era famoso. Eso era, precisamente, lo que lo hacía bueno en lo suyo — en el mundo del medio, el que conocen los que mueven cosas que no deberían moverse, su nombre circulaba con el respeto discreto de lo verdaderamente competente. Fuera de ese mundo era nadie. Hablaron los cuatro un rato, y en ese rato algo se asentó entre ellos sin que nadie lo nombrara, la sensación vaga pero reconocible de que esta conversación específica importaba de alguna forma que todavía no tenía forma.</p>
+
+<div class="scene-title">III · La sombra en la atalaya</div>
+
+<p class="prose drop-cap">Era pequeña. Lo suficiente para no ser amenaza, demasiado quieta para ser accidente. El Bathrak los observaba desde arriba con los ojos completamente dorados que ven bien en la oscuridad y que ese momento procesaban cuatro personas en una calle de Resaca con la calidad de atención que los Caminantes aprenden desde pequeños: quiénes son, qué cargan, si representan peligro o algo más complicado que el peligro.</p>
+
+<p class="prose">Hablaron. Y la conversación todavía encontraba su forma cuando llegó la bestia.</p>
+
+<p class="prose">Sin aviso. Sin el momento dramático que las historias prometen. La criatura simplemente estaba, de repente, en el espacio donde antes no había nada: algo del tamaño de una carreta de carga, con la forma vagamente de un cangrejo pero con la <em>intención</em> de algo mucho más antiguo que los cangrejos. Un guardia de Resaca — un hombre sin nombre que esa noche estaba donde le tocaba estar haciendo lo que le tocaba hacer — no tuvo tiempo de procesar lo que tenía delante antes de que las pinzas cerraran. Los que intentaron ayudar murieron con la velocidad misericordiosa de lo inevitable.</p>
+
+<p class="prose">Los cinco intentaron lo que podían con lo que tenían. No es una historia sobre eficiencia — es una historia sobre el momento anterior a saber qué clase de historia es.</p>
+
+<p class="prose">Entonces llegó <strong>Vethann</strong>.</p>
+
+<p class="prose">Era un hombre. Eso era lo más perturbador: un hombre, con cara de hombre y ropa de hombre, y sin embargo el aire a su alrededor tenía la densidad equivocada, como si el espacio donde él existía tuviera más historia que el espacio de cualquier otra persona en el mundo. El rayo de luz llegó de ningún lugar y la bestia dejó de existir con la misma velocidad con que había aparecido. No dramáticamente. Simplemente: estaba, y luego no estaba. Vethann miró a los cinco como se mira algo que ya se ha visto muchas veces desde muchos ángulos y desde muchos momentos simultáneos.</p>
+
+<p class="prose">Sus lacayos — dos figuras que se movían con la lentitud de quien ha entregado años de vida como precio de estar ahí — dejaron una nota. Una oferta. <em>Únanse a nuestra causa. Quedarán impunes de pecados.</em> Vethann se fue. Y luego uno de los lacayos regresó con la urgencia de algo no terminado y dejó un pergamino. Las letras irradiaban luz. El Bathrak lo recogió primero.</p>
+
+<p class="prose">Una taberna. El quinto puente. Al clérigo Solare le dijeron algo diferente: <em>sigue tu corazón.</em></p>
+
+<div class="scene-title">IV · El hombre que ríe un minuto</div>
+
+<p class="prose drop-cap">La puerta del quinto puente no tenía nada de especial vista desde fuera. Silas la evaluó con el ojo profesional del que ha entrado a muchos lugares sin ser invitado y llegó a la conclusión razonable de que podía entrar sin ser notado. Intentó hacerlo. Y entonces el hombre apareció.</p>
+
+<p class="prose">Grande no es la palabra correcta — grande implica solo tamaño, y el hombre que bloqueaba la entrada era algo más que tamaño. Era la clase de presencia física que hace que el instinto hable antes que el pensamiento. Musculoso de la manera en que lo son las cosas que han trabajado duro durante mucho tiempo, sin artificios. Miró a Silas con la expresión de quien ya ha visto este intento antes y no le resulta especialmente interesante.</p>
+
+<p class="prose">Entonces se rio. Un minuto completo, exacto, sin parar y sin explicación. Y cuando terminó de reírse respondió con total normalidad a la pregunta no formulada de la situación, como si el minuto de risa no hubiera ocurrido o fuera tan parte de su funcionamiento habitual que no merecía mención.</p>
+
+<p class="prose">Aerion lo imitó. Porque Aerion era un bufón, y los bufones reconocen en el absurdo una lengua franca. Hizo el minuto de risa con la precisión de alguien que ha estudiado toda su vida cómo funciona la gente, y algo en eso — la voluntad de entrar en el ritmo de otra persona sin cuestionarlo — fue suficiente. El hombre se hizo a un lado. Aerion, Silas y Solare entraron.</p>
+
+<div class="scene-title">V · Los que se fueron al agua quieta</div>
+
+<p class="prose drop-cap">Mientras tres de ellos cruzaban el umbral de la taberna del quinto puente, el Bathrak y el druida tomaron el camino opuesto. El consejo del círculo Bathrak no espera, y la laguna en la memoria del primero — ese hueco donde debería haber recuerdos de cómo llegó a Resaca — era el tipo de problema que su gente toma en serio.</p>
+
+<p class="prose">Se adentraron en la zona del pantano que penetra Resaca por el este, donde las tablas de madera se vuelven puentes sobre agua quieta y los ecos del Shadowfell son perceptibles incluso para quien no tiene entrenamiento. El druida caminaba con la atención específica de alguien acostumbrado a leer lo que los espacios naturales comunican — y el pantano de Resaca comunicaba algo entre la inquietud y la advertencia, aunque no con suficiente claridad para saber qué advertía exactamente.</p>
+
+<p class="prose">El consejo los esperaba o no los esperaba — eso dependería de cosas que solo el consejo podía saber. Pero la pregunta que llevaban era real y el hueco en la memoria del Bathrak era real, y en Verath los problemas reales eventualmente encuentran a las personas reales dispuestas a mirarlos de frente.</p>
+
+<div class="scene-break">✦ &nbsp; ✦ &nbsp; ✦</div>
+
+<p class="prose" style="text-align:center;font-style:italic;color:var(--ink-f);font-size:16px">Resaca cruje debajo de ellos. El Mar del Quiebre lanza relámpagos afuera. En algún lugar del pantano de Veyrath, dos figuras están de pie con los ojos en blanco. En las profundidades del Nivel Siete de Drukkaz, algo aprende nombres. En un cañón de tierra roja, las inscripciones cambian.</p>
+
+<p class="prose" style="text-align:center;font-style:italic;color:var(--ink-f);font-size:16px">El mundo tiene ochocientos años de secretos acumulados. Y esta noche, cinco personas jalaron el primer hilo.</p>
+
+
+<div class="ch-footer">
+  <span class="f-num">VERATH · AÑO 800</span>
+  <span class="f-title">Capítulo I — La Noche de Resaca</span>
+  <span class="f-num">I</span>
+</div>
+</div>
+</body>
+</html>

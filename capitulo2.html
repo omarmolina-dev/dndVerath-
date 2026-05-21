@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>VERATH — Capítulo II: El Peso del Nombre</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Cinzel:wght@400;600;700&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--ink:#1a1208;--ink-l:#3a2a18;--ink-f:#5a4a38;--parch:#f5ecd7;--parch-d:#e8d9b8;--parch-dk:#d4c090;--gold:#8a6a20;--gold-b:#c9a84c;--red:#7a1a1a;}
+html{scroll-behavior:smooth}
+body{background:#1a1006;background-image:radial-gradient(ellipse at 20% 20%,#2a1a08 0%,transparent 55%),radial-gradient(ellipse at 80% 80%,#0a0804 0%,transparent 55%);min-height:100vh;font-family:'Crimson Pro',Georgia,serif;display:flex;justify-content:center;padding:3rem 1.5rem;}
+.book{max-width:720px;width:100%;background:var(--parch);background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='.04'/%3E%3C/svg%3E"),linear-gradient(170deg,#faf3e2 0%,#f5ecd7 50%,#ede0c0 100%);padding:5rem 5.5rem;position:relative;box-shadow:0 0 0 1px var(--parch-dk),0 0 0 3px #1a1006,0 8px 60px rgba(0,0,0,.7),inset 0 0 100px rgba(180,140,60,.05);}
+.book::before{content:'';position:absolute;inset:18px;border:1px solid var(--parch-dk);pointer-events:none}
+.book::after{content:'';position:absolute;inset:22px;border:.5px solid rgba(138,106,32,.2);pointer-events:none}
+.ch-ornament{text-align:center;color:var(--gold);font-size:20px;letter-spacing:.4em;opacity:.6;margin-bottom:1rem}
+.ch-label{font-family:'Cinzel',serif;font-size:11px;letter-spacing:.25em;color:var(--gold);text-align:center;text-transform:uppercase;margin-bottom:.4rem}
+.ch-title{font-family:'Cinzel Decorative',serif;font-size:clamp(22px,4vw,34px);font-weight:700;color:var(--ink);text-align:center;line-height:1.2;margin-bottom:.3rem}
+.ch-subtitle{font-family:'Cinzel',serif;font-size:13px;color:var(--ink-f);text-align:center;letter-spacing:.12em;font-style:italic;margin-bottom:2rem}
+.ch-rule{display:flex;align-items:center;gap:10px;justify-content:center;margin:1.2rem 0 2.5rem}
+.ch-rule span{height:1px;width:80px;background:linear-gradient(to right,transparent,var(--gold))}
+.ch-rule span.r{background:linear-gradient(to left,transparent,var(--gold))}
+.ch-diamond{width:7px;height:7px;background:var(--gold);transform:rotate(45deg)}
+.drop-cap::first-letter{font-family:'Cinzel Decorative',serif;font-size:4.2em;line-height:.75;float:left;margin-right:.08em;margin-top:.05em;color:var(--ink);font-weight:700;}
+p.prose{font-size:17.5px;line-height:1.95;color:var(--ink-l);margin-bottom:1.4rem;text-align:justify;hyphens:auto;}
+p.prose em{color:var(--ink);font-style:italic}
+p.prose strong{color:var(--ink);font-weight:600;font-style:normal}
+.scene-break{text-align:center;margin:2.5rem 0;color:var(--gold);letter-spacing:.4em;font-size:14px;opacity:.6}
+.scene-title{font-family:'Cinzel',serif;font-size:12px;letter-spacing:.18em;color:var(--gold);text-align:center;text-transform:uppercase;margin:2.5rem 0 1.5rem;display:flex;align-items:center;gap:10px;}
+.scene-title::before,.scene-title::after{content:'';flex:1;height:.5px;background:var(--parch-dk)}
+.narr-note{border-left:3px solid var(--gold);background:rgba(138,106,32,.05);border-top:.5px solid var(--parch-dk);border-bottom:.5px solid var(--parch-dk);border-right:.5px solid var(--parch-dk);padding:1rem 1.4rem;margin:1.8rem 0;font-size:15.5px;line-height:1.8;color:var(--ink-f);font-style:italic;}
+.narr-note strong{font-style:normal;color:var(--ink);font-weight:600}
+.ch-footer{margin-top:4rem;padding-top:1.5rem;border-top:1px solid var(--parch-dk);display:flex;justify-content:space-between;align-items:center}
+.ch-footer .f-num{font-family:'Cinzel',serif;font-size:12px;color:var(--gold);letter-spacing:.15em}
+.ch-footer .f-title{font-family:'Cinzel',serif;font-size:11px;color:var(--ink-f);letter-spacing:.1em;font-style:italic}
+.back-link{display:block;text-align:center;margin-bottom:1.5rem}
+.back-link a{font-family:'Cinzel',serif;font-size:11px;letter-spacing:.15em;color:var(--gold-b);text-decoration:none;opacity:.7;}
+.back-link a:hover{opacity:1}
+@media(max-width:640px){.book{padding:3rem 2rem}}
+</style>
+</head>
+<body>
+<div class="book">
+<div class="back-link"><a href="index.html">← VOLVER A VERATH</a></div>
+<div class="ch-ornament">✦ &nbsp; ✦ &nbsp; ✦</div>
+<div class="ch-label">Crónicas de Verath · Año 800 del Quiebre</div>
+<div class="ch-title">El Peso del Nombre</div>
+<div class="ch-subtitle">Capítulo II — En el que algo antiguo les recuerda lo pequeños que son</div>
+<div class="ch-rule"><span></span><div class="ch-diamond"></div><span class="r"></span></div>
+
+<div class="scene-title">I · El Círculo de las Ranas</div>
+
+<p class="prose drop-cap">El círculo no es fácil de encontrar para quien no sabe dónde mirar. Se entra por el pantano este de Resaca, por un camino que parece cerrarse detrás de los pasos, y se llega a una sala de musgo vivo que huele exactamente como debería oler el hogar de alguien que lleva siglos construyéndolo. El guardia que recibió a Mirai no era lo que cualquiera esperaría de un guardia — era viejo, con los ojos de alguien que ha visto muchas cosas terminar y pocas empezar, y tenía la clase de calma que solo viene de haber decidido hace mucho tiempo que el pánico no sirve para nada.</p>
+
+<p class="prose">La misión que ofreció era extraña en la superficie: ser el cuentacuentos del grupo. El historiador. El que lleva el registro de lo que ocurre. Pero debajo de esa extrañeza había algo más serio — la sugerencia, dicha sin mucho énfasis, de que lo que este grupo fuera a hacer iba a importar de formas que todavía no eran visibles. Que alguien debía llevar la cuenta.</p>
+
+<p class="prose">Mirai se llevó cinco escarabajos. Pequeños, quietos, con el brillo específico de los insectos que viven cerca del Shadowfell. El guardia no explicó exactamente para qué servían más allá de lo necesario — los Bathrak tienen esa costumbre, decir lo suficiente y dejar que el resto se descubra en su momento. También recibió un bastón que no aporta nada en combate pero que, según las palabras exactas del guardia, se debe <em>"usar en caso de emergencia"</em>. Y una piedra con el símbolo del círculo — una marca de pertenencia, de que hay gente que sabe que existe y sabe dónde está.</p>
+
+<p class="prose">La druida Arivian observaba todo esto con la atención de alguien que ha aprendido que los gestos pequeños generalmente contienen las cosas más importantes. El bastón. La piedra. Los escarabajos. Ninguna de esas cosas era accidental.</p>
+
+<div class="scene-title">II · La taberna, las notas y el hombre asustado</div>
+
+<p class="prose drop-cap">Gorr los saludó como Gorr saluda a todo el mundo — con presencia, con brevedad, con el gesto de quien lleva demasiado tiempo en un mismo umbral para sorprenderse de quién entra. Los pasó a comer. La mesa tenía cinco notas.</p>
+
+<p class="prose"><em>El carruaje llegó. Esta vez en el muelle este. Algo grita dentro. Hasta el amanecer estará ahí.</em></p>
+
+<p class="prose">Cinco notas idénticas. Una para cada uno. Nadie las había puesto — eso era ya un hecho establecido en la forma en que funciona El Quinto Puente, que es que algunas cosas simplemente están cuando deberían estar. Mientras comían, alguien notó los emblemas. Gente en la taberna con la misma marca — discreta, en el cuello de la capa o en el filo del cinturón. Los <strong>Cantores del Mar</strong>: un grupo de mercenarios con suficiente reputación para tener emblema propio y suficiente discreción para no anunciarlo.</p>
+
+<p class="prose">Fue en ese intervalo de comida y observación cuando Aerion se encontró con el hombre del cuarto del fondo. El que llevaba días sin hablar con nadie. El que había reconocido la máscara con un miedo que no era actuado.</p>
+
+<p class="prose">Lo que ocurrió no fue exactamente una conversación. El hombre — que resultó ser ex miembro de la misma iglesia que Solare, la Mano Abierta, aunque había tomado caminos muy distintos desde entonces — no contó lo que sabía. Lo que hizo fue asustar, insinuar, dejar pedazos en el aire que no llegaban a ningún lado. Y luego se desmayó. Gorr apareció y se hizo cargo, con la eficiencia de alguien que ha visto demasiados desmayos en su taberna para que uno más lo altere. Oshe, en algún momento de ese proceso, demostró que la fuerza que tiene no es decorativa — con un golpe sin aparente esfuerzo recordó a todos que el Quinto Puente tiene su propia forma de mantener el orden.</p>
+
+<div class="scene-title">III · El carruaje y lo que guardaba</div>
+
+<p class="prose drop-cap">Vino un enviado. Tenía la clase de postura de quien trabaja para alguien importante y ha aprendido a cargarla como si fuera suya. La misión era el carruaje del muelle este — investigarlo, ver qué gritaba, reportar. A Solare le dieron una insignia: líder del grupo, al menos para efectos de este contrato. Era la primera vez que alguien les decía de forma oficial que eran un grupo.</p>
+
+<p class="prose">El carruaje tenía una estatua de piedra sentada dentro. Nadie había puesto una estatua de piedra ahí — o si lo habían hecho, no había sido hace poco. La estatua se partió a la mitad antes de que terminaran de acercarse, con el sonido específico de algo que ha estado guardando tensión durante mucho tiempo y finalmente decide soltarla. Lo que salió no fue violencia exactamente. Fue algo más parecido a una liberación.</p>
+
+<p class="prose">Mirai lo supo antes de que pudiera procesarlo conscientemente: era el mismo carruaje. El que había visto aquella noche en el pantano, con las figuras humanoides y la cabeza que gritaba. El mismo barro en las ruedas, el mismo olor, la misma forma de ocupar el espacio que tenían las cosas que vienen de lugares donde el Shadowfell sangra al mundo material. Las almas que salieron del carruaje hacia arriba — hacia la cima, como humo que sube — tenían la calidad específica de cosas que llevaban demasiado tiempo atrapadas.</p>
+
+<div class="narr-note"><strong>Lo que nadie supo en ese momento:</strong> el carruaje había cruzado el Mar del Quiebre usando un método que no deja rastro en el agua. Quien lo envió sabía exactamente lo que hacía. Y quien lo esperaba en Resaca también.</div>
+
+<div class="scene-title">IV · El contratista que no era un contratista</div>
+
+<p class="prose drop-cap">El enviado regresó. O lo que parecía el enviado — porque lo que se presentó la segunda vez tenía la misma forma pero una presencia completamente distinta, de la manera en que una llama tiene la misma forma que su sombra pero son cosas fundamentalmente opuestas.</p>
+
+<p class="prose">Aerion recibió la primera señal: un violín, no la guitarra que siempre había tenido. Pequeño detalle. El tipo de detalle que solo nota quien sabe exactamente qué está buscando. A Solare le dejaron una marca en el brazo — no visible para todos, pero presente, y al tocarla dolía de la manera específica en que duelen las cosas que no deberían estar ahí.</p>
+
+<p class="prose">La entidad — porque eso era lo que era, un nombre que el idioma de Resaca no tiene pero que el cuerpo reconoce antes que la mente — tenía la forma de un diablo con un grimorio que goteaba sangre. No metafóricamente. El grimorio goteaba sangre que caía al suelo y no dejaba mancha, lo que era de alguna manera más perturbador que si la dejara. Les dijo cosas. A Mirai le dijo que nunca debió volver. A los demás les dijo, con la gentileza específica de algo que no necesita ser cruel porque tiene todo el tiempo del mundo, que sus caminos eran conocidos.</p>
+
+<p class="prose">Luego los golpeó. No con magia, no con alguna habilidad sobrenatural elaborada — con golpes físicos, calculados, suficientes para dejarlos sin conciencia sin cruzar la línea hacia algo que no pudiera deshacerse. Era la violencia de algo que sabe exactamente cuánto puede hacer y elige hacer menos porque puede.</p>
+
+<div class="scene-title">V · El sueño de Mirai</div>
+
+<p class="prose drop-cap">El escarabajo hizo lo que debían hacer los escarabajos — lo durmió. Y en ese sueño forzado, mientras el resto yacía inconsciente en el suelo del muelle, Mirai vio lo que el círculo había decidido que todavía no estaba listo para ver.</p>
+
+<p class="prose">El pantano primero. Siempre el pantano primero.</p>
+
+<p class="prose">La sala de reunión. Las paredes de musgo vivo. La luz de las velas de Veyrath. Sus compañeros. Y el capitán Vess de pie frente a alguien de espaldas. Una capucha. Algo en el aire diferente, espeso, como si el espacio donde esa figura estaba parada tuviera más peso que el resto de la habitación.</p>
+
+<p class="prose">Vess hablaba con la voz que le temblaba. <em>"...no entiendes lo que estás pidiendo. Esto no es lealtad—"</em> La figura respondía algo que el sueño convertía en resonancia sin forma. Pero la cara de Vess decía que las palabras tenían sentido. Que parte de él ya estaba convencido.</p>
+
+<p class="prose"><em>"...cuando el árbol caminante llegue..."</em> — la voz de la figura, grave, sin urgencia — <em>"...ya será tarde para elegir."</em></p>
+
+<p class="prose">Las inscripciones. Vess las mencionaba. <em>"...ya cambiaron tres veces y tú sigues diciendo que es tiempo."</em> La figura giró la cabeza — solo un poco, solo la insinuación de que sabía que había alguien más en la habitación.</p>
+
+<p class="prose">Blanco. La silueta de la rana del círculo con los dedos extendidos. El conjuro.</p>
+
+<p class="prose" style="text-align:center;font-style:italic;color:var(--ink-f);">— nada —</p>
+
+<p class="prose">Mirai despertó en el segundo piso de la taberna, en una cama, con Gorr pasando a ver cómo estaban. Gorr los había encontrado tirados y los había llevado arriba — porque alguien tenía que hacerlo, y Gorr era quien estaba. No lo dijo, pero estaba en la forma en que revisó que todos respiraran antes de sentarse a esperar.</p>
+
+<div class="scene-title">VI · El hombre que eligió el mar</div>
+
+<p class="prose drop-cap">Arivian encontró al hombre del cuarto del fondo todavía en el edificio — lo que era inesperado dado lo que había pasado antes. Preso del miedo, con la clase de determinación que tienen las personas que ya tomaron una decisión y solo esperan el momento, se tiró por la ventana.</p>
+
+<p class="prose">Arivian lo salvó. Eso también era inesperado — no porque Arivian no fuera capaz, sino porque no era lo que el hombre había planeado. Lo que dijo, en el tiempo que tuvo antes de hacer lo que finalmente hizo, fue esto: <em>aléjate de la máscara.</em> No explicó por qué. No tuvo tiempo, o no quiso tenerlo. Se arrojó al mar antes de que pudiera impedirse.</p>
+
+<p class="prose">Oshe, cuando bajaron, no preguntó qué había pasado. Prometió en cambio decirles algo sobre la marca que la entidad le había dejado a Solare en el brazo — cuando fuera el momento correcto, en sus propios términos, que era la única forma en que Oshe compartía cosas.</p>
+
+<div class="scene-break">✦ &nbsp; ✦ &nbsp; ✦</div>
+
+<p class="prose" style="text-align:center;font-style:italic;color:var(--ink-f);font-size:16px">Cinco personas en el segundo piso de una taberna en una ciudad flotante en el centro de un mar de tormenta eterna. Una marca en el brazo de uno de ellos que duele al tocarla. Un grimorio que gotea sangre que no mancha. Un hombre que eligió el mar antes que seguir sabiendo lo que sabía.</p>
+<p class="prose" style="text-align:center;font-style:italic;color:var(--ink-f);font-size:16px">El mundo tiene cosas que llevan mucho tiempo esperando. Y parece que acaban de notar que estos cinco existen.</p>
+
+<div class="ch-footer">
+  <span class="f-num">VERATH · AÑO 800</span>
+  <span class="f-title">Capítulo II — El Peso del Nombre</span>
+  <span class="f-num">II</span>
+</div>
+</div>
+</body>
+</html>

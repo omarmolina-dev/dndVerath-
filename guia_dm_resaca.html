@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>VERATH — Guía DM: Resaca</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Cinzel:wght@400;600;700&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --ink:#1a1208;--ink-l:#3a2a18;--ink-f:#5a4a38;
+  --parch:#f0e6d0;--parch-d:#e0d0a8;--parch-dk:#c8b478;
+  --gold:#7a5a10;--gold-b:#b89040;--red:#6a0a0a;--red-l:#9a1a1a;
+}
+html{scroll-behavior:smooth}
+body{background:#0e0806;background-image:radial-gradient(ellipse at 20% 20%,#1e1008 0%,transparent 50%),radial-gradient(ellipse at 80% 80%,#080406 0%,transparent 50%);min-height:100vh;font-family:'Crimson Pro',Georgia,serif;display:flex;justify-content:center;padding:3rem 1.5rem;}
+.doc{max-width:860px;width:100%;background:var(--parch);background-image:linear-gradient(160deg,#f5e8cc 0%,#ede0c0 50%,#e0cca0 100%);padding:4rem 4.5rem;position:relative;box-shadow:0 0 0 1px var(--parch-dk),0 0 0 3px #0e0806,0 8px 60px rgba(0,0,0,.7);}
+.doc::before{content:'';position:absolute;inset:14px;border:1px solid var(--parch-dk);pointer-events:none}
+.doc::after{content:'';position:absolute;inset:18px;border:.5px solid rgba(106,10,10,.15);pointer-events:none}
+
+/* HEADER */
+.doc-title{font-family:'Cinzel Decorative',serif;font-size:clamp(18px,3vw,26px);font-weight:700;color:var(--ink);letter-spacing:.08em;margin-bottom:.2rem;}
+.doc-sub{font-family:'Cinzel',serif;font-size:11px;color:var(--red-l);letter-spacing:.2em;text-transform:uppercase;margin-bottom:.4rem;}
+.dm-stamp{display:inline-block;font-family:'Cinzel',serif;font-size:10px;letter-spacing:.15em;color:var(--red-l);border:.5px solid var(--red);padding:3px 10px;margin-bottom:1.8rem;}
+
+/* TABS */
+.tab-nav{display:flex;gap:0;border-bottom:1px solid var(--parch-dk);margin-bottom:2rem;flex-wrap:wrap;}
+.tab-btn{font-family:'Cinzel',serif;font-size:10px;letter-spacing:.1em;padding:8px 14px;background:none;border:none;border-bottom:2px solid transparent;color:var(--ink-f);cursor:pointer;transition:all .2s;text-transform:uppercase;}
+.tab-btn:hover{color:var(--ink)}.tab-btn.on{color:var(--red-l);border-bottom-color:var(--red-l)}
+.tab-pane{display:none}.tab-pane.on{display:block}
+
+/* TEXTO */
+p.b{font-size:15px;line-height:1.8;color:var(--ink-l);margin-bottom:.8rem;}
+p.b strong{color:var(--ink);font-weight:600;}
+p.b em{color:var(--ink-f);font-style:italic;}
+
+/* SECCIÓN */
+.sec{font-family:'Cinzel',serif;font-size:10px;letter-spacing:.15em;color:var(--red-l);text-transform:uppercase;border-bottom:.5px solid var(--parch-dk);padding-bottom:.3rem;margin:1.4rem 0 .8rem;}
+.scene{font-family:'Cinzel',serif;font-size:11px;letter-spacing:.15em;color:var(--gold-b);text-transform:uppercase;margin:1.8rem 0 1rem;display:flex;align-items:center;gap:8px;}
+.scene::before,.scene::after{content:'';flex:1;height:.5px;background:var(--parch-dk)}
+
+/* BLOQUES */
+.lore{background:rgba(122,90,16,.06);border-left:3px solid var(--gold-b);border-top:.5px solid var(--parch-dk);border-bottom:.5px solid var(--parch-dk);border-right:.5px solid var(--parch-dk);padding:.9rem 1.2rem;margin:.9rem 0;font-size:14.5px;line-height:1.78;color:var(--ink-l);font-style:italic;}
+.lore strong{font-style:normal;color:var(--ink);font-weight:600;}
+
+.secret{background:rgba(106,10,10,.05);border:.5px solid rgba(106,10,10,.2);border-left:3px solid var(--red-l);padding:.9rem 1.2rem;margin:.9rem 0;}
+.secret-lbl{font-family:'Cinzel',serif;font-size:9px;letter-spacing:.15em;color:var(--red-l);margin-bottom:5px;text-transform:uppercase;}
+.secret p,.secret li{font-size:14px;line-height:1.7;color:var(--ink-l);}
+.secret ul{padding-left:1.1rem;margin-top:.4rem;}
+.secret li{margin-bottom:.25rem;}
+
+/* CARRUAJE */
+.carriage-reveal{border:.5px solid var(--parch-dk);margin-bottom:1.1rem;overflow:hidden;}
+.cr-header{background:rgba(106,10,10,.06);padding:.75rem 1.1rem;border-bottom:.5px solid var(--parch-dk);display:flex;align-items:center;gap:.8rem;}
+.cr-num{font-family:'Cinzel',serif;font-size:10px;letter-spacing:.1em;color:var(--red-l);border:.5px solid var(--red-l);padding:2px 7px;flex-shrink:0;}
+.cr-title{font-family:'Cinzel',serif;font-size:12px;font-weight:600;color:var(--ink);letter-spacing:.06em;}
+.cr-body{padding:.85rem 1.1rem;}
+.cr-body p{font-size:14px;line-height:1.7;color:var(--ink-l);margin-bottom:.4rem;}
+.cr-body ul{padding-left:1.1rem;margin:.4rem 0;}
+.cr-body li{font-size:13.5px;line-height:1.65;color:var(--ink-l);margin-bottom:.2rem;}
+.cr-quote{font-style:italic;color:var(--ink);border-left:2px solid var(--gold-b);padding:.3rem .7rem;margin:.5rem 0;font-size:14.5px;background:rgba(122,90,16,.04);}
+
+/* MISIONES */
+.mission-card{border:.5px solid var(--parch-dk);margin-bottom:1.2rem;overflow:hidden;}
+.mc-banner{padding:.9rem 1.1rem;border-bottom:.5px solid var(--parch-dk);}
+.mc-name{font-family:'Cinzel',serif;font-size:14px;font-weight:600;color:var(--ink);letter-spacing:.07em;margin-bottom:2px;}
+.mc-type{font-family:'Cinzel',serif;font-size:9px;letter-spacing:.12em;color:var(--gold-b);text-transform:uppercase;}
+.mc-body{padding:.85rem 1.1rem;}
+.mc-body p{font-size:14px;line-height:1.7;color:var(--ink-l);margin-bottom:.4rem;}
+.mc-body strong{color:var(--ink);font-weight:600;}
+.mc-reward{font-family:'Cinzel',serif;font-size:10px;letter-spacing:.1em;color:var(--gold-b);margin-top:.6rem;}
+.draven-tag{display:inline-block;font-family:'Cinzel',serif;font-size:9px;letter-spacing:.1em;padding:2px 8px;border:.5px solid var(--red-l);color:var(--red-l);margin-top:.4rem;}
+
+/* DIOSES NOMBRES */
+.god-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:.6rem;margin:.6rem 0;}
+.god-box{border:.5px solid var(--parch-dk);padding:.7rem .9rem;background:rgba(255,255,255,.06);}
+.god-divine{font-family:'Cinzel',serif;font-size:12px;font-weight:600;color:var(--ink);letter-spacing:.06em;}
+.god-human{font-size:13px;color:var(--ink-l);font-style:italic;margin-top:2px;}
+.god-note{font-size:11px;color:var(--ink-f);margin-top:3px;line-height:1.4;}
+.god-status{font-family:'Cinzel',serif;font-size:9px;letter-spacing:.08em;margin-top:4px;}
+.vivo{color:#1a6a20;}.desconocido{color:var(--red-l);}
+
+/* MENSAJES PRIVADOS */
+.msg-card{border:.5px solid var(--parch-dk);margin-bottom:1.2rem;overflow:hidden;}
+.msg-banner{padding:.75rem 1.1rem;border-bottom:.5px solid var(--parch-dk);display:flex;align-items:center;justify-content:space-between;}
+.msg-char{font-family:'Cinzel',serif;font-size:13px;font-weight:600;color:var(--ink);letter-spacing:.06em;}
+.msg-tag{font-family:'Cinzel',serif;font-size:9px;letter-spacing:.1em;color:var(--gold-b);border:.5px solid var(--gold-b);padding:2px 7px;}
+.msg-body{padding:.9rem 1.1rem;background:rgba(255,255,255,.04);}
+.msg-body p{font-size:14.5px;line-height:1.8;color:var(--ink-l);margin-bottom:.5rem;}
+.msg-body p:last-child{margin-bottom:0;}
+.msg-body em{color:var(--ink);font-style:italic;}
+.msg-sig{font-family:'Cinzel',serif;font-size:10px;letter-spacing:.1em;color:var(--gold-b);margin-top:.8rem;text-align:right;opacity:.7;}
+
+/* CONEXIONES */
+.conn-row{display:grid;grid-template-columns:1fr 1fr;gap:.7rem;margin:.7rem 0;}
+.conn-box{border:.5px solid var(--parch-dk);padding:.8rem 1rem;}
+.conn-title{font-family:'Cinzel',serif;font-size:11px;letter-spacing:.08em;color:var(--red-l);margin-bottom:.4rem;}
+.conn-body{font-size:13.5px;line-height:1.65;color:var(--ink-l);}
+.conn-body strong{color:var(--ink);font-weight:600;}
+
+/* DRAVEN ENCUENTRO */
+.enc{border:.5px solid var(--parch-dk);margin-bottom:.9rem;}
+.enc-hdr{background:rgba(106,10,10,.06);padding:.7rem 1rem;border-bottom:.5px solid var(--parch-dk);display:flex;align-items:center;gap:.7rem;}
+.enc-n{font-family:'Cinzel',serif;font-size:9px;letter-spacing:.1em;color:var(--red-l);border:.5px solid var(--red-l);padding:2px 7px;flex-shrink:0;}
+.enc-t{font-family:'Cinzel',serif;font-size:12px;font-weight:600;color:var(--ink);}
+.enc-body{padding:.8rem 1rem;}
+.enc-body p{font-size:14px;line-height:1.7;color:var(--ink-l);margin-bottom:.4rem;}
+.enc-quote{font-style:italic;color:var(--ink);border-left:2px solid var(--red-l);padding:.3rem .7rem;margin:.5rem 0;font-size:14px;background:rgba(106,10,10,.03);}
+
+.back-link{display:block;text-align:center;margin-bottom:1.5rem;}
+.back-link a{font-family:'Cinzel',serif;font-size:11px;letter-spacing:.15em;color:var(--gold-b);text-decoration:none;opacity:.7;}
+.back-link a:hover{opacity:1}
+
+@media(max-width:640px){
+  .doc{padding:2.5rem 1.8rem;}
+  .god-row{grid-template-columns:1fr 1fr;}
+  .conn-row{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+<div class="doc">
+<div class="back-link"><a href="index.html">← VOLVER A VERATH</a></div>
+<div class="doc-title">Guía DM — Resaca: Las Semanas Antes del Viaje</div>
+<div class="doc-sub">Carruaje · Misiones · Mensajes privados · Nombres humanos · Conexiones</div>
+<div class="dm-stamp">⚠ SOLO DM — NO COMPARTIR</div>
+
+<div class="tab-nav">
+  <button class="tab-btn on" onclick="tab('carruaje',this)">El Carruaje</button>
+  <button class="tab-btn" onclick="tab('cobijo',this)">Gorr y el Cobijo</button>
+  <button class="tab-btn" onclick="tab('misiones',this)">5 Misiones</button>
+  <button class="tab-btn" onclick="tab('privados',this)">Mensajes Privados</button>
+  <button class="tab-btn" onclick="tab('dioses',this)">Nombres Humanos</button>
+  <button class="tab-btn" onclick="tab('conexiones',this)">Conexiones</button>
+</div>
+
+<!-- ════════════════════════════════════ -->
+<!-- TAB: CARRUAJE -->
+<!-- ════════════════════════════════════ -->
+<div class="tab-pane on" id="tab-carruaje">
+
+<p class="b">El carruaje es el primer misterio real que el grupo investiga juntos. No es un dungeon ni un combate — es una escena de tensión política con capas. Debería tomar media sesión investigar y resolverlo, y lo que descubran debe sentirse como tirar de un hilo y descubrir que tiene kilómetros de largo.</p>
+
+<div class="sec">Qué es el carruaje</div>
+<p class="b">El carruaje pertenece a un mensajero privado — no de ningún reino oficialmente, sino de la red de intermediarios que conecta a Drukkaz con Azurath en su alianza secreta. Los mensajeros de esta red no llevan documentos escritos. Llevan <strong>portadores de memoria</strong>: personas a las que se les ha realizado un ritual de la Orden de las Hojas que Recuerdan que implanta un mensaje directamente en su mente, de forma que solo pueden repetirlo una vez, al destinatario correcto, y luego el recuerdo se autodestruye.</p>
+<p class="b">Lo que grita en el carruaje es uno de esos portadores. Un humano joven — 19 años, se llama <strong>Edvar</strong> — al que el ritual salió mal. En lugar de implantar el mensaje de forma limpia, lo atrapó en un bucle: el mensaje se repite en su mente sin parar, sin que él pueda callarlo, sin que pueda pensar en nada más. Lo que grita no es "buscamos ayuda" por accidente — es el fragmento del mensaje que logra escapar a través del dolor.</p>
+
+<div class="sec">La investigación — capas de descubrimiento</div>
+
+<div class="carriage-reveal">
+  <div class="cr-header"><div class="cr-num">01</div><div class="cr-title">Primera capa — Lo que ven desde fuera</div></div>
+  <div class="cr-body">
+    <p>El carruaje está en el muelle este de Resaca, aparentemente abandonado. Sin caballos — algo más lo movía, y ese algo ya no está. Las ruedas tienen barro de pantano, no de camino seco. Vino por agua, no por tierra.</p>
+    <p>Desde fuera se escucha el grito amortiguado. Las figuras humanoides que lo acompañaban en la visión del Bathrak no están — desaparecieron en algún momento de la noche.</p>
+    <ul>
+      <li><strong>Percepción CD 12:</strong> Las ruedas tienen marcas de haber sido modificadas para flotar brevemente — hay restos de madera adicional en los ejes, ya retirada.</li>
+      <li><strong>Investigación CD 14:</strong> El símbolo grabado en la madera lateral no es de ningún reino. Es un símbolo comercial privado — quien lo reconozca (Historia CD 16) sabe que lo usan intermediarios de alto nivel entre reinos que no quieren contacto oficial.</li>
+    </ul>
+  </div>
+</div>
+
+<div class="carriage-reveal">
+  <div class="cr-header"><div class="cr-num">02</div><div class="cr-title">Segunda capa — Edvar</div></div>
+  <div class="cr-body">
+    <p>Dentro hay un joven humano atado — no por sus captores sino por sí mismo, con cuerdas que él mismo se ató en algún momento de lucidez para no hacerse daño. Tiene los ojos abiertos pero no ve lo que tiene enfrente. Habla sin parar en un murmullo roto que a veces sube a grito.</p>
+    <p>Lo que repite, fragmentado, en bucle:</p>
+    <div class="cr-quote">"...el árbol ya se movió, el árbol ya se movió, la piedra lo sabe, dile que la piedra lo sabe, cuando el árbol llegue al borde las inscripciones mostrarán el— el árbol ya se movió, el árbol ya se—"</div>
+    <p>Si alguien lo toca o intenta calmarlo: tirada de SAB o CAR CD 13. Éxito — Edvar los ve brevemente, claridad de segundos:</p>
+    <div class="cr-quote">"¿No son del consejo? [miedo] Tengo que decírselo al consejo. El árbol caminante cambió de dirección. Saben lo que significa. Alguien tiene que saberlo antes de que— antes de que llegue al borde."</div>
+    <p>Luego vuelve al bucle. No puede salir sin ayuda mágica — <strong>Restauración Menor</strong> estabiliza el bucle temporalmente (1 hora de lucidez). <strong>Restauración Mayor</strong> lo cura completamente pero olvida el mensaje para siempre.</p>
+  </div>
+</div>
+
+<div class="carriage-reveal">
+  <div class="cr-header"><div class="cr-num">03</div><div class="cr-title">Tercera capa — La hora de lucidez</div></div>
+  <div class="cr-body">
+    <p>Si consiguen la hora de lucidez, Edvar puede contar — con la urgencia de alguien que sabe que el tiempo se acaba — lo siguiente:</p>
+    <ul>
+      <li>Trabaja para un intermediario llamado solo <strong>"el Sokrath"</strong> — nunca vio su cara completa. Los Sokrath no trabajan para nadie, lo que hace esto muy inusual.</li>
+      <li>El mensaje era para alguien en Resaca. No sabe quién. Le dijeron que lo sabría reconocer — que la persona correcta le haría una pregunta específica que él sabría responder.</li>
+      <li>El árbol caminante de Ysseval cambió de dirección hace cinco días. Lleva 300 años caminando en la misma dirección. Ahora apunta hacia el este — hacia el Mar del Quiebre.</li>
+      <li>Hay alguien estudiando ese cambio. Alguien que conecta el movimiento del árbol con las inscripciones de Durrakh. Y ese alguien está siendo seguido.</li>
+      <li>No sabe por quién. Pero quien lo contrató tenía miedo. Y los Sokrath no tienen miedo de casi nada.</li>
+    </ul>
+    <p>Pasada la hora, Edvar cae dormido. Dormirá 18 horas. Al despertar estará bien — confundido, sin recuerdo del mensaje, con un hambre voraz y la sensación de que algo importante se le escapó.</p>
+  </div>
+</div>
+
+<div class="carriage-reveal">
+  <div class="cr-header"><div class="cr-num">04</div><div class="cr-title">Cuarta capa — Lo que el carruaje esconde</div></div>
+  <div class="cr-body">
+    <p>Bajo el asiento del carruaje, en un compartimento oculto (Investigación CD 17): una caja de madera negra de Drukkaz. Cerrada con un mecanismo de piedra que requiere presión en el patrón correcto para abrirse (no una llave — los dedos correctos en el orden correcto).</p>
+    <p>Dentro si la abren (Herramientas de Ladrón CD 19, o fuerza bruta que destruye parte del contenido):</p>
+    <ul>
+      <li>Un fragmento de corteza de árbol de Ysseval con texto grabado — demasiado fragmentado para leer completo, pero el druida reconoce que la corteza pertenece a un árbol muy viejo. Con Historia CD 15: el patrón del texto es similar a los sistemas de memoria de los árboles de Ysseval. Alguien arrancó esto de un árbol que recordaba algo.</li>
+      <li>Un mapa parcial de las inscripciones de Durrakh — solo una sección, copiada a mano con precisión obsesiva. En el margen, en un idioma que nadie reconoce inmediatamente: tres palabras repetidas. Con Arcanos CD 18: el idioma es una variante arcaica del idioma de los Sokrath. Las palabras significan aproximadamente: <em>"cuando llegue, abrir"</em>.</li>
+    </ul>
+  </div>
+</div>
+
+<div class="secret">
+  <div class="secret-lbl">🔒 Solo DM — El cuadro completo</div>
+  <p>El Sokrath que contrató a Edvar es uno de los pocos Sokrath que opera fuera de Drukkaz por voluntad propia — se llama <strong>Veth-sin-peso</strong> en su lengua, lo que los humanos han simplificado a <strong>Koss</strong>. Lleva décadas rastreando la conexión entre el árbol caminante y las inscripciones de Durrakh porque cree que ambas son señales de un sistema de alarma construido antes del Quiebre — algo que los constructores del mundo antiguo dejaron para avisar cuando algo específico estuviera a punto de ocurrir. El árbol cambia de dirección cuando el evento se acerca. Las inscripciones de Durrakh muestran las instrucciones para responder. Koss está siendo seguido por agentes de la conspiración Drukkaz-Azurath porque esa conspiración también quiere esa información — pero para llegar a las Islas del Eje antes de que nadie más entienda qué está pasando. Koss aparecerá más adelante en la campaña, probablemente en Drukkaz o en el camino a Veyrath.</p>
+</div>
+
+</div>
+
+<!-- ════════════════════════════════════ -->
+<!-- TAB: COBIJO -->
+<!-- ════════════════════════════════════ -->
+<div class="tab-pane" id="tab-cobijo">
+
+<div class="sec">Por qué Gorr les ofrece quedarse</div>
+<p class="b">Gorr vio tres cosas específicas esa noche que otros no vieron o no valoraron igual:</p>
+<p class="b"><strong>Primero:</strong> Aerion imitó su risa sin burla, sin incomodidad, sin hacer una pregunta al respecto. La aceptó como parte del mundo y siguió adelante. Gorr lleva doce años recibiendo miradas, preguntas, burlas y compasión no solicitada por esa risa. Nadie la ha tratado simplemente como <em>lo que es</em> con tanta naturalidad.</p>
+<p class="b"><strong>Segundo:</strong> El Bathrak lo miró a los ojos cuando otros miraban hacia arriba o hacia los lados. Los Bathrak tienen la costumbre de evaluar presencias por vibración además de vista — y lo que Gorr sintió en esa evaluación no fue miedo ni cálculo sino reconocimiento. Alguien que también vive siendo lo que es en un mundo no diseñado para eso.</p>
+<p class="b"><strong>Tercero:</strong> Vio cómo manejaron el carruaje. No perfectamente — torpemente, con más buena voluntad que habilidad — pero sin rendirse y sin abandonar a Edvar una vez que encontraron que había un humano adentro sufriendo. Eso importa para Gorr más de lo que él diría en voz alta.</p>
+
+<div class="sec">La oferta</div>
+<p class="b">Gorr los espera cuando regresan del carruaje. No dice mucho — nunca dice mucho. Pero dice esto:</p>
+<div class="lore">"Oshe tiene cuartos arriba. Normalmente no los usa para huéspedes. Le voy a preguntar si hace una excepción." [Pausa] "Si preguntan por qué: no pregunten por qué."</div>
+<p class="b">Oshe, cuando Gorr pregunta, los mira uno por uno desde la barra durante un silencio que dura lo suficiente para ser incómodo. Luego:</p>
+<div class="lore">"Dos semanas. Desayuno incluido. No se meten en la bodega. No traen sangre adentro — lávense afuera si vienen de pelea. Y si en algún momento necesito un favor, me lo deben."</div>
+<p class="b">No negocia el plazo ni las condiciones. No es hostilidad — es la claridad de alguien que ha tenido suficientes huéspedes problemáticos para saber exactamente qué términos funcionan.</p>
+
+<div class="sec">Qué ganan con el cobijo</div>
+<p class="b">Las dos semanas en El Quinto Puente son el tiempo que tienen para hacer las misiones secundarias en Resaca, juntar dinero para el viaje, y establecer dinámicas entre personajes antes de que la campaña los lleve lejos. Durante esas semanas:</p>
+<ul style="padding-left:1.2rem;margin:.6rem 0;">
+  <li style="font-size:14px;line-height:1.7;color:var(--ink-l);margin-bottom:.3rem">Oshe les da información sobre Resaca que no tienen — rutas, personas, qué misiones son seguras y cuáles no lo son tanto.</li>
+  <li style="font-size:14px;line-height:1.7;color:var(--ink-l);margin-bottom:.3rem">Gorr los protege pasivamente — su presencia disuade problemas que de otra forma llegarían a la taberna.</li>
+  <li style="font-size:14px;line-height:1.7;color:var(--ink-l);margin-bottom:.3rem">Drath, que también está en la taberna, empieza a confiar en ellos lentamente — lo suficiente para compartir información sobre la máscara en fragmentos.</li>
+  <li style="font-size:14px;line-height:1.7;color:var(--ink-l)">El favor que Oshe cobrará eventualmente: los manda a investigar algo en el pantano de Resaca que ella no puede investigar sola. Eso es una misión adicional para más adelante.</li>
+</ul>
+
+</div>
+
+<!-- ════════════════════════════════════ -->
+<!-- TAB: 5 MISIONES -->
+<!-- ════════════════════════════════════ -->
+<div class="tab-pane" id="tab-misiones">
+
+<p class="b">Cinco misiones disponibles en Resaca durante las dos semanas de cobijo. <strong>Necesitan completar al menos dos para tener suficiente oro para el viaje.</strong> Cada misión tiene algo más que oro — información, contactos, o consecuencias que importarán más tarde. Draven aparece en la misión 4, cuando menos lo esperan.</p>
+
+<div class="mission-card">
+  <div class="mc-banner" style="background:rgba(10,30,60,.04);border-left:4px solid #1a4a8a;">
+    <div class="mc-name">01 — El Mercader del Arrecife</div>
+    <div class="mc-type">Misión de escolta · Recomendada para empezar · Sin combate garantizado</div>
+  </div>
+  <div class="mc-body">
+    <p>Un mercader Arkai llamado <strong>Sev</strong> — branquias visibles, dedos palmeados, muy nervioso en tierra — necesita escoltar un cargamento desde el muelle norte hasta un almacén en el muelle sur de Resaca. El problema: tiene que cruzar el Puente del Medio, que está controlado por una banda de Half-Orcs que cobra "peaje" a quien cruza con mercancía.</p>
+    <p><strong>El encargo real:</strong> Sev no quiere que lo acompañen como fuerza — quiere que lo acompañen como distracción. Que alguien convenza, engañe o done a los Half-Orcs mientras él pasa. Si hay pelea, huye y pierde el cargamento.</p>
+    <p>Lo que descubren si hablan con los Half-Orcs: el peaje no es capricho — alguien en Resaca les cobró una deuda y esta es su forma de pagarla. Si investigan quién (Investigación CD 14): el nombre lleva a un intermediario comercial de Tharessi que opera en Resaca. Ese nombre aparecerá de nuevo más adelante.</p>
+    <p><strong>Complicación:</strong> El cargamento de Sev no es lo que parece. Son fragmentos de cristal de tormenta extraídos ilegalmente del arrecife — mercancía que Tharessi protege celosamente. Si alguien lo descubre y decide qué hacer con esa información, las consecuencias son interesantes.</p>
+    <div class="mc-reward">RECOMPENSA: 40 piezas de oro + favor de Sev (acceso a rutas de agua en Resaca)</div>
+  </div>
+</div>
+
+<div class="mission-card">
+  <div class="mc-banner" style="background:rgba(10,40,20,.04);border-left:4px solid #2a6a3a;">
+    <div class="mc-name">02 — Lo que el Pantano Guardó</div>
+    <div class="mc-type">Misión de recuperación · Recomendada · Combate probable</div>
+  </div>
+  <div class="mc-body">
+    <p>Una anciana Veyrath — no Oshe, otra, que vive en las tablas más externas de Resaca sobre el pantano — perdió algo en el agua hace tres días. No lo llama "perdido" — dice que el pantano lo tomó. Lo que tomó es un cofre de madera que contiene los únicos registros escritos de su familia. Lo necesita de vuelta.</p>
+    <p>El pantano en esa zona tiene presencia activa del Shadowfell — zonas de eco más densas de lo habitual. El cofre está a seis metros de profundidad en barro oscuro. Para llegar necesitan al Bathrak (anfibiosis) o una solución creativa. El problema: algo vive en el barro. No es inteligente. Pero es territorial.</p>
+    <p><strong>Criatura:</strong> Cieno gris (Gray Ooze, CR 1/2) de tamaño mayor al habitual — el pantano de Resaca tiene acceso al Shadowfell y las criaturas que viven en él crecen. Dos de ellos. Combate en terreno acuático con penalizaciones.</p>
+    <p><strong>Lo que hay en el cofre además de los registros:</strong> Una carta sin terminar, en idioma Veyrath, que menciona "el hombre de la sombra equivocada" y una fecha de hace 15 años. El Bathrak con su Memoria del Agua puede percibir un eco en el cofre — alguien lo tiró adrede, no lo perdió.</p>
+    <div class="mc-reward">RECOMPENSA: 35 piezas de oro + la anciana conoce los ecos del pantano de Resaca mejor que nadie</div>
+  </div>
+</div>
+
+<div class="mission-card">
+  <div class="mc-banner" style="background:rgba(30,10,40,.04);border-left:4px solid #5a2a7a;">
+    <div class="mc-name">03 — La Deuda de Drath</div>
+    <div class="mc-type">Misión de información · Opcional · Sin combate · Alta recompensa narrativa</div>
+  </div>
+  <div class="mc-body">
+    <p>Drath les pide ayuda — no con palabras, con hechos: aparece en el desayuno con una nota en la mano que claramente lo perturbó, y cuando Aerion pregunta, la deja ver. La nota dice: <em>"Sabemos dónde estás. El objeto que buscas también. Entrégalo o nosotros lo recogemos."</em> Sin firma. Sin amenaza explícita.</p>
+    <p>No es la Iglesia del Umbral quien lo contacta — es alguien que trabaja para la Iglesia del Umbral desde fuera, un cobrador de "deudas de conocimiento": personas que saben cosas que la Iglesia prefiere que no circulen. Drath lleva años huyendo de eso.</p>
+    <p><strong>Lo que pide:</strong> Que alguien lo ayude a reunirse con un contacto en el mercado flotante de Resaca sin que lo sigan. Necesita a alguien de distracción, alguien de vigilancia, alguien que sepa detectar seguimientos.</p>
+    <p><strong>A cambio:</strong> Cuenta todo lo que sabe sobre la máscara de Aerion — que no es todo, pero es suficiente para que Aerion entienda por primera vez que la máscara no fue un accidente. Y da un nombre: el fabricante de la máscara tiene un nombre. Drath lo susurra.</p>
+    <p><strong>Complicación:</strong> El contacto en el mercado flotante sabe algo adicional — algo que Drath no sabía que sabía. Ese algo conecta directamente con la misión personal del Bathrak.</p>
+    <div class="mc-reward">RECOMPENSA: 25 piezas de oro + información sobre la máscara + nombre del fabricante</div>
+  </div>
+</div>
+
+<div class="mission-card">
+  <div class="mc-banner" style="background:rgba(60,10,10,.05);border-left:4px solid #9a1a1a;">
+    <div class="mc-name">04 — El Documento del Capitán</div>
+    <div class="mc-type">Misión de robo · Obligatoria para el viaje · Aquí aparece Draven</div>
+    <div class="draven-tag">⚠ DRAVEN OSSOK APARECE EN ESTA MISIÓN</div>
+  </div>
+  <div class="mc-body">
+    <p>Para cruzar el Mar del Quiebre en cualquier barco que valga algo, necesitan un documento de tránsito sellado — sin él, los barcos con quillas de cristal de tormenta no los aceptan como pasajeros, y los que los aceptarían son demasiado peligrosos incluso para el nivel de riesgo que el grupo puede manejar. Oshe les explica que hay un capitán de barco llamado <strong>Torva</strong> — una mujer Arkai de 50 años, seria, no corrupta — que emite documentos de tránsito legítimos. El problema: Torva no emite documentos sin referencias verificables, y el grupo no tiene ninguna.</p>
+    <p>Gorr conoce a alguien que puede falsificar las referencias — un gnomo llamado <strong>Pess</strong> que opera en el tercer muelle. Pess puede hacerlo, pero necesita un sello específico para que la falsificación sea convincente. Ese sello está en la oficina del oficial de tránsito del muelle central. La oficina tiene guardia.</p>
+    <p><strong>La misión:</strong> Entrar a la oficina del oficial, copiar el sello (no robarlo — una copia en cera es suficiente), salir sin que sepan que estuvieron ahí. Pura misión de sigilo e improvisación.</p>
+    <p><strong>Aquí aparece Draven:</strong> Cuando salen de la oficina — con el sello o sin él, exitosamente o casi — Draven está apoyado en la pared del edificio de enfrente. No hace nada. Solo los mira. Luego silba la misma melodía de la primera vez que lo vieron. Y se va caminando en dirección opuesta.</p>
+    <p>No dice nada. No los detiene. Pero ambas partes saben que sabe lo que hicieron. Ese momento de silencio vale más que cualquier amenaza explícita.</p>
+    <div class="mc-reward">RECOMPENSA: Los documentos de tránsito (necesarios para el viaje) + 20 piezas de oro de Pess por el trabajo</div>
+  </div>
+</div>
+
+<div class="mission-card">
+  <div class="mc-banner" style="background:rgba(20,15,5,.04);border-left:4px solid #7a6a20;">
+    <div class="mc-name">05 — El Pasajero Perdido</div>
+    <div class="mc-type">Misión de búsqueda · Opcional · Alta recompensa en oro</div>
+  </div>
+  <div class="mc-body">
+    <p>Un mercader de Tharessi con más dinero que sentido común contrató a un buscapersonas para encontrar a su hijo — que llegó a Resaca hace tres semanas y no volvió a dar señales. El mercader ofrece pago generoso porque no puede venir él mismo (sus razones no son claras, lo que es una bandera roja que los jugadores perspicaces notarán).</p>
+    <p>El hijo — <strong>Lorek</strong>, 22 años, humano Tharess, cabello rizado, marca de nacimiento en el cuello derecho — está en Resaca. Vivo. El problema: no quiere ser encontrado. Se fue a propósito, sin decirle a su padre adónde iba, porque su padre tiene deudas con personas que ahora saben que Lorek existe.</p>
+    <p><strong>La decisión:</strong> Cuando encuentran a Lorek y entienden la situación, el grupo tiene que decidir qué hacer. Entregar a Lorek al mercader es cobrar el dinero y probablemente condenar a un joven a ser usado como palanca de negociación. No entregarlo es perder la recompensa pero ganarse un contacto en Resaca que les debe la vida.</p>
+    <p>Lorek, si lo ayudan, resulta saber algo sobre rutas de contrabando que evitan el paso oficial por el Mar del Quiebre — rutas más peligrosas pero más baratas que no requieren los documentos de la misión 04. Es una alternativa, no un sustituto.</p>
+    <div class="mc-reward">RECOMPENSA: 60 piezas de oro (si entregan a Lorek) ó 0 oro + contacto valioso (si lo protegen)</div>
+  </div>
+</div>
+
+<div class="secret">
+  <div class="secret-lbl">📋 Economía del viaje</div>
+  <p>Para el viaje a Veyrath el grupo necesita aproximadamente <strong>80-100 piezas de oro</strong> para pasajes, provisiones de dos semanas, y fondos de emergencia. Con las misiones obligatorias (04 cubre documentos, cualquier otra da oro suficiente) llegan. Si hacen tres o más misiones tienen margen de comodidad. Si solo hacen dos van justo — lo que crea tensión interesante durante el viaje.</p>
+</div>
+
+</div>
+
+<!-- ════════════════════════════════════ -->
+<!-- TAB: MENSAJES PRIVADOS -->
+<!-- ════════════════════════════════════ -->
+<div class="tab-pane" id="tab-privados">
+
+<p class="b">Estos mensajes se envían por privado a cada jugador antes de la sesión 2. El tono es de DM a jugador, no de narrador. Deben sentirse como información privilegiada — porque lo son. No revelan todo, pero plantan exactamente lo suficiente para que el jugador llegue a la sesión con dirección propia.</p>
+
+<div class="msg-card">
+  <div class="msg-banner" style="border-left:4px solid #8a5a20;">
+    <div class="msg-char">Para el jugador de Aerion</div>
+    <div class="msg-tag">PRIVADO</div>
+  </div>
+  <div class="msg-body">
+    <p>Antes de que empiece la sesión quiero que tengas esto en mente: <em>la máscara no apareció sola.</em> No sabes cuándo llegó — hay un período borroso que siempre has atribuido a ella misma — pero esta sesión vas a encontrar a alguien que la reconoce con miedo. No huyas de esa conversación. Lo que esa persona sabe cambia la forma en que entiendes lo que llevas en la cara.</p>
+    <p>Tu misión personal es quitarte la máscara. Para eso necesitas saber quién la fabricó y por qué. Esta sesión obtienes el primer fragmento real de esa respuesta — si decides perseguirlo.</p>
+    <p>Una cosa más: hay algo en la máscara que tú no controlas. No es solo que muestre emociones que no son tuyas. A veces <em>inclina</em> lo que sientes en una dirección. Muy sutilmente. Probablemente lo hayas notado sin nombrarlo. Eso también tiene explicación. También la vas a encontrar.</p>
+    <div class="msg-sig">— El DM</div>
+  </div>
+</div>
+
+<div class="msg-card">
+  <div class="msg-banner" style="border-left:4px solid #1a4a8a;">
+    <div class="msg-char">Para el jugador de Solare</div>
+    <div class="msg-tag">PRIVADO</div>
+  </div>
+  <div class="msg-body">
+    <p>Solare no tiene una misión clara todavía — lo sé, y es intencional. Por ahora tu personaje ayuda porque eso es lo que hace. Pero quiero que tengas esto en mente mientras juegas: <em>hay un hueco en tu memoria.</em> Un mentor que te introdujo a la fe de Sorra. Un nombre que debería estar ahí y no está.</p>
+    <p>No lo fuerces — déjalo aparecer cuando aparezca. Pero cuando alguien mencione Ysseval esta sesión, o cuando el druida hable del bosque, nota cómo reacciona Solare. Algo en esos temas genera una incomodidad que él mismo no puede explicar.</p>
+    <p>Lo que sí te digo: tu diosa está viva. No lo sabe casi nadie. Tú tampoco lo sabes todavía. Pero la dirección en la que este grupo parece estar moviéndose es exactamente la dirección donde está ella. Eso no es coincidencia — y Solare eventualmente va a tener que decidir qué hace con eso.</p>
+    <div class="msg-sig">— El DM</div>
+  </div>
+</div>
+
+<div class="msg-card">
+  <div class="msg-banner" style="border-left:4px solid #2a6a3a;">
+    <div class="msg-char">Para el jugador del Druida</div>
+    <div class="msg-tag">PRIVADO</div>
+  </div>
+  <div class="msg-body">
+    <p>Tu misión es encontrar por qué muere el bosque de Ysseval. Esta sesión vas a escuchar algo que te va a golpear más de lo que esperas: el árbol caminante — ese árbol de Ysseval que se mueve tres metros por día y lleva 300 años haciéndolo — cambió de dirección hace cinco días.</p>
+    <p>Tú sabes lo que eso significa mejor que nadie en el grupo. O intuyes que significa algo — aunque no sepas exactamente qué. Cuando lo escuches en la sesión, ese momento es tuyo. No lo suprimas.</p>
+    <p>Una cosa sobre tu bastón: en momentos de alta concentración o cuando estés cerca de magia muy antigua, a veces sientes cosas que no son tuyas. Fragmentos de algo. No es el bosque hablándote — o no solo eso. No te digo más. Pero presta atención a esos momentos.</p>
+    <div class="msg-sig">— El DM</div>
+  </div>
+</div>
+
+<div class="msg-card">
+  <div class="msg-banner" style="border-left:4px solid #7a1a1a;">
+    <div class="msg-char">Para el jugador de Silas</div>
+    <div class="msg-tag">PRIVADO</div>
+  </div>
+  <div class="msg-body">
+    <p>Silas quiere matar al rey de Veyrath. Bien. Vamos a trabajar con eso — pero necesito que me cuentes en privado, antes de la sesión, <em>por qué.</em> No tiene que ser algo que el personaje haya contado a nadie todavía. Solo necesito saberlo yo para darte las piezas correctas en el momento correcto.</p>
+    <p>Lo que sí te digo ahora: el rey de Veyrath es casi inaccesible sin una razón legítima para estar en su corte. Y hay al menos una persona en este grupo que necesita acceso legítimo a Veyrath por sus propias razones. Eso crea una situación interesante — Silas necesita a esa persona, y esa persona necesita que nadie arruine su acceso antes de tiempo.</p>
+    <p>Esta sesión también vas a encontrar algo que conecta con una deuda que tienes pendiente. No te digo más. Pero cuando aparezca, reconócelo.</p>
+    <div class="msg-sig">— El DM</div>
+  </div>
+</div>
+
+<div class="msg-card">
+  <div class="msg-banner" style="border-left:4px solid #1a6a4a;">
+    <div class="msg-char">Para el jugador del Bathrak</div>
+    <div class="msg-tag">PRIVADO</div>
+  </div>
+  <div class="msg-body">
+    <p>Esta sesión vas a tener un sueño. Te lo describiré en mesa cuando sea el momento — yo decido cuándo duerme tu personaje, pero cuando lo haga, lo que veas va a cambiar lo que entiendes sobre tu amnesia.</p>
+    <p>Lo que ya puedes saber: el consejo del círculo Bathrak en Resaca tiene información sobre lo que te ocurrió. Cuando vayas con ellos, te van a decir algo — no todo, nunca todo — pero suficiente para darte una dirección. Esa dirección lleva a Veyrath. Al Corazón Quieto. Al lugar donde el Shadowfell es tan delgado que puedes hablar con los que ya no están.</p>
+    <p>Tus aliados caídos tienen respuestas que tú necesitas. El camino para llegar ahí es largo. Pero esta sesión empieza ese camino.</p>
+    <p>Una cosa más: cuando escuches algo sobre el árbol caminante de Ysseval — y lo vas a escuchar — conecta eso con lo que el sueño te muestre. Esa conexión importa.</p>
+    <div class="msg-sig">— El DM</div>
+  </div>
+</div>
+
+</div>
+
+<!-- ════════════════════════════════════ -->
+<!-- TAB: NOMBRES HUMANOS -->
+<!-- ════════════════════════════════════ -->
+<div class="tab-pane" id="tab-dioses">
+
+<p class="b">Los dioses de Verath eran humanos. Cada uno tenía un nombre antes del Quiebre — un nombre que sus comunidades los conocían, que sus familias usaban, que ellos mismos respondían. Ese nombre es lo más humano que les queda. También es, en algunos casos, lo más peligroso: pronunciar el nombre humano de un dios frente a él produce una reacción que ningún otro estímulo produce. Para Vethann — que olvidó el suyo — encontrarlo sería un evento de magnitud imposible de predecir.</p>
+<p class="b">Para los jugadores, Vethann es un paladín extraordinariamente poderoso. No un dios. Nunca menciones la palabra "dios" en su presencia — él tampoco la usa para sí mismo. Eso es parte del diseño.</p>
+
+<div class="god-row">
+  <div class="god-box">
+    <div class="god-divine">VETHANN</div>
+    <div class="god-human">Nombre humano: <strong>desconocido</strong></div>
+    <div class="god-note">Lo olvidó. El fragmento del tiempo consumió su identidad pasada. Hay un hueco donde ese recuerdo debería estar — y alguien se lo robó.</div>
+    <div class="god-status vivo">● VIVO</div>
+  </div>
+  <div class="god-box">
+    <div class="god-divine">SORRA</div>
+    <div class="god-human">Nombre humano: <strong>Mara</strong></div>
+    <div class="god-note">Mara de la aldea de Soll, nacida en lo que hoy es la costa norte de Tharessi. 28 años aparentes. Hija de pescadores. Nadie de Soll sigue vivo que la recuerde.</div>
+    <div class="god-status vivo">● VIVA</div>
+  </div>
+  <div class="god-box">
+    <div class="god-divine">DRUUKH</div>
+    <div class="god-human">Nombre humano: <strong>Garren</strong></div>
+    <div class="god-note">Garren Oss, minero de la primera generación que abrió los túneles de Drukkaz. Eligió quedarse. El rey actual lo sabe.</div>
+    <div class="god-status vivo">● VIVO</div>
+  </div>
+  <div class="god-box">
+    <div class="god-divine">YSSARA</div>
+    <div class="god-human">Nombre humano: <strong>Lirel</strong></div>
+    <div class="god-note">Lirel Vass, archivista élfica de antes del Quiebre. Llevaba registros de todo. El fragmento la completó en esa dirección hasta el colapso.</div>
+    <div class="god-status desconocido">? DESCONOCIDO</div>
+  </div>
+  <div class="god-box">
+    <div class="god-divine">VORRAKH</div>
+    <div class="god-human">Nombre humano: <strong>Kael</strong></div>
+    <div class="god-note">Kael — sin apellido registrado. Los archivos de Drukkaz lo nombran antes del Quiebre como "el viajero sin origen". Eso es imposible si era humano normal.</div>
+    <div class="god-status desconocido">? DESCONOCIDO</div>
+  </div>
+  <div class="god-box">
+    <div class="god-divine">AZUTH</div>
+    <div class="god-human">Nombre humano: <strong>Dari</strong></div>
+    <div class="god-note">Dari Vel — sí, el apellido de la familia real de Azurath. No es coincidencia. La familia real desciende directamente de su hermano mayor.</div>
+    <div class="god-status desconocido">? DESCONOCIDO</div>
+  </div>
+  <div class="god-box" style="grid-column:1/-1;max-width:calc(33% - .4rem);">
+    <div class="god-divine">LYSSAVAR</div>
+    <div class="god-human">Nombre humano: <strong>Orveth</strong></div>
+    <div class="god-note">Orveth — nombre que la reina de Veyrath le puso a su hija sin saber de dónde venía el impulso. Lyssavar lo notó. No hizo nada al respecto. Todavía.</div>
+    <div class="god-status desconocido">? DESCONOCIDO</div>
+  </div>
+</div>
+
+<div class="secret" style="margin-top:1rem">
+  <div class="secret-lbl">🔒 Vethann para los jugadores</div>
+  <p>Los jugadores lo conocen como un paladín — alguien con un poder sobrenatural que va más allá de lo que un paladín debería tener, pero que ellos atribuirán a nivel, artefactos, o simplemente a ser extraordinariamente competente. <strong>Nunca digas "dios"</strong> en el contexto de Vethann frente a ellos. Si preguntan directamente qué es, Vethann responde: <em>"Alguien que lleva mucho tiempo en esto."</em> Si preguntan su orden o dios de devoción: <em>"Me debo a algo más viejo que las iglesias que conoces."</em> Ambas respuestas son completamente ciertas.</p>
+</div>
+
+</div>
+
+<!-- ════════════════════════════════════ -->
+<!-- TAB: CONEXIONES -->
+<!-- ════════════════════════════════════ -->
+<div class="tab-pane" id="tab-conexiones">
+
+<p class="b">Las historias de los cinco personajes no son paralelas — se cruzan. Estas conexiones no deben revelarse de golpe: deben ir apareciendo durante el juego, como cuando miras un mapa y de repente ves que dos caminos que parecían separados llevan al mismo punto.</p>
+
+<div class="sec">Conexiones entre personajes</div>
+<div class="conn-row">
+  <div class="conn-box">
+    <div class="conn-title">Aerion ↔ Bathrak</div>
+    <div class="conn-body">La máscara de Aerion es un Fragmento Observador de Lyssavar. El Bathrak tiene acceso al Corazón Quieto — el único lugar donde Lyssavar tiene un punto ciego. Si alguna vez necesitan hacer algo sin que Lyssavar los observe, el Bathrak es la clave. Ninguno de los dos sabe esto todavía.</div>
+  </div>
+  <div class="conn-box">
+    <div class="conn-title">Druida ↔ Bathrak</div>
+    <div class="conn-body">El árbol caminante que el Bathrak escucha en su sueño es el mismo árbol que el druida conoce de Ysseval. Cuando el Bathrak comparta el sueño, el druida reconocerá esa referencia — ese es el primer momento en que los dos se miran y entienden que sus misiones no son separadas.</div>
+  </div>
+  <div class="conn-box">
+    <div class="conn-title">Silas ↔ Aerion</div>
+    <div class="conn-body">Silas necesita acceso a la corte de Veyrath para acercarse al rey. Aerion necesita acceso a los archivos internos de la Iglesia del Umbral en Veyrath — lo que requiere presentación en la corte. Van al mismo lugar por razones opuestas. Aerion no puede dejar que Silas mate al rey antes de conseguir lo que necesita. Silas no puede esperar indefinidamente. Esa tensión es narrativamente muy fértil.</div>
+  </div>
+  <div class="conn-box">
+    <div class="conn-title">Solare ↔ Druida</div>
+    <div class="conn-body">Ambos van hacia Ysseval — uno porque el bosque lo llama, otro sin saberlo todavía. Cuando Solare empiece a recordar fragmentos de su mentor desaparecido, el druida puede reconocer detalles que lo conectan con algo que ocurrió en el bosque antes de que el druida saliera. Fueron al mismo lugar sin nunca haberse encontrado.</div>
+  </div>
+  <div class="conn-box">
+    <div class="conn-title">Silas ↔ Bathrak</div>
+    <div class="conn-body">La piedra del pantano que Draven le robó al Bathrak — Silas es quien más probabilidad tiene de poder recuperarla, dado su set de habilidades. Eso crea una dependencia temprana: el Bathrak necesita algo que Silas puede conseguir, lo que le da a Silas un tipo de poder en la dinámica grupal que no es de fuerza sino de utilidad.</div>
+  </div>
+  <div class="conn-box">
+    <div class="conn-title">Solare ↔ Silas</div>
+    <div class="conn-body">Un clérigo de la Mano Abierta y alguien que quiere matar a un rey. En principio incompatibles — Sorra sana, no ejecuta. Pero Solare no sabe todavía por qué Silas quiere al rey muerto. Cuando lo sepa, su respuesta moral no será simple. Eso es exactamente como debe ser.</div>
+  </div>
+</div>
+
+<div class="sec">Conexiones con el mundo</div>
+<div class="conn-row">
+  <div class="conn-box">
+    <div class="conn-title">El carruaje → Druida + Bathrak</div>
+    <div class="conn-body">El mensaje de Edvar sobre el árbol caminante conecta directamente con la misión del druida (el bosque de Ysseval) y con el sueño del Bathrak (las palabras del capitán Vess). El carruaje es el primer punto donde sus dos misiones separadas se tocan.</div>
+  </div>
+  <div class="conn-box">
+    <div class="conn-title">Drath → Aerion + Bathrak</div>
+    <div class="conn-body">Drath sabe sobre la máscara (Aerion). El contacto de Drath en el mercado flotante sabe algo sobre la asociación secreta Bathrak (Bathrak). Una sola misión — ayudar a Drath — da información relevante a dos personajes distintos.</div>
+  </div>
+  <div class="conn-box">
+    <div class="conn-title">Vethann → todos</div>
+    <div class="conn-body">Vethann los movió deliberadamente hacia Resaca, hacia el carruaje, hacia estar juntos. No por benevolencia — porque vio que este grupo específico, con estas misiones específicas, llega a un lugar que él necesita que alguien alcance. Qué lugar es ese: todavía no se revela.</div>
+  </div>
+  <div class="conn-box">
+    <div class="conn-title">Draven → todos</div>
+    <div class="conn-body">Draven los está observando porque cualquier cosa que Vethann mueve vale vigilar. La Hermandad de la Llama Gris tiene interés en el carruaje y en lo que apunta — lo mismo que ellos van a investigar. No son enemigos todavía. Podrían no serlo nunca. O podrían ser exactamente eso.</div>
+  </div>
+</div>
+
+<div class="secret" style="margin-top:1rem">
+  <div class="secret-lbl">🔒 El hilo que conecta todo — La alarma del mundo antiguo</div>
+  <p>El árbol caminante y las inscripciones de Durrakh son partes de un sistema de alarma construido antes del Quiebre por personas que sabían que algo iba a ocurrir eventualmente y querían dejar instrucciones. El árbol señala la dirección. Las inscripciones dan las instrucciones. Lo que ambos apuntan en última instancia es hacia las Islas del Eje. El Quiebre no fue un accidente — fue una respuesta a algo. Y ese algo no desapareció. Solo esperó. El árbol caminante lleva 800 años moviéndose en la dirección equivocada porque el sistema de alarma calibró mal la escala de tiempo. Ahora cambió de dirección porque el evento que el sistema anticipaba está finalmente cerca. Los personajes no saben nada de esto todavía. Pero están jalando los hilos correctos.</p>
+</div>
+
+</div>
+
+</div>
+<script>
+function tab(id,btn){
+  document.querySelectorAll('.tab-pane').forEach(p=>p.classList.remove('on'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('on'));
+  document.getElementById('tab-'+id).classList.add('on');
+  btn.classList.add('on');
+}
+</script>
+</body>
+</html>
