@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>VERATH — Sesión 2: El Quinto Puente</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Cinzel:wght@400;600;700&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --ink:#1a1208;--ink-l:#3a2a18;--ink-f:#5a4a38;
+  --parch:#f5ecd7;--parch-d:#e8d9b8;--parch-dk:#d4c090;
+  --gold:#8a6a20;--gold-b:#c9a84c;--red:#7a1a1a;
+  --dream:#1a0a2a;
+}
+html{scroll-behavior:smooth}
+body{background:#1a1006;background-image:radial-gradient(ellipse at 20% 20%,#2a1a08 0%,transparent 55%),radial-gradient(ellipse at 80% 80%,#0a0804 0%,transparent 55%);min-height:100vh;font-family:'Crimson Pro',Georgia,serif;display:flex;justify-content:center;padding:3rem 1.5rem;}
+.doc{max-width:820px;width:100%;background:var(--parch);background-image:linear-gradient(170deg,#faf3e2 0%,#f5ecd7 50%,#ede0c0 100%);padding:4rem 4.5rem;position:relative;box-shadow:0 0 0 1px var(--parch-dk),0 0 0 3px #1a1006,0 8px 60px rgba(0,0,0,.7);}
+.doc::before{content:'';position:absolute;inset:16px;border:1px solid var(--parch-dk);pointer-events:none}
+.doc::after{content:'';position:absolute;inset:20px;border:.5px solid rgba(138,106,32,.2);pointer-events:none}
+
+/* TABS */
+.tab-nav{display:flex;gap:0;border-bottom:1px solid var(--parch-dk);margin-bottom:2rem;flex-wrap:wrap;}
+.tab-btn{font-family:'Cinzel',serif;font-size:11px;letter-spacing:.1em;padding:9px 16px;background:none;border:none;border-bottom:2px solid transparent;color:var(--ink-f);cursor:pointer;transition:all .2s;text-transform:uppercase;}
+.tab-btn:hover{color:var(--ink)}.tab-btn.on{color:var(--gold);border-bottom-color:var(--gold)}
+.tab-pane{display:none}.tab-pane.on{display:block}
+
+/* HEADER */
+.doc-title{font-family:'Cinzel Decorative',serif;font-size:clamp(20px,3.5vw,30px);font-weight:700;color:var(--ink);letter-spacing:.1em;margin-bottom:.2rem;}
+.doc-sub{font-family:'Cinzel',serif;font-size:12px;color:var(--gold);letter-spacing:.2em;text-transform:uppercase;margin-bottom:2rem;padding-bottom:1.2rem;border-bottom:1px solid var(--parch-dk);}
+
+/* TIPOGRAFÍA */
+p.body{font-size:15.5px;line-height:1.82;color:var(--ink-l);margin-bottom:.85rem;}
+p.body strong{color:var(--ink);font-weight:600;}
+p.body em{color:var(--ink-f);font-style:italic;}
+p.prose{font-size:17px;line-height:1.95;color:var(--ink-l);margin-bottom:1.3rem;text-align:justify;}
+p.prose em{color:var(--ink);font-style:italic}
+p.prose strong{color:var(--ink);font-weight:600}
+.drop-cap::first-letter{font-family:'Cinzel Decorative',serif;font-size:4em;line-height:.75;float:left;margin-right:.08em;margin-top:.05em;color:var(--ink);font-weight:700;}
+
+/* SECCIÓN */
+.sec-lbl{font-family:'Cinzel',serif;font-size:10px;letter-spacing:.15em;color:var(--gold);text-transform:uppercase;border-bottom:.5px solid var(--parch-dk);padding-bottom:.3rem;margin:1.4rem 0 .8rem;}
+.scene-title{font-family:'Cinzel',serif;font-size:11px;letter-spacing:.18em;color:var(--gold);text-transform:uppercase;margin:2rem 0 1.2rem;display:flex;align-items:center;gap:10px;}
+.scene-title::before,.scene-title::after{content:'';flex:1;height:.5px;background:var(--parch-dk)}
+
+/* BLOQUES */
+.lore{background:rgba(138,106,32,.06);border-left:3px solid var(--gold);border-top:.5px solid var(--parch-dk);border-bottom:.5px solid var(--parch-dk);border-right:.5px solid var(--parch-dk);padding:1rem 1.3rem;margin:1rem 0;font-size:15px;line-height:1.8;color:var(--ink-l);font-style:italic;}
+.lore strong{font-style:normal;color:var(--ink);font-weight:600;}
+
+.dm-box{background:rgba(122,26,26,.05);border:.5px solid rgba(122,26,26,.25);border-left:3px solid var(--red);padding:1rem 1.3rem;margin:1.2rem 0;}
+.dm-lbl{font-family:'Cinzel',serif;font-size:10px;letter-spacing:.15em;color:var(--red);margin-bottom:6px;}
+.dm-box p,.dm-box li{font-size:14px;line-height:1.7;color:var(--ink-l);}
+.dm-box ul{padding-left:1.1rem;margin-top:.4rem;}
+.dm-box li{margin-bottom:.3rem;}
+
+/* SUEÑO */
+.dream-block{background:#0e0818;border:1px solid rgba(120,60,180,.3);padding:2rem 2.2rem;margin:1.5rem 0;position:relative;}
+.dream-block::before{content:'';position:absolute;inset:4px;border:.5px solid rgba(120,60,180,.15);pointer-events:none;}
+.dream-title{font-family:'Cinzel',serif;font-size:10px;letter-spacing:.2em;color:#9060d0;text-transform:uppercase;margin-bottom:1rem;opacity:.8;}
+p.dream{font-size:16px;line-height:1.9;color:#c8b0e8;margin-bottom:1rem;font-style:italic;}
+p.dream strong{color:#e0c8ff;font-style:normal;}
+p.dream em{color:#a080c8;font-style:normal;}
+
+/* NPC CARD */
+.npc-card{border:.5px solid var(--parch-dk);margin-bottom:2rem;overflow:hidden;}
+.npc-banner{padding:1.2rem 1.4rem;border-bottom:.5px solid var(--parch-dk);}
+.npc-name{font-family:'Cinzel Decorative',serif;font-size:20px;color:var(--ink);margin-bottom:2px;}
+.npc-role{font-family:'Cinzel',serif;font-size:10px;letter-spacing:.15em;color:var(--gold);text-transform:uppercase;margin-bottom:.7rem;}
+.npc-body{padding:1.1rem 1.4rem;}
+.npc-body p{font-size:15px;line-height:1.75;color:var(--ink-l);margin-bottom:.6rem;}
+.npc-body strong{color:var(--ink);font-weight:600;}
+
+.voice-box{background:rgba(138,106,32,.05);border:.5px solid var(--parch-dk);border-left:2px solid var(--gold-b);padding:.7rem 1rem;margin:.7rem 0;}
+.voice-lbl{font-family:'Cinzel',serif;font-size:9px;letter-spacing:.15em;color:var(--gold);margin-bottom:4px;text-transform:uppercase;}
+.voice-box p{font-size:14px;line-height:1.7;color:var(--ink-l);font-style:italic;}
+
+.quirk-list{list-style:none;margin:.5rem 0;}
+.quirk-list li{padding:.45rem 0 .45rem 16px;border-bottom:.5px solid rgba(212,192,144,.35);font-size:14px;color:var(--ink-l);line-height:1.6;position:relative;}
+.quirk-list li::before{content:'◆';position:absolute;left:0;color:var(--gold);font-size:8px;top:9px;}
+.quirk-list li:last-child{border-bottom:none}
+
+/* MISIONES */
+.mission-grid{display:grid;grid-template-columns:1fr 1fr;gap:.8rem;margin:1rem 0;}
+.mission-box{border:.5px solid var(--parch-dk);padding:.9rem 1rem;background:rgba(255,255,255,.08);}
+.mission-char{font-family:'Cinzel',serif;font-size:11px;letter-spacing:.1em;color:var(--gold);margin-bottom:4px;text-transform:uppercase;}
+.mission-txt{font-size:14px;line-height:1.6;color:var(--ink-l);}
+.mission-complication{font-size:12px;color:var(--red);font-style:italic;margin-top:5px;}
+
+/* ENCUENTRO */
+.enc-phase{border:.5px solid var(--parch-dk);margin-bottom:1rem;}
+.enc-hdr{background:rgba(138,106,32,.07);padding:.7rem 1.1rem;border-bottom:.5px solid var(--parch-dk);display:flex;align-items:center;gap:.7rem;}
+.enc-num{font-family:'Cinzel',serif;font-size:10px;letter-spacing:.1em;color:var(--red);border:.5px solid var(--red);padding:2px 8px;}
+.enc-title{font-family:'Cinzel',serif;font-size:13px;font-weight:600;color:var(--ink);letter-spacing:.06em;}
+.enc-body{padding:.9rem 1.1rem;}
+.enc-body p{font-size:14.5px;line-height:1.72;color:var(--ink-l);margin-bottom:.5rem;}
+.enc-body ul{padding-left:1.1rem;margin:.4rem 0;}
+.enc-body li{font-size:14px;line-height:1.65;color:var(--ink-l);margin-bottom:.25rem;}
+.enc-quote{font-family:'Crimson Pro',serif;font-size:15px;font-style:italic;color:var(--ink);border-left:2px solid var(--gold-b);padding:.4rem .8rem;margin:.6rem 0;background:rgba(138,106,32,.04);}
+
+.back-link{display:block;text-align:center;margin-bottom:1.5rem;}
+.back-link a{font-family:'Cinzel',serif;font-size:11px;letter-spacing:.15em;color:var(--gold-b);text-decoration:none;opacity:.7;}
+.back-link a:hover{opacity:1;}
+
+@media(max-width:640px){.doc{padding:2.5rem 1.8rem;}.mission-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="doc">
+<div class="back-link"><a href="index.html">← VOLVER A VERATH</a></div>
+<div class="doc-title">Sesión 2 — El Quinto Puente</div>
+<div class="doc-sub">NPCs · Misiones · El sueño del Bathrak · El encuentro con Draven Ossok</div>
+
+<div class="tab-nav">
+  <button class="tab-btn on" onclick="tab('npcs',this)">NPCs</button>
+  <button class="tab-btn" onclick="tab('misiones',this)">Misiones</button>
+  <button class="tab-btn" onclick="tab('sueno',this)">El Sueño</button>
+  <button class="tab-btn" onclick="tab('encuentro',this)">Draven Ossok</button>
+</div>
+
+<!-- ══════════════════════════════════ -->
+<!-- TAB: NPCs -->
+<!-- ══════════════════════════════════ -->
+<div class="tab-pane on" id="tab-npcs">
+<div class="lore">Estos son los personajes que los jugadores encontrarán en la sesión 2. Todos tienen vida propia, motivaciones que van más allá de servir a la trama, y cosas que no dicen. Ninguno es puro bien ni puro mal.</div>
+
+<!-- OSHE -->
+<div class="npc-card">
+  <div class="npc-banner" style="background:rgba(10,30,40,.04);border-left:4px solid #2a6a7a;">
+    <div class="npc-name">Oshe</div>
+    <div class="npc-role">Tabernera del Quinto Puente · Humana Veyrath · ~65 años</div>
+  </div>
+  <div class="npc-body">
+    <div class="sec-lbl">Apariencia</div>
+    <p>Mujer de 65 años que parece tener 80 y moverse como si tuviera 40. Estatura baja, 1.58m, complexión robusta de alguien que ha cargado barriles toda su vida. Piel pálido-verdosa característica de Veyrath, profundamente arrugada en las comisuras de los ojos y la boca — arrugas de reír mucho, no de sufrir. Cabello completamente blanco recogido en un moño imperfecto del que siempre escapan mechones. Ojos completamente verdes sin gradación, sin blanco visible — el rasgo Veyrath más pronunciado que tiene. Manos grandes, nudosas, manchadas de permanente por el trabajo.</p>
+    <p>Viste siempre igual: delantal marrón sobre ropa oscura, un collar con tres cuentas de piedra del pantano que nunca se quita, y calzado silencioso que hace que sus apariciones en la taberna sean siempre ligeramente sorpresivas.</p>
+
+    <div class="sec-lbl">Personalidad y tono de voz</div>
+    <p>Oshe habla despacio, con pausas largas que no son vacilación sino deliberación — elige cada palabra como quien elige dónde poner el pie en terreno incierto. Voz grave para ser mujer, con una resonancia baja que hace que lo que dice se quede en la habitación más tiempo de lo habitual. No levanta la voz nunca. Cuando baja el volumen es cuando dice las cosas más importantes.</p>
+    <p>No miente. No exactamente — es más precisa que eso: dice verdades incompletas con la tranquilidad de quien sabe que completarlas no es su trabajo. Si la presionan con preguntas directas, responde con preguntas directas. No lo hace por evasión sino porque genuinamente cree que las personas encuentran mejor lo que buscan cuando llegan solas.</p>
+
+    <div class="voice-box">
+      <div class="voice-lbl">Cómo habla — ejemplos para actuar</div>
+      <p>"El pantano me lo dijo esta mañana." [pausa de tres segundos] "No me preguntes cómo. Llevas dos minutos aquí y ya quieres explicaciones. Siéntate primero."</p>
+      <p>"¿Que si los conozco? [mira a cada uno] No. Pero los reconozco. Hay diferencia."</p>
+      <p>"Ese hombre que acaba de salir [sobre Draven]. Sí. Ha estado antes. No, no sé su nombre. Sí, me dejó propina. No, no pienso decirte cuánto."</p>
+    </div>
+
+    <div class="sec-lbl">Peculiaridades</div>
+    <ul class="quirk-list">
+      <li>Cuando sirve bebida a alguien, lo mira directamente a los ojos durante el tiempo exacto que tarda en llenar el vaso. No antes, no después.</li>
+      <li>Tiene un gato que nadie ha visto pero cuya presencia se nota — pelos en las sillas, un cuenco de agua detrás de la barra, ruidos ocasionales en el techo.</li>
+      <li>Cada noche a medianoche apaga todas las velas excepto una y se sienta frente a ella cinco minutos en silencio. No interrumpible. No explicable.</li>
+      <li>Sabe el nombre de cada persona que ha entrado a su taberna en 30 años. Lo sabe. Si le preguntan por alguien por descripción física, da el nombre sin dudar.</li>
+    </ul>
+
+    <div class="dm-box"><div class="dm-lbl">🔒 Solo DM</div>
+    <p>Oshe es una de las pocas personas en Resaca que sabe que Lyssavar observa a través de los ecos del pantano. Lo sabe porque Lyssavar se lo dijo directamente hace 20 años — una conversación que ella describe como "la más incómoda de mi vida y también la más honesta". Tiene un acuerdo tácito con él: no revelar su presencia a cambio de que él no interfiera con su taberna. Los ecos que a veces se ven en El Quinto Puente son reales — personas que vivieron ahí, murieron ahí, o simplemente importaron lo suficiente para quedarse. Oshe los conoce a todos por nombre también.</p></div>
+  </div>
+</div>
+
+<!-- DRATH -->
+<div class="npc-card">
+  <div class="npc-banner" style="background:rgba(30,10,40,.04);border-left:4px solid #5a2a7a;">
+    <div class="npc-name">Drath</div>
+    <div class="npc-role">Ex Sacerdote del Umbral · Humano Veyrath · ~50 años · Fugitivo</div>
+  </div>
+  <div class="npc-body">
+    <div class="sec-lbl">Apariencia</div>
+    <p>Hombre de 50 años que parece más — no por vejez sino por agotamiento acumulado, el tipo que deja marca permanente. 1.71m, complexión delgada tendiendo a flaco, hombros que han pasado demasiado tiempo cargados y ya no terminan de enderezarse. Piel pálido-verdosa de Veyrath pero más apagada que la de Oshe, como si hubiera pasado demasiado tiempo lejos del pantano. Cabello castaño grisáceo, sin cortar en meses, que lleva detrás de las orejas sin convicción.</p>
+    <p>Lo más notable: sus ojos. Marrón claro, normales en color, pero con la cualidad específica de los que han visto cosas que no pueden desver — siempre están mirando un punto ligeramente a la derecha de lo que tienen enfrente, como si calcularan la distancia a la salida más cercana. Cuando se obliga a mirar directo, hace un esfuerzo visible.</p>
+    <p>Viste ropa de viaje que fue buena hace años. En el cuello lleva las marcas tatuadas de ex sacerdote del Umbral — dos medias lunas espalda contra espalda, pero con una línea cruzada encima en tinta más oscura: la marca de quien dejó la orden de forma no del todo voluntaria.</p>
+
+    <div class="sec-lbl">Personalidad y tono de voz</div>
+    <p>Drath habla rápido cuando está nervioso — que es casi siempre — y en frases cortas que a veces no terminan porque su mente ya está en la siguiente. Tiene el acento específico de alguien educado que ha pasado tiempo entre gente no educada y ha adoptado algunas de sus construcciones sin darse cuenta.</p>
+    <p>No es cobarde — es alguien que aprendió exactamente a qué le tiene miedo y está tomando decisiones racionales basadas en eso. Si los personajes le demuestran que pueden protegerlo, o que saben cosas que él no, o que la información que tiene vale más compartida que guardada, coopera. Si lo presionan sin darle nada a cambio, huye. Ha huido antes. Sabe cómo.</p>
+
+    <div class="voice-box">
+      <div class="voice-lbl">Cómo habla — ejemplos para actuar</div>
+      <p>[Al ver la máscara de Aerion, en voz muy baja] "Eso no debería estar aquí. Eso no debería estar en ningún lado. ¿De dónde la sacaste? No, espera, no me digas, no quiero saber, ya sé demasiado—"</p>
+      <p>"Escucha. Escucha. Hay cosas que la Iglesia del Umbral hace que el resto de la iglesia no sabe. Niveles. Y yo estaba en uno de esos niveles. Y luego no quise estar más. Y resulta que ese tipo de decisión no es tan simple como parece."</p>
+      <p>"La máscara tiene nombre. No te voy a decir el nombre porque pronunciarlo en voz alta no es buena idea. Pero existe. Y el que la fabricó lleva buscándola desde que desapareció."</p>
+    </div>
+
+    <div class="sec-lbl">Peculiaridades</div>
+    <ul class="quirk-list">
+      <li>Cuenta las personas en cualquier cuarto que entra. En voz muy baja, con los labios apenas moviéndose. Si entra alguien nuevo, recomienza desde uno.</li>
+      <li>No puede estar de espaldas a una puerta. Si no hay opción, pone la silla en ángulo para ver el cuarto entero.</li>
+      <li>Cuando algo lo sorprende, su primera reacción es reírse — una risa corta, involuntaria, que él mismo parece encontrar inapropiada y suprime inmediatamente.</li>
+      <li>Lleva encima un conjuro de Disfraz preparado en todo momento. No lo usa a menos que sea absolutamente necesario porque "gastarlo mal es peor que no tenerlo".</li>
+    </ul>
+
+    <div class="dm-box"><div class="dm-lbl">🔒 Solo DM</div>
+    <p>Drath sabe que la máscara de Aerion es un <em>Fragmento Observador</em> — un objeto fabricado por los niveles internos de la Iglesia del Umbral para que Lyssavar pueda observar a través de él de forma activa en lugar de pasiva. La diferencia: los ecos normales de Veyrath son observación pasiva. Un Fragmento Observador le da a Lyssavar la capacidad de influir sutilmente en las emociones del portador — no controlar, pero sí inclinar. La máscara no llegó a Aerion por accidente. Alguien la colocó deliberadamente. Drath sabe quién ordenó colocarla pero no sabe en quién. Cuando vio la cara de Aerion — o más bien la máscara donde debería estar su cara — entendió que ese "quién" encontró a su objetivo. Huir es su respuesta natural porque la persona que ordenó esto y descubra que Drath habló tendrá motivos para eliminarlo.</p></div>
+  </div>
+</div>
+
+<!-- EL MUSCULOSO -->
+<div class="npc-card">
+  <div class="npc-banner" style="background:rgba(30,20,10,.04);border-left:4px solid #7a6a3a;">
+    <div class="npc-name">Gorr</div>
+    <div class="npc-role">Portero del Quinto Puente · Semiorco · ~40 años · Enigma ambulante</div>
+  </div>
+  <div class="npc-body">
+    <div class="sec-lbl">Apariencia</div>
+    <p>Semiorco de 1.95m y complexión que hace que la palabra "musculoso" parezca insuficiente — no voluminoso de manera artificial sino construido, denso, como algo que se formó bajo presión durante mucho tiempo. Piel gris verdosa, colmillos inferiores que asoman levemente cuando cierra la boca, frente ancha sobre ojos pequeños y oscuros que ven más de lo que sugieren. Nariz que ha sido rota al menos dos veces y sanó en posiciones distintas cada vez.</p>
+    <p>Viste ropa simple — camisa de lino, pantalón de cuero, sin armadura. No la necesita y aparentemente lo sabe. Brazos cruzados es su postura de reposo. Cuando los descrúza es el único aviso que da de que algo está a punto de ocurrir.</p>
+    <p>No lleva armas visibles. Esto es, en sí mismo, una declaración.</p>
+
+    <div class="sec-lbl">Personalidad y tono de voz</div>
+    <p>Gorr habla poco. Cuando habla, la voz es más grave de lo que el tamaño ya sugiere — con una resonancia que hace que las personas que están cerca la <em>sientan</em> además de escucharla. Las frases son cortas. Las palabras son exactas. No repite.</p>
+    <p>La risa del minuto es completamente involuntaria y él lo sabe y no puede hacer nada al respecto — lleva años con eso y lo ha aceptado con la filosofía pragmática de alguien que ha tenido que aceptar cosas más difíciles. Después de la risa retoma exactamente donde estaba, sin comentario, sin disculpa.</p>
+    <p>Le gusta Aerion por el truco de imitarle la risa. No lo dice. Pero a partir de ese momento le da un trato ligeramente más cordial que al resto — lo que en Gorr equivale a mirarlo directamente en lugar de ligeramente por encima de su cabeza.</p>
+
+    <div class="voice-box">
+      <div class="voice-lbl">Cómo habla — ejemplos para actuar</div>
+      <p>[A Silas intentando entrar con sigilo] "No." [Un minuto de risa. Luego, como si nada] "¿Tienes nombre o solo sigilo?"</p>
+      <p>[A quien pregunte por qué ríe] "No sé." [Pausa] "Lleva pasando doce años. Ya no pregunto."</p>
+      <p>[Si alguien intenta intimidarlo] [Mira al que intenta. Larga pausa. Sin moverse] "Siguiente."</p>
+    </div>
+
+    <div class="sec-lbl">Peculiaridades</div>
+    <ul class="quirk-list">
+      <li>La risa del minuto ocurre siempre — sin excepción — cuando alguien pronuncia su nombre en voz alta por primera vez en el día. El segundo nombre no la activa. Solo el primero.</li>
+      <li>Lleva un libro en el bolsillo trasero. Pequeño, gastado, sin título visible. Nunca lo lee donde alguien pueda verlo.</li>
+      <li>A Draven Ossok lo saludó con un gesto de cabeza. A Vethann lo dejó pasar sin mirarlo. Esa diferencia importa y los personajes perspicaces pueden notarla.</li>
+      <li>Cuando algo le parece genuinamente curioso — raro en él — inclina la cabeza exactamente 15 grados a la derecha. Solo a la derecha.</li>
+    </ul>
+
+    <div class="dm-box"><div class="dm-lbl">🔒 Solo DM</div>
+    <p>Gorr no trabaja para Oshe exactamente — trabaja con ella, distinción que él haría si alguien preguntara. Lleva en Resaca más tiempo del que aparenta, bajo distintos nombres. La risa involuntaria es resultado de un ritual fallido hace doce años — intentó ser iniciado en la Hermandad de la Llama Gris, el ritual salió mal de formas que prefiere no detallar, y lo que quedó fue esto. No guarda rencor a la Hermandad. Solo aprendió a no hacer rituales con desconocidos.</p></div>
+  </div>
+</div>
+
+<!-- CAPITAN VESS (en el sueño) -->
+<div class="npc-card">
+  <div class="npc-banner" style="background:rgba(10,5,20,.06);border-left:4px solid #6a3a9a;">
+    <div class="npc-name">Capitán Vess</div>
+    <div class="npc-role">Bathrak · Capitán del Círculo Desaparecido · Solo aparece en el sueño</div>
+  </div>
+  <div class="npc-body">
+    <div class="sec-lbl">Apariencia (en el sueño)</div>
+    <p>Bathrak de edad madura — difícil de determinar, como siempre en su especie. Complexión amplia para un Bathrak, 1.60m. Piel negra pantano con manchas verde oliva en espalda y hombros. Ojos completamente negros — la variante más oscura posible. Lleva las marcas rituales del rango de capitán en ambos antebrazos: líneas paralelas en tinta de pantano que suben desde la muñeca.</p>
+    <p>En el sueño aparece siempre de espaldas primero. Cuando gira, su cara tiene la expresión de alguien en medio de una discusión que lleva tiempo — no al inicio, cuando todavía hay esperanza de resolver, sino en el punto donde ambos saben que no va a resolverse.</p>
+
+    <div class="sec-lbl">Cómo actuar la escena del sueño</div>
+    <p>Vess en el sueño no habla al Bathrak — no sabe que está siendo observado. Está discutiendo con alguien cuya cara no se ve. Su tono es el de alguien que está intentando convencer sin suplicar — la voz controlada de quien tiene mucho orgullo y está a punto de perder algo que importa más que el orgullo.</p>
+
+    <div class="voice-box">
+      <div class="voice-lbl">Fragmentos que el Bathrak escucha en el sueño</div>
+      <p>"...no entiendes lo que estás pidiendo. Esto no es lealtad, esto es—" [las palabras siguientes se pierden en la resonancia del sueño]</p>
+      <p>"...cuando el árbol caminante llegue, ya será tarde para..." [inaudible]</p>
+      <p>"...las inscripciones ya cambiaron tres veces y tú sigues diciendo que es tiempo. ¿Tiempo para qué? ¿Para que nos usen como—"</p>
+      <p>[La voz de la figura sin cara, grave, sin urgencia, como alguien que ya ganó la discusión y solo espera que el otro lo entienda] "...capitán. Tu círculo o el mundo. Elige."</p>
+    </div>
+
+    <div class="dm-box"><div class="dm-lbl">🔒 Solo DM — Quién es la figura sin cara</div>
+    <p>La figura ante la que el capitán Vess se arrodilló no es un dios, no es un noble, no es nadie famoso. Es un agente — alguien que trabaja para una entidad mayor que los jugadores no conocen todavía y que tiene interés en el movimiento del árbol caminante de Ysseval y en las inscripciones de Durrakh. Ambas cosas apuntan hacia las Islas del Eje. Vess resistió. Su círculo no. El Bathrak fue dormido para protegerlo de que esa figura lo viera — porque si lo hubiera visto, habría sido eliminado como testigo. El capitán Vess está vivo todavía. En algún lugar del pantano de Veyrath. Haciendo cosas que ya no son exactamente las del círculo.</p></div>
+  </div>
+</div>
+
+</div><!-- fin tab-npcs -->
+
+<!-- ══════════════════════════════════ -->
+<!-- TAB: MISIONES -->
+<!-- ══════════════════════════════════ -->
+<div class="tab-pane" id="tab-misiones">
+  <div class="lore">La misión grupal los mantiene juntos. Las misiones personales crean fricción, decisiones difíciles, y los momentos más memorables de cualquier campaña. Lo ideal es que en algún punto una misión personal de un personaje complique activamente la misión personal de otro.</div>
+
+  <div class="sec-lbl">Misión grupal — El hilo que los ata</div>
+  <p class="body">La misión grupal no viene de un contrato ni de un villano que los amenaza. Viene de las cinco copias idénticas de la nota de Vethann que aparecen en su mesa en El Quinto Puente — y de lo que Oshe les dice cuando preguntan quién las puso ahí:</p>
+  <div class="lore">"Nadie las puso. Estaban cuando preparé la mesa. Y la mesa la preparé sola, hace diez minutos, y no había nada encima." [Pausa] "Vethann tiene sentido del humor. No te lo recomendaría como defecto pero es el suyo."</div>
+  <p class="body">Las notas dicen lo mismo para todos: <em>"El carruaje volvió. Esta vez paró en el muelle este. Lo que grita adentro sabe cosas que ustedes necesitan saber. El tiempo que tienen para encontrarlo antes de que desaparezca de nuevo: hasta el amanecer."</em></p>
+  <p class="body">Eso es todo. Sin instrucciones adicionales. Sin promesa de pago. Sin amenaza. Vethann no opera así — él ya vio lo que van a decidir, así que simplemente les da la información y espera. La misión grupal inicial es investigar el carruaje, y lo que encuentren ahí es el gancho hacia algo mucho mayor que se irá revelando con las sesiones.</p>
+
+  <div class="dm-box"><div class="dm-lbl">🔒 Qué hay en el carruaje — para sesiones futuras</div>
+  <p>Dentro del carruaje hay una criatura que no es exactamente la cabeza que gritaba — eso era el señuelo. Lo que hay dentro es algo que presenció el momento exacto en que el Quiebre del Eje ocurrió y lleva 800 años atrapado en ese momento, repitiéndolo, sin poder avanzar. No es peligroso. Es trágico. Y lo que sabe sobre el Quiebre podría cambiar la comprensión de todos los reinos sobre su propia historia.</p></div>
+
+  <div class="sec-lbl" style="margin-top:1.8rem">Misiones personales</div>
+  <div class="mission-grid">
+    <div class="mission-box">
+      <div class="mission-char">Aerion — El Bardo</div>
+      <div class="mission-txt">Encontrar quién le puso la máscara, por qué, y cómo quitársela. Drath tiene la primera pieza. Las siguientes están en Veyrath — en los archivos internos de la Iglesia del Umbral que no son públicos.</div>
+      <div class="mission-complication">Complicación: Para llegar a esos archivos necesita entrar a Veyrath como visitante de confianza. El rey de Veyrath otorga ese permiso. Silas quiere matar al rey de Veyrath.</div>
+    </div>
+    <div class="mission-box">
+      <div class="mission-char">Silas — El Pícaro</div>
+      <div class="mission-txt">Matar al rey de Veyrath. El jugador tiene razón en que su personaje quiere esto — pero todavía no sabemos por qué. Esa razón, cuando aparezca, debe ser buena. Propuesta: el rey firmó algo que destruyó a alguien que Silas quería.</div>
+      <div class="mission-complication">Complicación: El rey de Veyrath es casi imposible de alcanzar sin acceso legítimo. Aerion necesita ese acceso. Van a necesitarse mutuamente de formas incómodas.</div>
+    </div>
+    <div class="mission-box">
+      <div class="mission-char">Druida — El Guardián</div>
+      <div class="mission-txt">Encontrar la causa de la muerte del bosque de Ysseval. La causa real está conectada al colapso cognitivo de Yssara — lo que significa que eventualmente tendrá que encontrarla, lo que significa que tendrá que llegar a donde ella está.</div>
+      <div class="mission-complication">Complicación: Yssara en su estado actual es peligrosa de contactar. Los recuerdos que proyecta pueden instalarse en la mente de quien se acerca sin preparación. El druida no lo sabe todavía.</div>
+    </div>
+    <div class="mission-box">
+      <div class="mission-char">Solare — El Clérigo</div>
+      <div class="mission-txt">Por ahora: ayudar a quien lo necesite. Pero hay una semilla plantada — su diosa está viva, escondida en Ysseval, y hay un hueco en su memoria donde debería estar el recuerdo del mentor que fue a buscarla. Cuando esa semilla florezca, su misión cambia completamente.</div>
+      <div class="mission-complication">Complicación: Encontrar a Sorra significa ir a Ysseval. El druida también va hacia Ysseval. Irán juntos hacia algo que solo uno de los dos sabe que es su objetivo.</div>
+    </div>
+    <div class="mission-box" style="grid-column:1/-1;">
+      <div class="mission-char">Bathrak — El Explorador</div>
+      <div class="mission-txt">Llegar al Corazón Quieto de Veyrath — donde el Shadowfell y el plano material se tocan — para hablar con sus aliados caídos y recuperar la memoria completa. El sueño de esta noche le dará suficiente para saber que lo que olvidó importa. Suficiente para no poder ignorarlo.</div>
+      <div class="mission-complication">Complicación: El Corazón Quieto está en Veyrath. Veyrath está al otro lado del Mar del Quiebre. Y cruzar el mar en barco es caro, peligroso, y lento — los barcos capaces de cruzarlo valen fortunas. Los nobles lo hacen en dragón, pero eso es un secreto tan oculto que hasta mencionarlo en voz alta en la taberna equivocada es suficiente para que alguien aparezca preguntando cómo lo supiste.</div>
+    </div>
+  </div>
+
+  <div class="dm-box" style="margin-top:1rem"><div class="dm-lbl">📋 El hilo que conecta todas las misiones personales</div>
+  <p>Todas las misiones personales llevan, por caminos distintos, hacia Veyrath. La máscara de Aerion tiene respuestas ahí. El rey que Silas quiere matar vive ahí. El bosque que el druida busca salvar está conectado a Yssara cuya pista más fuerte está ahí. Sorra está escondida en Ysseval pero la ruta pasa por Veyrath. El Bathrak necesita el Corazón Quieto que está ahí. Veyrath es el primer destino grande — y cuando lleguen, cada uno tendrá un objetivo distinto en el mismo lugar, lo que garantiza conflicto interesante.</p></div>
+</div>
+
+<!-- ══════════════════════════════════ -->
+<!-- TAB: EL SUEÑO -->
+<!-- ══════════════════════════════════ -->
+<div class="tab-pane" id="tab-sueno">
+  <div class="lore">El Bathrak se duerme en la taberna — voluntariamente o porque el agotamiento gana, tú decides. Lo que sigue es lo que ve. No es un recuerdo completo. Es un recuerdo <strong>filtrado por el trauma de la amnesia</strong> — fragmentado, con huecos, con la cualidad específica de las cosas que el cerebro intenta reconstruir desde pedazos.</div>
+
+  <div class="scene-title">El Sueño — Leer en voz alta al jugador del Bathrak</div>
+
+  <div class="dream-block">
+    <div class="dream-title">⬡ Sueño del Bathrak — El Círculo</div>
+
+    <p class="dream">El pantano primero. Siempre el pantano primero — el olor es lo más real, tierra húmeda y flores que brillan azul en la oscuridad, y por un momento todo está bien. Estás en el círculo. Estás donde deberías estar.</p>
+
+    <p class="dream">La sala de reunión. Las paredes de musgo vivo que el círculo ha cultivado durante generaciones. La luz de las velas de Veyrath — esa luz que no es exactamente amarilla sino algo entre el amarillo y el verde que no tiene nombre en Común. Tus compañeros. Y el capitán <strong>Vess</strong> de pie frente a alguien.</p>
+
+    <p class="dream">De espaldas. La figura de espaldas. Alta para ser humana — o quizás no es humana, el sueño no deja verlo bien. Una capucha. Y algo en el aire diferente, <em>espeso</em>, como si el espacio donde esa figura está parada tuviera más peso que el resto de la habitación.</p>
+
+    <p class="dream">Vess habla. Su voz la conoces — llevas años conociéndola, la voz del capitán que dice las cosas difíciles sin que le tiemble. Pero ahora le tiembla.</p>
+
+    <p class="dream"><em>"...no entiendes lo que estás pidiendo. Esto no es lealtad—"</em></p>
+
+    <p class="dream">La figura dice algo. No escuchas las palabras — el sueño se las come, las convierte en resonancia sin forma. Pero ves la cara de Vess cuando las escucha. Y la cara de Vess dice que las palabras son <em>razonables</em>. Que tienen sentido. Que parte de él ya está convencido aunque el resto todavía resiste.</p>
+
+    <p class="dream"><em>"...cuando el árbol caminante llegue..."</em> — eso sí lo escuchas, la voz de la figura ahora, grave y sin urgencia, la voz de alguien que ya ganó y solo espera que el otro lo acepte — <em>"...ya será tarde para elegir."</em></p>
+
+    <p class="dream">Las inscripciones. Vess menciona las inscripciones. <em>"...ya cambiaron tres veces y tú sigues diciendo que es tiempo. ¿Tiempo para qué?"</em> Y luego algo que no termina — una frase que el sueño corta antes de que llegue a su forma completa.</p>
+
+    <p class="dream">La figura gira la cabeza. Solo la cabeza. Solo un poco. Y en ese giro hay algo — la insinuación de que sabe que hay alguien más en la habitación, que <em>huele</em> algo fuera de lugar.</p>
+
+    <p class="dream">Y entonces: blanco. No el blanco del despertar sino el blanco de algo que entra en tu visión desde el costado y lo llena todo, y en ese blanco está la silueta de la rana del círculo con los dedos extendidos, y el conjuro, y luego—</p>
+
+    <p class="dream" style="text-align:center;color:#8060a8;letter-spacing:.1em;">— nada —</p>
+
+    <p class="dream">— y Resaca. Y la madera húmeda. Y el olor a sal en lugar de pantano.</p>
+
+    <p class="dream">Pero ahora sabes una cosa que antes no sabías: <strong>el capitán Vess no estaba siendo amenazado.</strong> Estaba siendo convencido. Y eso es mucho peor.</p>
+  </div>
+
+  <div class="dm-box"><div class="dm-lbl">📋 Cómo manejar el momento después del sueño</div>
+  <ul>
+    <li>El Bathrak despierta en la taberna. El resto del grupo está ahí — fue mientras dormitaba en la silla, no fue largo. Quizás diez minutos.</li>
+    <li>Lo que comparte con el grupo es decisión suya. No lo obligues — pero la escena es mejor si comparte algo, porque los otros personajes pueden conectar los fragmentos que él no puede todavía.</li>
+    <li><strong>"El árbol caminante"</strong> — el druida sabe qué es eso. Ese momento de reconocimiento es el primer vínculo real entre los dos personajes.</li>
+    <li><strong>"Las inscripciones"</strong> — nadie en el grupo sabe qué inscripciones todavía. Eso es un hilo para más tarde.</li>
+    <li>No confirmes qué era la figura. No todavía. La respuesta a eso tiene que ganarse.</li>
+  </ul></div>
+</div>
+
+<!-- ══════════════════════════════════ -->
+<!-- TAB: DRAVEN OSSOK -->
+<!-- ══════════════════════════════════ -->
+<div class="tab-pane" id="tab-encuentro">
+  <div class="lore">Este encuentro ocurre <strong>después de la primera pelea real del grupo</strong> — que los deja sin aliento, raspados, usando los últimos recursos. Ese agotamiento es parte del diseño: que Draven aparezca en ese momento específico, fresco, silbando, hace el contraste mucho más efectivo que si apareciera en cualquier otro momento.</div>
+
+  <div class="sec-lbl">Draven Ossok — Quién es</div>
+  <p class="body"><strong>Draven Ossok</strong>, 45 años, Inquisidor de la Hermandad de la Llama Gris. Lleva 15 años encontrando cosas que la Hermandad no quiere que existan y haciendo que dejen de existir. No es cruel — la crueldad implica disfrutar del dolor ajeno, y Draven es demasiado profesional para eso. Simplemente hace su trabajo con la eficiencia de alguien que ha tenido mucho tiempo para volverse muy bueno en él.</p>
+
+  <div class="sec-lbl">Apariencia</div>
+  <p class="body">1.88m, complexión de densidad imposible — no volumen, densidad, la diferencia entre algo hecho para impresionar y algo hecho para funcionar. Piel gris pálida de Vokrath. Cabello negro con hilos plateados, muy corto. Una sola cicatriz visible: horizontal, cruza ambos labios, hace que su expresión de reposo parezca siempre levemente burlona. Ojos grises sin calor — evaluadores, pacientes.</p>
+  <p class="body">Armadura de placas negras sin emblema. Desgaste real en los bordes — no decorativo. Espada a dos manos en la espalda que parece demasiado grande para la velocidad con que la usa. En el muslo izquierdo, una daga que no ha necesitado en años.</p>
+
+  <div class="sec-lbl">Tono de voz y forma de hablar</div>
+  <p class="body">Voz media, sin inflexiones marcadas — la voz de alguien que ha aprendido que el tono neutro es más inquietante que cualquier tono amenazante. Habla despacio. Las pausas son deliberadas. Nunca levanta la voz. Cuando algo le resulta genuinamente interesante — raro — hay un cambio mínimo en la calidad de su atención, no en su expresión.</p>
+
+  <div class="voice-box">
+    <div class="voice-lbl">Cómo habla — ejemplos para actuar</div>
+    <p>"Buen trabajo con lo del cangrejo, por cierto. El de anoche. Cuatro de ustedes sin formación demostrable y uno que huele a pantano. No era el resultado más probable." [Pausa] "Tampoco el peor."</p>
+    <p>[Si alguien intenta intimidarlo] [Mira al que intenta. Larga pausa. Absolutamente nada cambia en su cara] "¿Terminaste?"</p>
+    <p>"No vine a lastimarlos. Eso lo haría si fuera necesario, pero no es lo que vine a hacer. Vine a saber qué quiere Vethann de cinco personas que no tienen nada en común excepto haber estado en el mismo lugar anoche."</p>
+    <p>[Al irse] "Piénsenlo. No corran — eso cansa. Y los necesito descansados, si resulta que sus intereses y los míos se alinean."</p>
+  </div>
+
+  <div class="sec-lbl">La secuencia del encuentro</div>
+
+  <div class="enc-phase">
+    <div class="enc-hdr"><div class="enc-num">01</div><div class="enc-title">La entrada — después de la pelea</div></div>
+    <div class="enc-body">
+      <p>El grupo acaba de terminar su primera pelea real. Están raspados, gastados, usando los últimos recursos de curación. Alguien está sentado en el suelo. Alguien más revisa sus heridas. El ambiente es el específico del después-de-combate: adrenalina bajando, cuerpos doliéndose, la conversación todavía entrecortada.</p>
+      <p>Desde el fondo de la calle, o desde la entrada del cuarto, o desde donde tenga más impacto visual en tu mesa — se escucha un silbido. Una melodía corta, sin prisa. Y luego pasos. Regulares. Sin urgencia.</p>
+      <p>Draven dobla la esquina con las manos en los bolsillos, mirando el resultado de la pelea con la expresión de alguien que evalúa sin juzgar. No dice nada por un momento. Deja que el silencio haga el trabajo.</p>
+    </div>
+  </div>
+
+  <div class="enc-phase">
+    <div class="enc-hdr"><div class="enc-num">02</div><div class="enc-title">La conversación</div></div>
+    <div class="enc-body">
+      <p>Draven es perfectamente cortés durante toda la conversación. No amenaza explícitamente. Pregunta qué les dijo Vethann, qué decía el pergamino, si aceptaron. Responde preguntas con preguntas cuando le conviene y con respuestas directas cuando calcular que la honestidad sirve mejor.</p>
+      <p>Lo que ofrece: nada todavía. Está evaluando. Lo que quiere: información. Lo que hará con esa información: no lo dice.</p>
+      <p>Si alguien hace una tirada de Perspicacia CD 16: <em>Este hombre no tiene miedo de nada en esta habitación. Lo sabe. Y está siendo amable porque elegir ser amable le resulta más interesante que la alternativa. No porque sea buena persona — porque la amabilidad le da más información.</em></p>
+    </div>
+  </div>
+
+  <div class="enc-phase">
+    <div class="enc-hdr"><div class="enc-num">03</div><div class="enc-title">Si alguien intenta algo hostil</div></div>
+    <div class="enc-body">
+      <p>Draven se levanta de donde esté. Da un paso hacia quien intentó algo. Lo mira. Solo lo mira — sin sacar arma, sin gesto amenazante.</p>
+      <p><strong>Tirada de salvación de SAB CD 16</strong> para ese personaje. Fracaso: queda Asustado 1 minuto — no por magia, sino porque algo en la forma en que Draven ocupa el espacio hace que el instinto hable más alto que todo lo demás. Éxito: no queda Asustado, pero sabe con absoluta certeza que atacar sería el último error de forma autónoma que tomaría en un tiempo largo.</p>
+      <p>Draven no saca la espada. Se sienta de nuevo. Continúa la conversación exactamente donde la dejó.</p>
+    </div>
+  </div>
+
+  <div class="enc-phase">
+    <div class="enc-hdr"><div class="enc-num">04</div><div class="enc-title">La salida — y lo que se llevó</div></div>
+    <div class="enc-body">
+      <p>Draven se va sin haber obtenido una respuesta definitiva. Deja una moneda en la superficie más cercana — el gesto de alguien que cierra una conversación, no una transacción.</p>
+      <div class="enc-quote">"Cuando decidan, me encontrarán. O yo los encontraré a ustedes. En cualquier caso, ya sé sus caras."</div>
+      <p>Sale. Sus pasos se alejan en el mismo ritmo con que llegaron.</p>
+      <p>Cinco minutos después — cuando el grupo intenta reorganizarse — el Bathrak nota que su bolsa de viaje está abierta. La piedra del pantano que lleva siempre, la que toca cuando necesita orientarse, la que vino con él desde Veyrath, <strong>no está.</strong></p>
+      <p>Draven la tomó durante la conversación. Sin magia. Sin que nadie lo notara. Solo con 15 años de práctica.</p>
+      <p>No la usará para dañarlos. La usará para encontrarlos si alguna vez necesita hacerlo. Y ahora los cinco saben que no pueden recuperarla sin buscarlo. Y buscarlo ahora mismo sería exactamente tan inteligente como parece.</p>
+    </div>
+  </div>
+
+  <div class="dm-box"><div class="dm-lbl">🔒 Solo DM — Por qué Draven está en Resaca</div>
+  <p>Draven no estaba buscando al grupo. Estaba en Resaca por otra razón — rastreando el mismo carruaje con la cabeza gritante que Vethann mencionó en las notas. La Hermandad de la Llama Gris tiene interés en lo que ese carruaje transporta, y ese interés no se alinea necesariamente con el de Vethann. Cuando vio a los cinco después de la pelea con el cangrejo entendió que Vethann los está moviendo hacia algo — y cualquier cosa que Vethann mueve vale la pena vigilar. La piedra del Bathrak es su forma de mantenerlos en el radar sin tener que seguirlos físicamente. Es paciente. Puede esperar.</p></div>
+
+</div>
+
+</div><!-- fin doc -->
+<script>
+function tab(id,btn){
+  document.querySelectorAll('.tab-pane').forEach(p=>p.classList.remove('on'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('on'));
+  document.getElementById('tab-'+id).classList.add('on');
+  btn.classList.add('on');
+}
+</script>
+</body>
+</html>

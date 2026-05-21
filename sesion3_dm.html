@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>VERATH — DM: Sesión 3 y Nuevos Sistemas</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Cinzel:wght@400;600;700&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--ink:#1a1208;--ink-l:#3a2a18;--ink-f:#5a4a38;--parch:#f0e6d0;--parch-d:#e0d0a8;--parch-dk:#c8b478;--gold:#7a5a10;--gold-b:#b89040;--gold-bright:#c9a84c;--red:#6a0a0a;--red-l:#9a1a1a;--sw:250px;}
+html{scroll-behavior:smooth}
+body{background:#0e0806;font-family:'Crimson Pro',Georgia,serif;color:var(--ink);display:flex;min-height:100vh;}
+
+.sb{width:var(--sw);flex-shrink:0;background:rgba(8,4,2,.98);border-right:1px solid rgba(180,140,60,.2);position:fixed;top:0;left:0;height:100vh;overflow-y:auto;z-index:100;}
+.sb-brand{padding:1.1rem 1rem .7rem;border-bottom:.5px solid rgba(180,140,60,.15);}
+.sb-title{font-family:'Cinzel Decorative',serif;font-size:14px;color:var(--gold-bright);letter-spacing:.08em;}
+.sb-sub{font-family:'Cinzel',serif;font-size:8px;letter-spacing:.15em;color:var(--red-l);text-transform:uppercase;margin-top:2px;}
+.sb-stamp{font-family:'Cinzel',serif;font-size:7px;letter-spacing:.1em;color:var(--red-l);border:.5px solid var(--red);padding:2px 5px;display:inline-block;margin-top:5px;}
+.sb-nav{padding:.5rem 0 2rem;}
+.sb-grp-btn{width:100%;background:none;border:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;padding:.5rem .9rem .5rem 1rem;font-family:'Cinzel',serif;font-size:8px;letter-spacing:.18em;color:rgba(180,140,60,.45);text-transform:uppercase;transition:color .15s;}
+.sb-grp-btn:hover{color:rgba(180,140,60,.75);}
+.sb-grp-btn.open{color:var(--gold-bright);}
+.sb-arrow{font-size:7px;transition:transform .2s;opacity:.6;}
+.sb-grp-btn.open .sb-arrow{transform:rotate(90deg);}
+.sb-ch{display:none;padding-left:.2rem;}
+.sb-ch.open{display:block;}
+.sb-a{display:block;padding:.38rem .9rem .38rem 1.4rem;font-family:'Cinzel',serif;font-size:9.5px;letter-spacing:.06em;color:rgba(200,180,140,.5);text-decoration:none;border-left:2px solid transparent;transition:all .15s;line-height:1.4;}
+.sb-a:hover{color:var(--gold-bright);border-left-color:rgba(180,140,60,.3);background:rgba(180,140,60,.04);}
+.sb-a.on{color:var(--gold-bright);border-left-color:var(--gold-bright);background:rgba(180,140,60,.07);}
+.sb-a.red{color:rgba(180,80,80,.6);}
+.sb-a.red:hover,.sb-a.red.on{color:#c04040;border-left-color:#c04040;background:rgba(180,60,60,.05);}
+
+.main{margin-left:var(--sw);flex:1;}
+.pg{background:var(--parch);background-image:linear-gradient(160deg,#f5e8cc 0%,#ede0c0 50%,#e0cca0 100%);min-height:100vh;padding:3rem 3.5rem;position:relative;display:none;}
+.pg.on{display:block;}
+.pg::before{content:'';position:absolute;inset:12px;border:1px solid var(--parch-dk);pointer-events:none;z-index:0;}
+.pg::after{content:'';position:absolute;inset:16px;border:.5px solid rgba(106,10,10,.1);pointer-events:none;z-index:0;}
+.inn{position:relative;z-index:1;}
+
+.pg-t{font-family:'Cinzel Decorative',serif;font-size:clamp(16px,2.2vw,22px);font-weight:700;color:var(--ink);letter-spacing:.08em;margin-bottom:.15rem;}
+.pg-s{font-family:'Cinzel',serif;font-size:9.5px;letter-spacing:.18em;color:var(--red-l);text-transform:uppercase;margin-bottom:1.2rem;padding-bottom:.8rem;border-bottom:.5px solid var(--parch-dk);}
+.sub{font-family:'Cinzel',serif;font-size:8.5px;letter-spacing:.13em;color:var(--red-l);text-transform:uppercase;border-bottom:.5px solid var(--parch-dk);padding-bottom:.25rem;margin:1.2rem 0 .7rem;}
+.scene{font-family:'Cinzel',serif;font-size:9.5px;letter-spacing:.13em;color:var(--gold-b);text-transform:uppercase;margin:1.5rem 0 .85rem;display:flex;align-items:center;gap:7px;}
+.scene::before,.scene::after{content:'';flex:1;height:.5px;background:var(--parch-dk);}
+
+p.b{font-size:14px;line-height:1.82;color:var(--ink-l);margin-bottom:.7rem;}
+p.b strong{color:var(--ink);font-weight:600;}
+p.b em{color:var(--ink-f);font-style:italic;}
+
+.lore{background:rgba(122,90,16,.06);border-left:3px solid var(--gold-b);border-top:.5px solid var(--parch-dk);border-bottom:.5px solid var(--parch-dk);border-right:.5px solid var(--parch-dk);padding:.8rem 1.1rem;margin:.8rem 0;font-size:13.5px;line-height:1.78;color:var(--ink-l);font-style:italic;}
+.lore strong{font-style:normal;color:var(--ink);font-weight:600;}
+.dm{background:rgba(106,10,10,.05);border:.5px solid rgba(106,10,10,.18);border-left:3px solid var(--red-l);padding:.8rem 1.1rem;margin:.8rem 0;}
+.dm-l{font-family:'Cinzel',serif;font-size:8px;letter-spacing:.13em;color:var(--red-l);margin-bottom:4px;text-transform:uppercase;}
+.dm p,.dm li{font-size:13px;line-height:1.7;color:var(--ink-l);}
+.dm ul{padding-left:.95rem;margin-top:.3rem;}
+.dm li{margin-bottom:.2rem;}
+
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:.7rem;margin:.7rem 0;}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:.6rem;margin:.6rem 0;}
+.box{border:.5px solid var(--parch-dk);padding:.7rem .85rem;background:rgba(255,255,255,.06);}
+.box-t{font-family:'Cinzel',serif;font-size:9.5px;letter-spacing:.07em;color:var(--gold-b);margin-bottom:.3rem;}
+.box-t.red{color:var(--red-l);}
+.box p,.box li{font-size:12.5px;line-height:1.65;color:var(--ink-l);}
+.box ul{padding-left:.85rem;margin-top:.25rem;}
+.box li{margin-bottom:.15rem;}
+.box strong{color:var(--ink);font-weight:600;}
+
+/* MAGIA DE SANGRE */
+.blood-card{border:1px solid rgba(140,20,20,.35);background:rgba(100,10,10,.04);margin-bottom:1rem;overflow:hidden;}
+.blood-banner{background:rgba(100,10,10,.08);padding:.8rem 1.1rem;border-bottom:.5px solid rgba(140,20,20,.25);}
+.blood-name{font-family:'Cinzel',serif;font-size:13px;font-weight:600;color:#8a1a1a;letter-spacing:.06em;margin-bottom:2px;}
+.blood-cost{font-family:'Cinzel',serif;font-size:9px;letter-spacing:.1em;color:#c04040;text-transform:uppercase;}
+.blood-body{padding:.8rem 1.1rem;}
+.blood-body p{font-size:13.5px;line-height:1.72;color:var(--ink-l);margin-bottom:.4rem;}
+.blood-body strong{color:var(--ink);font-weight:600;}
+.seq-cost{display:inline-block;font-family:'Cinzel',serif;font-size:8px;letter-spacing:.08em;padding:2px 7px;border:.5px solid #c04040;color:#c04040;margin:.3rem .2rem 0 0;}
+.perm-cost{display:inline-block;font-family:'Cinzel',serif;font-size:8px;letter-spacing:.08em;padding:2px 7px;border:.5px solid #8a1a1a;color:#8a1a1a;margin:.3rem .2rem 0 0;}
+
+/* OBJETOS */
+.item-card{border:.5px solid var(--parch-dk);margin-bottom:.9rem;overflow:hidden;}
+.item-banner{padding:.7rem 1rem;border-bottom:.5px solid var(--parch-dk);display:flex;align-items:center;gap:.7rem;}
+.item-name{font-family:'Cinzel',serif;font-size:12.5px;font-weight:600;color:var(--ink);letter-spacing:.06em;}
+.item-type{font-family:'Cinzel',serif;font-size:8px;letter-spacing:.1em;color:var(--gold-b);margin-left:auto;flex-shrink:0;}
+.item-body{padding:.75rem 1rem;}
+.item-body p{font-size:13.5px;line-height:1.72;color:var(--ink-l);margin-bottom:.35rem;}
+.item-body strong{color:var(--ink);font-weight:600;}
+.rarity{display:inline-block;font-family:'Cinzel',serif;font-size:8px;letter-spacing:.09em;padding:2px 7px;border:.5px solid;border-radius:2px;margin-left:.5rem;}
+.r-infrecuente{border-color:#2a6a3a;color:#2a6a3a;}
+.r-raro{border-color:#1a4a8a;color:#1a4a8a;}
+.r-mimico{border-color:#8a1a1a;color:#8a1a1a;}
+
+/* NPC ENEMIGO */
+.npc-enemy{border:.5px solid rgba(140,20,20,.3);margin-bottom:1rem;overflow:hidden;}
+.ne-banner{background:rgba(100,10,10,.07);padding:.8rem 1.1rem;border-bottom:.5px solid rgba(140,20,20,.2);}
+.ne-name{font-family:'Cinzel Decorative',serif;font-size:16px;color:var(--ink);margin-bottom:2px;}
+.ne-role{font-family:'Cinzel',serif;font-size:8.5px;letter-spacing:.13em;color:#c04040;text-transform:uppercase;}
+.ne-body{padding:.8rem 1.1rem;}
+.ne-body p{font-size:13.5px;line-height:1.72;color:var(--ink-l);margin-bottom:.4rem;}
+.ne-body strong{color:var(--ink);font-weight:600;}
+.sg{display:grid;grid-template-columns:repeat(6,1fr);gap:.3rem;margin:.5rem 0;}
+.st{border:.5px solid var(--parch-dk);padding:.35rem .1rem;text-align:center;background:rgba(255,255,255,.06);}
+.sn{font-family:'Cinzel Decorative',serif;font-size:14px;color:var(--ink);line-height:1;}
+.sm{font-family:'Cinzel',serif;font-size:8px;color:var(--gold-b);}
+.sl{font-family:'Cinzel',serif;font-size:6px;letter-spacing:.06em;color:var(--ink-f);text-transform:uppercase;margin-top:1px;}
+.cr-row{display:grid;grid-template-columns:repeat(3,1fr);gap:.4rem;margin:.4rem 0;}
+.cb{border:.5px solid var(--parch-dk);padding:.4rem .6rem;}
+.cb-l{font-family:'Cinzel',serif;font-size:7.5px;letter-spacing:.08em;color:var(--gold-b);text-transform:uppercase;margin-bottom:1px;}
+.cb-v{font-family:'Cinzel',serif;font-size:13px;color:var(--ink);font-weight:600;}
+.al{list-style:none;margin:.35rem 0;}
+.al li{font-size:13px;line-height:1.65;color:var(--ink-l);padding:.28rem 0;border-bottom:.5px solid rgba(200,180,120,.28);}
+.al li:last-child{border-bottom:none;}
+.al strong{color:var(--ink);font-weight:600;}
+.vbox{background:rgba(122,90,16,.05);border:.5px solid var(--parch-dk);border-left:2px solid var(--gold-bright);padding:.55rem .8rem;margin:.5rem 0;}
+.vbox-l{font-family:'Cinzel',serif;font-size:7.5px;letter-spacing:.13em;color:var(--gold-b);margin-bottom:3px;text-transform:uppercase;}
+.vbox p{font-size:12.5px;line-height:1.7;color:var(--ink-l);font-style:italic;}
+
+/* ENCUENTRO */
+.enc{border:.5px solid var(--parch-dk);margin-bottom:.75rem;}
+.enc-h{background:rgba(106,10,10,.05);padding:.6rem .85rem;border-bottom:.5px solid var(--parch-dk);display:flex;align-items:center;gap:.5rem;}
+.enc-n{font-family:'Cinzel',serif;font-size:8.5px;letter-spacing:.08em;color:var(--red-l);border:.5px solid var(--red-l);padding:2px 5px;flex-shrink:0;}
+.enc-t{font-family:'Cinzel',serif;font-size:11px;font-weight:600;color:var(--ink);}
+.enc-body{padding:.7rem .85rem;}
+.enc-body p{font-size:13.5px;line-height:1.7;color:var(--ink-l);margin-bottom:.35rem;}
+.enc-body ul{padding-left:.9rem;margin:.3rem 0;}
+.enc-body li{font-size:13px;line-height:1.6;color:var(--ink-l);margin-bottom:.2rem;}
+.enc-q{font-style:italic;color:var(--ink);border-left:2px solid var(--red-l);padding:.28rem .65rem;margin:.35rem 0;font-size:13.5px;background:rgba(106,10,10,.03);}
+
+.mob-btn{display:none;position:fixed;bottom:1.2rem;right:1.2rem;z-index:200;background:var(--gold-bright);border:none;width:42px;height:42px;align-items:center;justify-content:center;font-size:17px;cursor:pointer;color:var(--ink);}
+@media(max-width:768px){.sb{transform:translateX(-100%);transition:transform .3s;}.sb.open{transform:translateX(0);}.main{margin-left:0;}.pg{padding:2rem 1.4rem;}.g2,.g3{grid-template-columns:1fr;}.sg{grid-template-columns:repeat(3,1fr);}.mob-btn{display:flex!important;}}
+</style>
+</head>
+<body>
+<button class="mob-btn" onclick="document.querySelector('.sb').classList.toggle('open')">☰</button>
+
+<nav class="sb">
+  <div class="sb-brand">
+    <div class="sb-title">VERATH</div>
+    <div class="sb-sub">Sesión 3 y Sistemas Nuevos</div>
+    <div class="sb-stamp">⚠ SOLO DM</div>
+  </div>
+  <div class="sb-nav">
+    <div class="sb-grp">
+      <button class="sb-grp-btn open" onclick="tog(this)">Sesión 3 <span class="sb-arrow">▶</span></button>
+      <div class="sb-ch open">
+        <a class="sb-a on" href="#" onclick="show('s3_plan');return false">Plan general</a>
+        <a class="sb-a" href="#" onclick="show('s3_inicio');return false">Inicio — La mañana después</a>
+        <a class="sb-a" href="#" onclick="show('s3_oshe');return false">Lo que Oshe promete</a>
+        <a class="sb-a" href="#" onclick="show('s3_cantores');return false">Los Cantores del Mar</a>
+        <a class="sb-a" href="#" onclick="show('s3_misiones');return false">Las misiones del tablón</a>
+        <a class="sb-a" href="#" onclick="show('s3_cofres');return false">Objetos en cofres</a>
+      </div>
+    </div>
+    <div class="sb-grp">
+      <button class="sb-grp-btn" onclick="tog(this)">Sistemas Nuevos <span class="sb-arrow">▶</span></button>
+      <div class="sb-ch">
+        <a class="sb-a" href="#" onclick="show('sangre');return false">Magia de Sangre</a>
+        <a class="sb-a" href="#" onclick="show('mimico');return false">La Moneda Mímica</a>
+      </div>
+    </div>
+    <div class="sb-grp">
+      <button class="sb-grp-btn" onclick="tog(this)">NPCs Enemigos <span class="sb-arrow">▶</span></button>
+      <div class="sb-ch">
+        <a class="sb-a red" href="#" onclick="show('entidad');return false">La Entidad — El Grimorio</a>
+        <a class="sb-a" href="#" onclick="show('cantores_npc');return false">Cantores del Mar (rivales)</a>
+        <a class="sb-a" href="#" onclick="show('demonio_circulo');return false">Ataque al Círculo Bathrak</a>
+      </div>
+    </div>
+    <div class="sb-grp">
+      <button class="sb-grp-btn" onclick="tog(this)">Jugadores — Notas <span class="sb-arrow">▶</span></button>
+      <div class="sb-ch">
+        <a class="sb-a" href="#" onclick="show('feedback');return false">Feedback y ajustes</a>
+        <a class="sb-a" href="#" onclick="show('marca_solare');return false">La marca de Solare</a>
+        <a class="sb-a" href="#" onclick="show('escarabajos');return false">Los escarabajos de Mirai</a>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<main class="main">
+
+<!-- ══ PLAN SESIÓN 3 ══ -->
+<div class="pg on" id="p-s3_plan"><div class="inn">
+<div class="pg-t">Sesión 3 — Plan General</div>
+<div class="pg-s">Dentro de 4 días · Mix de rol y peleas · Ritmo más rápido</div>
+<p class="b">El feedback de tus jugadores fue claro: más peleas, más opciones, ritmo más ágil. La sesión 3 debe tener al menos dos encuentros de combate reales — no solo scares — y cada misión del tablón debe tener algo con qué interactuar además de "llegar y resolver".</p>
+<div class="sub">Objetivos de la sesión</div>
+<div class="g2">
+  <div class="box"><div class="box-t">Combate</div><p>Mínimo 2 peleas reales. Una fácil (calentar), una difícil (sudar). La difícil que llegue al final de la sesión para cerrar con adrenalina.</p></div>
+  <div class="box"><div class="box-t">Rol</div><p>La conversación con Oshe sobre la marca de Solare. Un momento con los Cantores del Mar — ¿aliados? ¿rivales? Los jugadores deciden.</p></div>
+  <div class="box"><div class="box-t">Misterio</div><p>Alguna misión del tablón revela un pedazo de lore. Que salgan con más preguntas de las que entraron — pero también con al menos una respuesta.</p></div>
+  <div class="box"><div class="box-t">Recompensa</div><p>Cofres con objetos. Al menos uno por misión completada. Y la moneda mímica en alguno de ellos.</p></div>
+</div>
+<div class="sub">Estructura sugerida</div>
+<div class="enc"><div class="enc-h"><div class="enc-n">01</div><div class="enc-t">La mañana después — 20 min</div></div><div class="enc-body"><p>Despertar en el segundo piso. Gorr pasando a ver. Desayuno. Oshe dice lo que prometió sobre la marca. Este momento debe sentirse tranquilo — es el ojo de la tormenta antes de que empiecen las misiones.</p></div></div>
+<div class="enc"><div class="enc-h"><div class="enc-n">02</div><div class="enc-t">El tablón de misiones — 10 min</div></div><div class="enc-body"><p>Presentar las misiones disponibles. Dejar que el grupo elija. No guiar — solo hacer que las opciones sean claras. Los Cantores del Mar también están mirando el tablón.</p></div></div>
+<div class="enc"><div class="enc-h"><div class="enc-n">03</div><div class="enc-t">Primera misión — 40 min</div></div><div class="enc-body"><p>La que elijan. Combate ligero incluido. Cofre con objeto al final.</p></div></div>
+<div class="enc"><div class="enc-h"><div class="enc-n">04</div><div class="enc-t">Pausa / momento de personaje — 15 min</div></div><div class="enc-body"><p>Breve respiro. Los Cantores del Mar hacen contacto — no hostil todavía. Información o rumor de algo más grande pasando en Resaca.</p></div></div>
+<div class="enc"><div class="enc-h"><div class="enc-n">05</div><div class="enc-t">Segunda misión — 50 min</div></div><div class="enc-body"><p>La que elijan. Combate más difícil. Algo inesperado a mitad — un giro que no anticiparon. Cofre con objeto.</p></div></div>
+<div class="enc"><div class="enc-h"><div class="enc-n">06</div><div class="enc-t">Cierre — 15 min</div></div><div class="enc-body"><p>Regreso a la taberna. Un detalle que no cuadra con lo que vieron en las misiones — un hilo suelto para la sesión 4. Y posiblemente el primer encuentro visual con la entidad a distancia, solo para recordarles que existe.</p></div></div>
+</div></div>
+
+<!-- ══ INICIO S3 ══ -->
+<div class="pg" id="p-s3_inicio"><div class="inn">
+<div class="pg-t">La Mañana Después</div>
+<div class="pg-s">Inicio de sesión 3 · Tono tranquilo · Información de Oshe</div>
+<p class="b">Amanece en Resaca con el sonido del mar golpeando las tablas debajo y el olor a sal y a algo que siempre huele a sal y a algo más en esta ciudad. El segundo piso del Quinto Puente tiene cinco camas que ninguno de ellos eligió, cinco personas que comparten un techo desde hace poco más de un día, y la clase de silencio que existe entre gente que vivió algo juntos y todavía está procesando qué fue exactamente.</p>
+<p class="b">Gorr pasa antes del desayuno. No pregunta cómo están — mira, evalúa, y si todo le parece razonablemente bien se va a su puerta. Si alguien no está bien, se queda sin decir nada hasta que esa persona está bien o hasta que queda claro que estar bien va a tomar más tiempo del que Gorr tiene esta mañana.</p>
+<p class="b">Oshe sirve el desayuno. Es el mejor desayuno que han tenido desde que llegaron a Resaca. No porque quiera impresionarlos — porque así es como Oshe hace las cosas cuando va a decir algo importante. La comida es su forma de crear el ambiente correcto para las conversaciones difíciles.</p>
+<div class="sub">Lo que Oshe dice — sobre la marca de Solare</div>
+<p class="b">Espera a que estén comiendo. Luego, sin preámbulo:</p>
+<div class="lore">"La marca que tienes en el brazo." [pausa] "La hizo algo que lleva mucho tiempo en este mundo. Más que cualquier dios que conozcas. Más que el Quiebre." [pausa más larga] "No es una maldición. Es una firma. Significa que te notó. Eso puede ser muy bueno o muy malo dependiendo de qué decidas hacer con tu vida a partir de ahora." [pausa] "El pantano tiene ecos de criaturas así. Nunca les hablo a los ecos. Esta sería la primera excepción que haría."</div>
+<p class="b">No dice más a menos que le pregunten directamente. Si preguntan: responde con verdades incompletas como siempre, pero esta vez un poco menos incompletas que de costumbre.</p>
+<div class="dm"><div class="dm-l">🔒 Lo que Oshe sabe realmente</div><p>La entidad que los golpeó anoche es algo que en Veyrath se llama simplemente "lo que no tiene nombre" — una categoría de entes que existían antes de que el Quiebre creara el sistema de dioses-fragmento. No son demonios en el sentido religioso. Son algo más antiguo que la distinción entre bien y mal. La marca en el brazo de Solare es literal: lo marcó como alguien que ha entrado en su campo de percepción y que podría ser útil o podría ser un problema. Sorre (Mara), la diosa de la vida, es el único fragmento que podría potencialmente quitar esa marca — lo que significa que la misión de Solare acaba de volverse urgente de una forma que él todavía no entiende.</p></div>
+</div></div>
+
+<!-- ══ OSHE ══ -->
+<div class="pg" id="p-s3_oshe"><div class="inn">
+<div class="pg-t">Lo que Oshe Promete</div>
+<div class="pg-s">Información sobre la marca · Qué comparte · Qué guarda</div>
+<div class="sub">Lo que dice libremente</div>
+<ul class="al"><li>La marca no desaparece sola con el tiempo.</li><li>No es mágica en el sentido de que alguien pueda simplemente disiparla con un conjuro de Disipar Magia.</li><li>Quien la hizo puede sentir, vagamente, la dirección en que está Solare. No la ubicación exacta. La dirección general.</li><li>Hay una forma de quitarla. Oshe no la sabe con certeza pero tiene una hipótesis.</li></ul>
+<div class="sub">Si le preguntan cómo quitarla</div>
+<div class="lore">"Tendría que encontrar algo más antiguo que lo que te la puso. Algo que tenga suficiente peso en el mundo para decirle que este no es su territorio." [pausa] "No sé si existe algo así todavía. El Quiebre cambió muchas cosas."</div>
+<div class="sub">Si le preguntan qué es exactamente la entidad</div>
+<div class="lore">"El pantano tiene una palabra para lo que es. No la voy a pronunciar aquí. Las palabras tienen peso y esta taberna ya tiene suficiente."</div>
+<div class="dm"><div class="dm-l">🔒 La hipótesis de Oshe</div><p>Oshe cree que Sorra (Mara), como fragmento del Quiebre con dominio sobre la vida, podría anular la marca porque su poder es fundamentalmente opuesto a lo que la entidad representa. Pero Oshe no sabe que Sorra está viva — solo que en teoría su tipo de poder sería el correcto. Si Solare eventualmente encuentra a Sorra, uno de los primeros temas de conversación que tendrán es esta marca.</p></div>
+</div></div>
+
+<!-- ══ CANTORES DEL MAR ══ -->
+<div class="pg" id="p-s3_cantores"><div class="inn">
+<div class="pg-t">Los Cantores del Mar</div>
+<div class="pg-s">Grupo de mercenarios · Rivales potenciales o aliados incómodos · Primer contacto en sesión 3</div>
+<p class="b">Los Cantores del Mar son un grupo de mercenarios con suficiente reputación en Resaca para tener su propio emblema — una ola con una nota musical encima, discreta, que solo los que saben la reconocen. No son los mejores mercenarios de Resaca, pero son consistentes, no matan a quien no les pagan por matar, y llevan dos años operando sin perder un contrato. Eso les da credibilidad.</p>
+<p class="b">Son cuatro. Llevan más tiempo en Resaca que el grupo. Conocen el tablón de misiones mejor. Y cuando ven al grupo mirando el mismo tablón que ellos, su respuesta es evaluar — no atacar, no ignorar.</p>
+<div class="sub">Los cuatro miembros</div>
+<div class="g2">
+  <div class="box"><div class="box-t">Mael — El Líder</div><p>Humano de Tharessi, 35 años, piel cobriza, cicatrices en las manos de años de trabajo con cuerdas y armas. Habla poco en público. Cuando habla, el resto escucha. Evalúa al grupo de forma visible — no con hostilidad sino con la curiosidad de alguien que considera si algo podría ser útil.</p></div>
+  <div class="box"><div class="box-t">Tessiv — La Arkai</div><p>Arkai de 28 años, más alta de lo habitual para su especie. Branquias que se abren cuando está nerviosa o emocionada. Es la que habla más dentro del grupo — rápido, con humor seco, con la tendencia a decir exactamente lo que piensa antes de filtrar si es buena idea.</p></div>
+  <div class="box"><div class="box-t">Gorvo — El Semiorco</div><p>Semiorco de Vokrath, callado, que da la impresión de que está a punto de hacer algo violento pero nunca lo hace a menos que alguien lo inicie. Es el curador del grupo — tiene conocimiento herbal básico y experiencia de campo. No usa magia.</p></div>
+  <div class="box"><div class="box-t">Liss — La Gnoma</div><p>Gnoma de Veta de Drukkaz, 60 años (adulta joven para su especie), ojos que brillan levemente. Especialista en trampas y mecanismos. Siempre tiene algo entre las manos — una pieza de metal, un mecanismo a medio armar. Si alguien del grupo le pregunta sobre algo mecánico, se anima notablemente.</p></div>
+</div>
+<div class="sub">Cómo interactúan con el grupo</div>
+<p class="b">El primer contacto es en el tablón. Tessiv hace el comentario, en voz suficientemente alta para que el grupo lo escuche: <em>"Esa misión ya la reclamamos nosotros."</em> — sobre la misión que el grupo esté a punto de elegir.</p>
+<p class="b">No es una pelea. Es una declaración de territorio. Mael la calma con un gesto y luego mira al grupo: <em>"¿Nuevos en Resaca?"</em> No es hostil. Es la evaluación de alguien que considera si vale la pena invertir tiempo en esta conversación.</p>
+<p class="b">Cómo termine el primer encuentro depende del grupo. Si son amables y directos: los Cantores comparten información sobre una misión (la que el grupo finalmente elija). Si son hostiles: los Cantores recuerdan quién fue hostil y lo toman en cuenta para después.</p>
+<div class="dm"><div class="dm-l">🔒 El papel de los Cantores a largo plazo</div><p>Los Cantores del Mar van a cruzarse con el grupo varias veces antes de que partan de Resaca. No son villanos — son competencia, lo que es más interesante. Si el grupo los trata bien, pueden convertirse en aliados ocasionales que comparten trabajos demasiado grandes para un grupo solo. Si los tratan mal, pueden convertirse en un obstáculo que complica las misiones. Eventualmente, si la relación es buena, Mael podría revelar que los Cantores también tienen información sobre el carruaje que el grupo investigó — información diferente, desde otro ángulo.</p></div>
+</div></div>
+
+<!-- ══ MISIONES TABLÓN ══ -->
+<div class="pg" id="p-s3_misiones"><div class="inn">
+<div class="pg-t">Las Misiones del Tablón</div>
+<div class="pg-s">Estructura general · Cada misión tiene su texto propio · Aquí solo los ganchos y los extras</div>
+<p class="b">Cada misión del tablón tiene su texto ya definido por ti. Lo que aquí añado son los extras que convierten cada misión en algo más que resolver y cobrar: el giro inesperado, el detalle de lore, el NPC de fondo.</p>
+<div class="sub">Extras recomendados por tipo de misión</div>
+<div class="enc"><div class="enc-h"><div class="enc-n">MISIÓN DE COBRO</div><div class="enc-t">El deudor tiene razón</div></div><div class="enc-body">
+<p>La misión dice que cobren una deuda. Cuando llegan, el deudor tiene su versión — y su versión tiene sentido. El grupo tiene que decidir si cobran de todas formas, negocian, o vuelven con información que el contratante no les dijo.</p>
+<p><strong>Giro:</strong> El contratante tiene el símbolo de los Cantores del Mar. Esa deuda es de los Cantores, no de un particular.</p>
+<p><strong>Cofre:</strong> El deudor les ofrece algo que vale más que el dinero de la deuda — un mapa de un lugar en Resaca que nadie del grupo conoce todavía.</p>
+</div></div>
+<div class="enc"><div class="enc-h"><div class="enc-n">MISIÓN DE RECUPERACIÓN</div><div class="enc-t">Lo que se perdió no quiere ser encontrado</div></div><div class="enc-body">
+<p>Recuperar un objeto de un lugar que debería estar vacío. El objeto está ahí. También hay algo más que no debería estar — no necesariamente hostil al principio.</p>
+<p><strong>Combate:</strong> 1-2 Zombis de agua (cuerpos de marineros ahogados en el pantano de Resaca reanimados por la proximidad al Shadowfell). CR 1/4 cada uno, pero en terreno acuático son más peligrosos.</p>
+<p><strong>Cofre:</strong> Dentro del lugar hay una caja cerrada que no es el objeto que buscan. Dentro de la caja: la moneda mímica.</p>
+</div></div>
+<div class="enc"><div class="enc-h"><div class="enc-n">MISIÓN DE ESCOLTA</div><div class="enc-t">El escoltado sabe algo que no dice</div></div><div class="enc-body">
+<p>Escortar a alguien del muelle norte al muelle sur. Straightforward. Excepto que a mitad del camino el escoltado hace algo que no tiene sentido — se detiene frente a un callejón y mira fijo durante cinco segundos, como si estuviera viendo algo.</p>
+<p><strong>Giro:</strong> El escoltado puede ver ecos del Shadowfell de forma natural — una rareza incluso en Veyrath. Lo que vio en el callejón fue el eco de alguien que murió ahí hace poco. Reciente. Demasiado reciente.</p>
+<p><strong>Combate:</strong> En el último tramo, dos miembros de un grupo que quiere al escoltado para propósitos propios. Bandidos de nivel apropiado para el grupo.</p>
+<p><strong>Cofre:</strong> Los bandidos llevaban algo — un pago por el "trabajo" que no completaron. En la bolsa, además del dinero, un papel con instrucciones escritas en código simple.</p>
+</div></div>
+<div class="enc"><div class="enc-h"><div class="enc-n">MISIÓN DE INVESTIGACIÓN</div><div class="enc-t">La respuesta es peor que la pregunta</div></div><div class="enc-body">
+<p>Investigar por qué un almacén del muelle este lleva tres días con las puertas cerradas y nadie ha salido. El contratante es el dueño del almacén, que está en el muelle norte y no puede ir personalmente.</p>
+<p><strong>Dentro del almacén:</strong> Cuatro trabajadores vivos pero en estado de trance. No responden, no se mueven, no reaccionan a nada. Están mirando todos en la misma dirección — hacia una pared que no tiene nada visible.</p>
+<p><strong>Combate:</strong> Cuando el grupo intenta mover a uno de los trabajadores, algo en la pared reacciona — una Sombra (Shadow, CR 1/2) que estaba adherida al muro. Si la destruyen, los trabajadores despiertan sin recuerdo de los tres días.</p>
+<p><strong>Lore:</strong> Percepción CD 13 en la pared: hay marcas grabadas en la madera que son similares — aunque no idénticas — a las inscripciones de Durrakh. Alguien estuvo aquí antes que los trabajadores y dejó algo.</p>
+<p><strong>Cofre:</strong> Detrás de una estantería caída — una caja con herramientas de grabado y un diario parcialmente quemado. Tres páginas legibles.</p>
+</div></div>
+</div></div>
+
+<!-- ══ COFRES ══ -->
+<div class="pg" id="p-s3_cofres"><div class="inn">
+<div class="pg-t">Objetos en Cofres</div>
+<div class="pg-s">No muy op · Útiles para situaciones específicas · Uno por misión</div>
+
+<div class="item-card">
+  <div class="item-banner"><div class="item-name">Frasco de Eco<span class="rarity r-infrecuente">Infrecuente</span></div><div class="item-type">Objeto maravilloso · Consumible</div></div>
+  <div class="item-body">
+    <p>Un frasco pequeño de vidrio oscuro lleno de agua del pantano de Veyrath con un eco atrapado dentro. Al abrirlo, el eco se reproduce brevemente — entre 5 y 30 segundos de un momento del pasado que ocurrió cerca del lugar donde fue recogida el agua.</p>
+    <p><strong>Uso en juego:</strong> Una vez por frasco. El DM describe el eco — una escena de lo que ocurrió en ese lugar. No es controlable: muestra lo que el pantano considera más relevante, no necesariamente lo que el grupo quiere ver. Hay 2 frascos disponibles.</p>
+    <p><strong>Cuándo es útil:</strong> Investigación, buscar testigos de eventos pasados, confirmar si alguien estuvo en un lugar.</p>
+  </div>
+</div>
+
+<div class="item-card">
+  <div class="item-banner"><div class="item-name">Capa de Marea<span class="rarity r-infrecuente">Infrecuente</span></div><div class="item-type">Armadura (capa) · Requiere sintonización</div></div>
+  <div class="item-body">
+    <p>Una capa de tela de color variable — cambia entre azul marino y verde pantano dependiendo de la luz — que está ligeramente húmeda al tacto sin mojar lo que toca. Fue fabricada en Tharessi pero tiene trabajos de Veyrath en el borde.</p>
+    <p><strong>Efectos:</strong></p>
+    <ul style="padding-left:1rem;margin:.3rem 0;"><li style="font-size:13px;color:var(--ink-l);margin-bottom:.2rem">Ventaja en tiradas de sigilo en terreno acuático o lluvioso.</li><li style="font-size:13px;color:var(--ink-l);margin-bottom:.2rem">Puedes respirar bajo el agua durante 10 minutos antes de necesitar salir a superficie (no tantos como el Bathrak — 10 minutos exactos, no más).</li><li style="font-size:13px;color:var(--ink-l)">Una vez por día: cuando caigas al agua, puedes reaccionar para no hacer ningún ruido al entrar — sin salpicadura, sin sonido.</li></ul>
+    <p><strong>Quién la usaría mejor:</strong> Silas, Aerion, o el druida.</p>
+  </div>
+</div>
+
+<div class="item-card">
+  <div class="item-banner"><div class="item-name">Piedra de Eco<span class="rarity r-infrecuente">Infrecuente</span></div><div class="item-type">Objeto maravilloso · No requiere sintonización</div></div>
+  <div class="item-body">
+    <p>Una piedra pequeña y plana de color gris verdoso que vibra levemente cuando hay muertos vivientes o presencias del Shadowfell en un radio de 18 metros. La vibración aumenta de intensidad cuanto más cerca está la fuente.</p>
+    <p><strong>Efectos:</strong> Funciona como un detector pasivo — no require acción activarla, solo llevarla encima. No da dirección exacta, solo intensidad. No funciona contra criaturas que enmascaran su presencia (invisibilidad mágica, etc.).</p>
+    <p><strong>Quién la usaría mejor:</strong> Mirai (el Bathrak) como sustituto parcial de la piedra del pantano que le robó Draven. No es lo mismo — no tiene la conexión personal — pero sirve para orientarse.</p>
+  </div>
+</div>
+
+<div class="item-card">
+  <div class="item-banner"><div class="item-name">Diario Parcialmente Quemado<span class="rarity r-raro">Raro</span></div><div class="item-type">Objeto de lore · No tiene efectos mecánicos</div></div>
+  <div class="item-body">
+    <p>Tres páginas legibles de un diario cuyo autor no se identifica. La escritura es pequeña y regular — alguien acostumbrado a escribir mucho. Las páginas legibles contienen:</p>
+    <ul style="padding-left:1rem;margin:.3rem 0;"><li style="font-size:13px;color:var(--ink-l);margin-bottom:.3rem"><strong>Página 1:</strong> Notas sobre las inscripciones de Durrakh — específicamente sobre tres símbolos que el autor no había visto en ningún texto pre-Quiebre. Dibujados con precisión. Al lado de cada uno: la pregunta "¿respuesta o instrucción?"</li><li style="font-size:13px;color:var(--ink-l);margin-bottom:.3rem"><strong>Página 2:</strong> Una lista de lugares — Resaca, un punto en el pantano de Veyrath, un nombre de ciudad en Drukkaz — con fechas. Las fechas son recientes. La última es hace dos semanas.</li><li style="font-size:13px;color:var(--ink-l)"><strong>Página 3:</strong> Casi ilegible por el fuego. Lo que se puede leer: "...el árbol no camina hacia el mar. Camina hacia el punto donde el mar empezó..." y debajo, en letra diferente y más urgente: "no lo abran todavía."</li></ul>
+    <p><strong>Conexión:</strong> Este diario pertenecía a alguien que investigaba lo mismo que Koss el Sokrath. Puede que trabajaran juntos. Puede que fueran la misma persona usando un alias.</p>
+  </div>
+</div>
+
+</div></div>
+
+<!-- ══ MAGIA DE SANGRE ══ -->
+<div class="pg" id="p-sangre"><div class="inn">
+<div class="pg-t">Magia de Sangre</div>
+<div class="pg-s">Sistema alternativo · Pre-Quiebre · Nadie sabe bien cómo funciona · Grandes consecuencias</div>
+<div class="lore">Antes del Quiebre existía una forma de magia que no requería el estudio de los magos ni la devoción de los clérigos. Requería sangre — la propia, la de alguien dispuesto, o la de alguien no tan dispuesto. Los registros de esa magia son escasos porque quienes la practicaban no tendían a sobrevivir lo suficiente para documentarla bien. Los que sí sobrevivieron no tendieron a compartir lo que aprendieron. Lo que queda son fragmentos, rumores, y consecuencias visibles en el cuerpo de quien la usó demasiadas veces.</div>
+<div class="sub">Cómo funciona en juego</div>
+<p class="b">La magia de sangre no usa espacios de conjuro. Usa <strong>Puntos de Golpe</strong> — directamente, sin reducción, sin recuperación mágica posible de ese costo hasta un descanso largo completo. Cuanto más poderoso el efecto, más caro en PG.</p>
+<p class="b">Hay dos tipos de costo: el <strong>costo secuencial</strong> (PG que se recuperan normalmente con descanso) y el <strong>costo permanente</strong> (pérdida física irreversible — un ojo, un dedo, una cicatriz que no cierra). Los efectos más extremos requieren costo permanente.</p>
+<p class="b">Cualquier personaje puede intentar usar magia de sangre si encuentra instrucciones o si alguien se las enseña. Requiere conocer el ritual específico — no es algo que se improvise. Los clérigos y druidas tienen desventaja en su uso (su magia viene de fuentes que no se llevan bien con esto). Los magos y pícaros pueden aprender algunos efectos con suficiente estudio.</p>
+<div class="sub">Efectos conocidos — Lo que pueden encontrar o aprender</div>
+
+<div class="blood-card">
+  <div class="blood-banner">
+    <div class="blood-name">Marca de Rastreo</div>
+    <div class="blood-cost">Ritual de 1 minuto · Requiere contacto físico con el objetivo</div>
+  </div>
+  <div class="blood-body">
+    <p>El practicante corta su palma y toca al objetivo durante 6 segundos. Durante las siguientes 24 horas puede sentir la dirección general donde está el objetivo (no distancia, solo dirección) siempre que estén en el mismo plano de existencia.</p>
+    <span class="seq-cost">Costo: 2 PG propios</span>
+    <p style="margin-top:.5rem;font-size:13px;color:var(--ink-f);font-style:italic;">El objetivo puede sentir que fue marcado con Percepción CD 14 (sensación de hormigueo en el punto de contacto).</p>
+  </div>
+</div>
+
+<div class="blood-card">
+  <div class="blood-banner">
+    <div class="blood-name">Golpe de Eco</div>
+    <div class="blood-cost">Acción · Requiere estar herido (al menos 1 PG perdido previamente)</div>
+  </div>
+  <div class="blood-body">
+    <p>El practicante canaliza la energía de su propia herida en un ataque. Un objetivo en 9 metros recibe daño necrótico igual a la mitad de los PG que el practicante ha perdido desde su último descanso corto (mínimo 1, máximo 10). El ataque no falla — no hay tirada de ataque, pero el objetivo puede hacer salvación de CON CD 13 para reducir el daño a la mitad.</p>
+    <span class="seq-cost">Costo: 4 PG propios adicionales</span>
+  </div>
+</div>
+
+<div class="blood-card">
+  <div class="blood-banner">
+    <div class="blood-name">Sello de Silencio</div>
+    <div class="blood-cost">Acción · Requiere sangre del practicante aplicada a los labios del objetivo</div>
+  </div>
+  <div class="blood-body">
+    <p>El objetivo queda imposibilitado de hablar, cantar o emitir sonidos con la boca durante 1 hora. No afecta conjuros con componentes somáticos solamente. El objetivo sabe que fue silenciado y puede intentar romper el sello con una acción (SAL CAR CD 15).</p>
+    <span class="seq-cost">Costo: 3 PG propios</span>
+    <p style="margin-top:.5rem;font-size:13px;color:var(--ink-f);font-style:italic;">Útil contra bardos, clérigos, o alguien que no quieres que grite.</p>
+  </div>
+</div>
+
+<div class="blood-card">
+  <div class="blood-banner">
+    <div class="blood-name">Vínculo de Vida</div>
+    <div class="blood-cost">Ritual de 10 minutos · Requiere sangre de ambos participantes mezclada</div>
+  </div>
+  <div class="blood-body">
+    <p>Dos personas crean un vínculo temporal (24 horas). Mientras dura, cuando una recibe daño, puede transferir hasta la mitad de ese daño al otro participante del vínculo (el receptor puede negarse con reacción + SAL CON CD 12). Ambos participantes sienten el dolor físico del otro, aunque no el daño completo.</p>
+    <span class="seq-cost">Costo: 5 PG de cada participante</span>
+  </div>
+</div>
+
+<div class="blood-card">
+  <div class="blood-banner">
+    <div class="blood-name">Invocación de Sombra Sangrienta</div>
+    <div class="blood-cost">Ritual de 1 hora · Solo puede usarse una vez por luna llena</div>
+  </div>
+  <div class="blood-body">
+    <p>El practicante invoca una proyección de sí mismo hecha de sangre y sombra que puede actuar de forma independiente durante 10 minutos. La proyección tiene la mitad de los PG máximos del practicante, las mismas estadísticas, pero no puede usar magia. Si la proyección muere, el practicante recibe daño igual a los PG que le quedaban a la proyección.</p>
+    <span class="seq-cost">Costo: 8 PG propios</span>
+    <span class="perm-cost">Costo permanente: Una cicatriz en el pecho que nunca cierra completamente</span>
+  </div>
+</div>
+
+<div class="blood-card">
+  <div class="blood-banner">
+    <div class="blood-name">Fractura de Alma</div>
+    <div class="blood-cost">Acción · Solo puede intentarse contra objetivo inconsciente o con 0 PG</div>
+  </div>
+  <div class="blood-body">
+    <p>El efecto más extremo conocido. El practicante abre su propia palma sobre el objetivo y pronuncia las palabras del ritual. Si tiene éxito (el objetivo falla una SAL de CON CD 18), el objetivo queda en un estado entre la vida y la muerte durante 1d4 días — no muere, no despierta, y no puede ser curado mágicamente en ese período. Al despertar, ha perdido un recuerdo permanente y al azar.</p>
+    <span class="seq-cost">Costo: 15 PG propios</span>
+    <span class="perm-cost">Costo permanente: El practicante pierde la visión de un ojo por 1 semana, y ese ojo queda con una vena roja visible permanentemente</span>
+    <p style="margin-top:.5rem;font-size:13px;color:var(--ink-f);font-style:italic;">Esto no es algo que un personaje de nivel 1-3 debería poder usar cómodamente. Si lo intentan de todas formas, que las consecuencias sean visibles.</p>
+  </div>
+</div>
+
+<div class="dm"><div class="dm-l">🔒 Cómo introducirla en juego</div><p>Nadie en el grupo sabe todavía que esto existe. La primera vez que la encuentran es en el diario quemado del almacén — una página describe brevemente el ritual de Marca de Rastreo sin llamarlo "magia de sangre", solo describiendo el proceso. La conexión con el resto del sistema la tienen que construir ellos. Si la investigan activamente, pueden encontrar más en Resaca — hay al menos una persona en la ciudad que la ha practicado y las cicatrices se pueden ver si sabes qué buscar.</p></div>
+</div></div>
+
+<!-- ══ MÍMICO ══ -->
+<div class="pg" id="p-mimico"><div class="inn">
+<div class="pg-t">La Moneda Mímica</div>
+<div class="pg-s">Objeto único · Se encuentra en un cofre · Se hace pasar por moneda corriente</div>
+<p class="b">El objeto mímico más sorprendente no es la espada ni la llave — es la moneda. Una espada mímica te ataca cuando la empuñas. Eso es dramático pero predecible. Una moneda mímica te observa durante semanas antes de que sepas qué es. Y para cuando lo sabes, probablemente ya la has usado como moneda corriente al menos una vez.</p>
+
+<div class="item-card">
+  <div class="item-banner"><div class="item-name">La Moneda de Dos Caras<span class="rarity r-mimico">Mímico</span></div><div class="item-type">Criatura disfrazada · CR 1/2</div></div>
+  <div class="item-body">
+    <p><strong>Apariencia:</strong> Una moneda de plata de aspecto completamente ordinario. La cara de un lado tiene el grabado de una ola — símbolo de Tharessi. La cara del otro lado tiene un grabado que ninguno de ellos reconoce: una figura con una capucha. Podría ser arte. Podría ser algo más.</p>
+    <p><strong>Comportamiento:</strong> La moneda mímica es paciente. Extraordinariamente paciente. No ataca cuando la encuentran, no ataca cuando la tocan, no ataca cuando la guardan en una bolsa con otras monedas (a las que devora lentamente — una por semana si nadie lo nota). Solo ataca si alguien intenta doblarla, cortarla, o fundirla — cualquier intento de destruirla.</p>
+
+    <div class="sub" style="margin-top:1rem;">Cómo descubrirla</div>
+    <p><strong>Señales que puede notar el grupo:</strong></p>
+    <ul style="padding-left:1rem;margin:.3rem 0 .7rem;">
+      <li style="font-size:13.5px;color:var(--ink-l);margin-bottom:.3rem">Si llevan la bolsa donde está y alguien hace una tirada de Percepción CD 16 mientras la tocan: la moneda está ligeramente tibia. Las otras no.</li>
+      <li style="font-size:13.5px;color:var(--ink-l);margin-bottom:.3rem">Después de 2 semanas en la bolsa: hay una moneda menos de las que deberían haber. La mímica la digirió.</li>
+      <li style="font-size:13.5px;color:var(--ink-l);margin-bottom:.3rem">Si Mirai la toca y usa Memoria del Agua en cualquier agua cercana: el eco muestra brevemente la imagen de algo que no es una moneda.</li>
+      <li style="font-size:13.5px;color:var(--ink-l)">Si Silas la examina con sus habilidades de pícaro (Investigación CD 17): la textura en el borde es ligeramente diferente a cualquier moneda que haya visto — demasiado orgánica.</li>
+    </ul>
+
+    <div class="sub">Si intentan destruirla</div>
+    <p>La moneda se abre. Lo que estaba doblado dentro se despliega — no es grande, del tamaño de un puño cuando está completamente expandida — con una superficie adhesiva y un pseudópodo que intenta agarrar la mano más cercana.</p>
+    <p><strong>Estadísticas en forma de combate:</strong> 22 PG, CA 12, velocidad 0 metros (no puede moverse, solo adherirse a lo que toca). Ataque: Pseudópodo +3, 1d6+1 contundente + el objetivo queda Agarrado (CD de escape 11). Mientras tiene a alguien agarrado: 1d6 de daño ácido por turno.</p>
+    <p><strong>Vulnerabilidad:</strong> El frío la hace lenta — si alguien le aplica cualquier fuente de frío, tiene desventaja en sus ataques ese turno.</p>
+
+    <div class="sub">Si deciden domesticarla</div>
+    <p>Esto es completamente posible y completamente un error que tienen ganas de cometer. Un mímico bien alimentado y no amenazado puede volverse territorial — protege el espacio donde está. No es un aliado. Es más como una trampa que elige sus propias víctimas.</p>
+    <p>Si alguien intenta comunicarse con él (Comunicación con Animales no funciona — no es un animal; pero un conjuro de Telepatía podría): el mímico tiene la inteligencia de un perro con mucha paciencia y muy poca empatía. Entiende conceptos como "comida", "aquí", "no", y "ese de ahí".</p>
+
+    <div class="dm"><div class="dm-l">🔒 De dónde viene la moneda mímica</div><p>Fue fabricada deliberadamente — los mímicos no crecen naturalmente en forma de moneda. Alguien en Resaca los cría y los vende como herramientas de espionaje o como trampas financieras (imagina darle a tu enemigo una "herencia" llena de mímicos pequeños). Quién hace esto en Resaca es un hilo que el grupo puede tirar si quiere, con una recompensa potencial si encuentran el taller.</p></div>
+  </div>
+</div>
+</div></div>
+
+<!-- ══ ENTIDAD ══ -->
+<div class="pg" id="p-entidad"><div class="inn">
+<div class="pg-t">La Entidad — El Grimorio de Sangre</div>
+<div class="pg-s">NPC enemigo principal · No para pelear todavía · Para entender qué enfrentan</div>
+<p class="b">La entidad no tiene nombre que los mortales puedan pronunciar cómodamente. En Veyrath existe una categoría de seres que preexistían al sistema de dioses-fragmento que el Quiebre creó. Esta entidad pertenece a esa categoría. Tiene la forma de un diablo porque esa es la forma que los mortales de esta era pueden procesar con más facilidad — y porque, en algún nivel que no explicará, le parece conveniente.</p>
+<div class="sub">Apariencia</div>
+<p class="b">Alta, de proporciones ligeramente equivocadas — los brazos un poco demasiado largos, la cabeza un poco demasiado grande, los ojos en una posición que funciona pero que el ojo humano registra como incorrecta. Piel de color carbón oscuro con líneas de un rojo que no es sangre sino algo más antiguo que la sangre. Cuernos que no son decoración — tienen el tipo de desgaste que solo viene de haberlos usado durante mucho tiempo.</p>
+<p class="b">El grimorio siempre está en su mano izquierda. Goteen sangre que cae y no deja mancha — la sangre desaparece antes de llegar al suelo, como si el suelo no la mereciera o el grimorio la reclamara de vuelta.</p>
+<div class="sub">Qué sabe el grupo de ella</div>
+<div class="g2">
+  <div class="box"><div class="box-t">Lo que dijeron los PJs que saben</div><p>Les golpeó y los dejó inconscientes. Les dijo a Mirai que "nunca debió volver." Le dejó una marca a Solare. Le cambió el instrumento a Aerion.</p></div>
+  <div class="box"><div class="box-t">Lo que no saben</div><p>Por qué Mirai no debió volver. Qué quiere con ellos. Si los conoce de antes o simplemente los detectó. Qué contiene el grimorio.</p></div>
+</div>
+<div class="sub">Estadísticas — Para referencia del DM solamente</div>
+<div class="sg"><div class="st"><div class="sn">22</div><div class="sm">+6</div><div class="sl">FUE</div></div><div class="st"><div class="sn">16</div><div class="sm">+3</div><div class="sl">DES</div></div><div class="st"><div class="sn">20</div><div class="sm">+5</div><div class="sl">CON</div></div><div class="st"><div class="sn">18</div><div class="sm">+4</div><div class="sl">INT</div></div><div class="st"><div class="sn">16</div><div class="sm">+3</div><div class="sl">SAB</div></div><div class="st"><div class="sn">20</div><div class="sm">+5</div><div class="sl">CAR</div></div></div>
+<div class="cr-row"><div class="cb"><div class="cb-l">PG</div><div class="cb-v">180</div></div><div class="cb"><div class="cb-l">CA</div><div class="cb-v">18</div></div><div class="cb"><div class="cb-l">Salvaciones</div><div class="cb-v">+7 todo</div></div></div>
+<ul class="al"><li><strong>Resistencias:</strong> Fuego, rayo, veneno. Inmune a encantamientos y al miedo.</li><li><strong>El Grimorio:</strong> Acción legendaria. Abre el grimorio y lee una línea — un objetivo en 18 metros debe hacer SAL de INT CD 17 o queda Aturdido hasta el inicio del siguiente turno de la entidad. No consume espacio de conjuro — consume la sangre que el grimorio contiene.</li><li><strong>Golpe Aplastante:</strong> +9 a golpear, 2d8+6 contundente. Puede hacer esto 3 veces por acción.</li><li><strong>Firma de Presencia:</strong> Reacción. Cuando alguien intenta usar magia en 9 metros, puede forzar una tirada de concentración adicional CD 15 o el conjuro falla.</li></ul>
+<div class="dm"><div class="dm-l">🔒 Qué quiere realmente</div><p>La entidad quiere el contenido del grimorio completado — y el grimorio se completa con eventos específicos que tienen que ocurrir en un orden específico. Algunos de esos eventos involucran al grupo de formas que todavía no son claras ni para la entidad ni para el DM, que puede irlos desarrollando según la campaña avance. Lo que sí es claro: Mirai específicamente es un problema porque fue testigo de algo que la entidad preferiría que nadie hubiera visto. La frase "nunca debiste volver" no es amenaza — es observación de un problema logístico.</p></div>
+</div></div>
+
+<!-- ══ CANTORES NPC ══ -->
+<div class="pg" id="p-cantores_npc"><div class="inn">
+<div class="pg-t">Cantores del Mar — Como Rivales</div>
+<div class="pg-s">Si la relación se deteriora · Estadísticas para posible confrontación</div>
+<p class="b">Los Cantores del Mar no son villanos y no deberían convertirse en enemigos a menos que el grupo los trate muy mal. Pero si ocurre, aquí están las estadísticas para una confrontación que debería ser difícil pero no imposible para el grupo.</p>
+<div class="g2">
+  <div class="box"><div class="box-t">Mael (CR 2)</div><p>Guerrero. 45 PG, CA 15. Ataque múltiple: 2 ataques con espada corta (+4, 1d6+2). Rasgo: Parada — reacción para añadir +2 a su CA contra un ataque.</p></div>
+  <div class="box"><div class="box-t">Tessiv la Arkai (CR 1)</div><p>Exploradora. 32 PG, CA 13. Ataque furtivo +2d6. Anfibiosis — sin penalizaciones en agua. Si el combate pasa a zona acuática, es más peligrosa.</p></div>
+  <div class="box"><div class="box-t">Gorvo (CR 1)</div><p>Luchador. 38 PG, CA 12. Ataque: Garrote +4, 1d8+2. Puede estabilizar a un aliado como acción adicional (1d4 PG).</p></div>
+  <div class="box"><div class="box-t">Liss la Gnoma (CR 1/2)</div><p>Especialista. 22 PG, CA 13. Ataque: Ballesta ligera +4, 1d8+2. Especial: Trampa de campo (bonus action) — instala trampa en 1.5m que hace 1d6 a quien la active.</p></div>
+</div>
+<div class="dm"><div class="dm-l">📋 Táctica recomendada</div><p>Los Cantores no pelean si no tienen que hacerlo — son mercenarios, no se meten en peleas que no les pagan. Si el grupo los ataca, Mael intenta desescalar primero. Si eso falla, Liss pone trampas mientras Tessiv y Gorvo distraen, y Mael busca el flanco. No son suicidas — si pierden dos miembros, se retiran.</p></div>
+</div></div>
+
+<!-- ══ ATAQUE AL CÍRCULO ══ -->
+<div class="pg" id="p-demonio_circulo"><div class="inn">
+<div class="pg-t">Ataque al Círculo Bathrak</div>
+<div class="pg-s">Evento que ocurre fuera de pantalla · El grupo lo descubre después · Consecuencias para Mirai</div>
+<p class="b">Tu idea de que el círculo Bathrak fue atacado por demonios o entes del mal es exactamente el tipo de evento que no debe ocurrir <em>durante</em> la sesión — sino que el grupo descubre que ocurrió. Llegar a un lugar y encontrar lo que quedó es siempre más impactante que ver el evento en tiempo real.</p>
+<div class="sub">Cuándo ocurre</div>
+<p class="b">El ataque al círculo ocurre durante la noche entre sesión 2 y sesión 3 — mientras el grupo estaba inconsciente en el segundo piso de la taberna. Cuando van a la sesión 3, el círculo ya fue atacado. No lo saben todavía.</p>
+<div class="sub">Cómo lo descubren</div>
+<p class="b">Hay tres formas posibles:</p>
+<div class="g3">
+  <div class="box"><div class="box-t">Opción A — El escarabajo</div><p>Uno de los escarabajos que Mirai lleva en la bolsa muere sin razón aparente durante la mañana. Los escarabajos están conectados al círculo — cuando un miembro del círculo muere, el escarabajo que portaba también.</p></div>
+  <div class="box"><div class="box-t">Opción B — Un mensajero</div><p>Un Bathrak joven, herido, llega a la taberna preguntando por Mirai. Tiene quemaduras que no son de fuego — son de algo más frío que el frío, el tipo de quemadura que deja la magia de sombra.</p></div>
+  <div class="box"><div class="box-t">Opción C — El pantano</div><p>Si Mirai usa Memoria del Agua en cualquier punto de agua cercano al pantano este: el eco muestra brevemente el ataque — figuras oscuras, el círculo en llamas, gritos que no son exactamente sonido.</p></div>
+</div>
+<div class="sub">Qué encontrarán si van al círculo</div>
+<p class="b">El lugar está dañado pero no destruido completamente. Tres miembros del círculo murieron. El guardia que le dio las misiones a Mirai está herido pero vivo, escondido detrás de una pared de musgo que creció a su alrededor como protección instintiva.</p>
+<p class="b">El guardia, cuando lo encuentran, dice solo: <em>"Venían por el bastón."</em></p>
+<div class="dm"><div class="dm-l">🔒 Por qué venían por el bastón</div><p>El bastón que le dieron a Mirai con instrucciones de "usar en caso de emergencia" no es un bastón ordinario. Es un objeto de anclaje — tiene un fragmento de la esencia del círculo imbuido en él. Si el bastón se destruye, debilita el vínculo del círculo con el Corazón Quieto de Veyrath. La entidad quería el bastón para ese propósito — no para tenerlo, sino para destruirlo. Como Mirai se lo llevó antes del ataque, el plan falló parcialmente. Eso hace a Mirai el objetivo más importante de la entidad en este momento, aunque todavía no lo sabe.</p></div>
+<div class="sub">Estadísticas de los atacantes — En caso de que el grupo llegue a tiempo a un segundo ataque</div>
+<div class="npc-enemy"><div class="ne-banner"><div class="ne-name">Sombra Sanguínea</div><div class="ne-role">Ente menor · CR 1 · Enviado de la entidad</div></div><div class="ne-body">
+<p>Una figura humanoide hecha de sombra con venas de rojo oscuro que brillan cuando absorbe luz. No habla. Se mueve sin hacer sonido. Sus ataques no hacen daño físico — hacen daño necrótico que reduce el máximo de PG temporalmente (recuperable con descanso largo).</p>
+<div class="sg"><div class="st"><div class="sn">6</div><div class="sm">-2</div><div class="sl">FUE</div></div><div class="st"><div class="sn">14</div><div class="sm">+2</div><div class="sl">DES</div></div><div class="st"><div class="sn">12</div><div class="sm">+1</div><div class="sl">CON</div></div><div class="st"><div class="sn">6</div><div class="sm">-2</div><div class="sl">INT</div></div><div class="st"><div class="sn">10</div><div class="sm">+0</div><div class="sl">SAB</div></div><div class="st"><div class="sn">6</div><div class="sm">-2</div><div class="sl">CAR</div></div></div>
+<div class="cr-row"><div class="cb"><div class="cb-l">PG</div><div class="cb-v">18</div></div><div class="cb"><div class="cb-l">CA</div><div class="cb-v">12</div></div><div class="cb"><div class="cb-l">Movimiento</div><div class="cb-v">9m + vuelo 6m</div></div></div>
+<ul class="al"><li><strong>Resistencia:</strong> A daño no mágico excepto radiante.</li><li><strong>Vulnerabilidad:</strong> Daño radiante. La luz solar brillante le da desventaja en ataques.</li><li><strong>Toque de Sombra:</strong> +4, 1d6+2 necrótico. El objetivo reduce su máximo de PG en la mitad del daño recibido hasta descanso largo.</li><li><strong>Paso de Sombras:</strong> Acción adicional para teletransportarse hasta 9 metros a cualquier sombra que pueda ver.</li></ul>
+</div></div>
+</div></div>
+
+<!-- ══ FEEDBACK ══ -->
+<div class="pg" id="p-feedback"><div class="inn">
+<div class="pg-t">Feedback de Jugadores</div>
+<div class="pg-s">Qué dijeron · Cómo incorporarlo en sesión 3</div>
+<div class="g2">
+  <div class="box"><div class="box-t">Arivian (Babuns) — Velocidad lenta</div><p>Solución: reduce la narración descriptiva en momentos de transición. Ve directo al gancho de cada escena. Las descripciones largas guárdalas para momentos que las merecen (un encuentro importante, un lugar nuevo). En movimientos de tablón y desplazamiento: "están en el muelle norte, ¿qué hacen?" sin prólogo.</p></div>
+  <div class="box"><div class="box-t">Aerion (Yahir) — Más peleas y opciones</div><p>Solución: dos combates reales por sesión mínimo. En cada escena de decisión, ofrece explícitamente al menos tres opciones aunque no las nombres — que el jugador las identifique. Las misiones del tablón deben tener múltiples puntos de decisión, no un camino lineal.</p></div>
+  <div class="box"><div class="box-t">Silas (Biro) — Todo bien</div><p>Seguir haciendo lo que funciona para este jugador. Le gustan las situaciones donde el sigilo y la información importan. La misión del almacén le dará oportunidad para ambos.</p></div>
+  <div class="box"><div class="box-t">Solare (Quetz) — Todo bien</div><p>La marca en el brazo le da material propio. La conversación con Oshe esta sesión es para él. Asegúrate de que tenga al menos un momento donde su rol de líder (la insignia) sea mecánicamente relevante.</p></div>
+  <div class="box"><div class="box-t">Mirai (SpaceMan) — Mix de rol y peleas</div><p>El ataque al círculo le da el peso dramático del rol. Los combates de la sesión le dan la acción. La moneda mímica, si la encuentra, es un momento de descubrimiento que mezcla ambos.</p></div>
+</div>
+</div></div>
+
+<!-- ══ MARCA DE SOLARE ══ -->
+<div class="pg" id="p-marca_solare"><div class="inn">
+<div class="pg-t">La Marca de Solare</div>
+<div class="pg-s">Qué es · Cómo evoluciona · Mecánicas</div>
+<p class="b">La marca es una firma — la entidad marcó a Solare como alguien que entró en su campo de percepción. No es una maldición que lo debilita constantemente. Es más sutil y más inquietante que eso.</p>
+<div class="sub">Efectos mecánicos actuales (nivel 1-3)</div>
+<ul class="al"><li>Al tocar la marca: 1 punto de daño necrótico. No reducible, no evitable. Es el costo de recordar que está ahí.</li><li>La entidad sabe la dirección general donde está Solare en todo momento que esté en el mismo plano. No la distancia exacta — la dirección.</li><li>Una vez por semana, Solare puede recibir un sueño de la entidad — una imagen, una frase, algo que la entidad quiere que sepa. No es obligatorio. La entidad elige si envía algo.</li></ul>
+<div class="sub">Cómo evoluciona si no la quitan</div>
+<p class="b">A nivel 4: la marca puede activarse activamente — la entidad puede causar 1d4 de daño necrótico a distancia a Solare una vez por día si lo desea.</p>
+<p class="b">A nivel 6: la marca comienza a ser visible sin que Solare la toque — un brillo rojizo tenue que otros pueden ver en la oscuridad.</p>
+<p class="b">A nivel 8: la entidad puede hablar a través de la marca durante 1 minuto una vez por semana, aunque Solare no quiera.</p>
+<div class="sub">Cómo quitarla</div>
+<p class="b">Oshe sugirió algo más antiguo que lo que la puso. La respuesta real: Sorra (Mara), como fragmento del Quiebre con dominio sobre la vida. Pero hay un camino más accesible a corto plazo: el bastón que le dieron a Mirai tiene un fragmento de esencia del círculo Bathrak que podría suprimir la marca temporalmente — no quitarla, pero reducirla al efecto básico de 1 punto de daño al tocarse. Eso le da tiempo para encontrar la solución real.</p>
+</div></div>
+
+<!-- ══ ESCARABAJOS ══ -->
+<div class="pg" id="p-escarabajos"><div class="inn">
+<div class="pg-t">Los Escarabajos de Mirai</div>
+<div class="pg-s">5 escarabajos · Qué hacen exactamente · Uno ya murió</div>
+<p class="b">El guardia del círculo los entregó con una sola instrucción: que duermen. Lo que no explicó — porque los Bathrak esperan que la gente descubra las cosas en su momento — es para qué sirven exactamente.</p>
+<div class="sub">Lo que hacen</div>
+<div class="g2">
+  <div class="box"><div class="box-t">Función primaria — El sueño</div><p>Aplastando suavemente al escarabajo contra la piel de alguien (no mata al escarabajo, lo activa), ese alguien cae en sueño profundo en 1d4 turnos. El sueño dura 1d4 horas y no puede interrumpirse por daño menor — solo daño severo (más de 10 PG de golpe) o magia de nivel 3 o superior lo rompe. El escarabajo queda inactivo durante 24 horas después de activarse.</p></div>
+  <div class="box"><div class="box-t">Función secundaria — El vínculo</div><p>Cada escarabajo está vinculado a un miembro del círculo Bathrak. Si ese miembro muere, el escarabajo muere también. Mirai ahora tiene 4 escarabajos — uno murió anoche. Eso significa que un miembro del círculo murió durante el ataque. Mirai no sabe cuál todavía.</p></div>
+</div>
+<div class="sub">Los 4 escarabajos restantes</div>
+<table style="width:100%;border-collapse:collapse;font-size:13px;margin:.7rem 0;">
+<tr style="border-bottom:.5px solid var(--parch-dk);"><th style="font-family:'Cinzel',serif;font-size:8px;letter-spacing:.09em;color:var(--red-l);padding:5px 8px;text-align:left;font-weight:400;">Escarabajo</th><th style="font-family:'Cinzel',serif;font-size:8px;letter-spacing:.09em;color:var(--red-l);padding:5px 8px;text-align:left;font-weight:400;">Vinculado a</th><th style="font-family:'Cinzel',serif;font-size:8px;letter-spacing:.09em;color:var(--red-l);padding:5px 8px;text-align:left;font-weight:400;">Estado</th></tr>
+<tr style="border-bottom:.5px solid rgba(200,180,120,.3);"><td style="padding:6px 8px;color:var(--ink);font-weight:600;">Escarabajo 1 (muerto)</td><td style="padding:6px 8px;color:var(--ink-l);">Un miembro del círculo — TBD</td><td style="padding:6px 8px;color:#9a1a1a;">Muerto</td></tr>
+<tr style="border-bottom:.5px solid rgba(200,180,120,.3);"><td style="padding:6px 8px;color:var(--ink);font-weight:600;">Escarabajo 2</td><td style="padding:6px 8px;color:var(--ink-l);">El guardia que les habló (herido pero vivo)</td><td style="padding:6px 8px;color:#1a6a20;">Vivo · Herido</td></tr>
+<tr style="border-bottom:.5px solid rgba(200,180,120,.3);"><td style="padding:6px 8px;color:var(--ink);font-weight:600;">Escarabajo 3</td><td style="padding:6px 8px;color:var(--ink-l);">Miembro del círculo en paradero desconocido</td><td style="padding:6px 8px;color:#1a6a20;">Vivo · Ubicación desconocida</td></tr>
+<tr style="border-bottom:.5px solid rgba(200,180,120,.3);"><td style="padding:6px 8px;color:var(--ink);font-weight:600;">Escarabajo 4</td><td style="padding:6px 8px;color:var(--ink-l);">Miembro del círculo fuera de Resaca</td><td style="padding:6px 8px;color:#1a6a20;">Vivo · Fuera de Resaca</td></tr>
+<tr><td style="padding:6px 8px;color:var(--ink);font-weight:600;">Escarabajo 5</td><td style="padding:6px 8px;color:var(--ink-l);">Reserva — no vinculado todavía</td><td style="padding:6px 8px;color:var(--ink-f);font-style:italic;">Sin vincular · Puede usarse en alguien del grupo</td></tr>
+</table>
+<div class="dm"><div class="dm-l">📋 El escarabajo 5</div><p>El guardia incluyó uno sin vincular deliberadamente — para que Mirai pueda elegir a quién vincularlo. Si lo usa en alguien del grupo: si ese personaje muere, el escarabajo muere y Mirai lo sabe en el momento. Es una forma discreta de mantener un vínculo con sus nuevos compañeros sin tener que decirlo explícitamente.</p></div>
+</div></div>
+
+</main>
+
+<script>
+const map={
+  's3_plan':'p-s3_plan','s3_inicio':'p-s3_inicio','s3_oshe':'p-s3_oshe',
+  's3_cantores':'p-s3_cantores','s3_misiones':'p-s3_misiones','s3_cofres':'p-s3_cofres',
+  'sangre':'p-sangre','mimico':'p-mimico',
+  'entidad':'p-entidad','cantores_npc':'p-cantores_npc','demonio_circulo':'p-demonio_circulo',
+  'feedback':'p-feedback','marca_solare':'p-marca_solare','escarabajos':'p-escarabajos'
+};
+function show(id){
+  document.querySelectorAll('.pg').forEach(p=>p.classList.remove('on'));
+  document.querySelectorAll('.sb-a').forEach(l=>l.classList.remove('on'));
+  const pg=document.getElementById(map[id]);
+  if(pg)pg.classList.add('on');
+  document.querySelectorAll('.sb-a').forEach(l=>{
+    if(l.getAttribute('onclick')&&l.getAttribute('onclick').includes("'"+id+"'"))l.classList.add('on');
+  });
+  window.scrollTo(0,0);
+  document.querySelector('.sb').classList.remove('open');
+}
+function tog(btn){
+  btn.classList.toggle('open');
+  btn.nextElementSibling.classList.toggle('open');
+}
+document.querySelectorAll('.sb-grp-btn.open').forEach(b=>b.nextElementSibling.classList.add('open'));
+</script>
+</body>
+</html>

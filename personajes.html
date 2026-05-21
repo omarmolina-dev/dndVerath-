@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>VERATH — Personajes y Sesión 2</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Cinzel:wght@400;600;700&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--ink:#1a1208;--ink-l:#3a2a18;--ink-f:#5a4a38;--parch:#f5ecd7;--parch-d:#e8d9b8;--parch-dk:#d4c090;--gold:#8a6a20;--gold-b:#c9a84c;--red:#7a1a1a;}
+html{scroll-behavior:smooth}
+body{background:#1a1006;background-image:radial-gradient(ellipse at 20% 20%,#2a1a08 0%,transparent 55%),radial-gradient(ellipse at 80% 80%,#0a0804 0%,transparent 55%);min-height:100vh;font-family:'Crimson Pro',Georgia,serif;display:flex;justify-content:center;padding:3rem 1.5rem;}
+.doc{max-width:820px;width:100%;background:var(--parch);background-image:linear-gradient(170deg,#faf3e2 0%,#f5ecd7 50%,#ede0c0 100%);padding:4rem 4.5rem;position:relative;box-shadow:0 0 0 1px var(--parch-dk),0 0 0 3px #1a1006,0 8px 60px rgba(0,0,0,.7);}
+.doc::before{content:'';position:absolute;inset:16px;border:1px solid var(--parch-dk);pointer-events:none}
+.doc::after{content:'';position:absolute;inset:20px;border:.5px solid rgba(138,106,32,.2);pointer-events:none}
+
+/* TABS */
+.tab-nav{display:flex;gap:0;border-bottom:1px solid var(--parch-dk);margin-bottom:2rem;flex-wrap:wrap;}
+.tab-btn{font-family:'Cinzel',serif;font-size:11px;letter-spacing:.1em;padding:9px 16px;background:none;border:none;border-bottom:2px solid transparent;color:var(--ink-f);cursor:pointer;transition:all .2s;text-transform:uppercase;}
+.tab-btn:hover{color:var(--ink)}
+.tab-btn.on{color:var(--gold);border-bottom-color:var(--gold)}
+.tab-pane{display:none}.tab-pane.on{display:block}
+
+/* HEADER */
+.doc-title{font-family:'Cinzel Decorative',serif;font-size:clamp(20px,3.5vw,30px);font-weight:700;color:var(--ink);letter-spacing:.1em;margin-bottom:.2rem;}
+.doc-sub{font-family:'Cinzel',serif;font-size:12px;color:var(--gold);letter-spacing:.2em;text-transform:uppercase;margin-bottom:2rem;padding-bottom:1.2rem;border-bottom:1px solid var(--parch-dk);}
+
+/* PERSONAJE CARD */
+.char-card{border:.5px solid var(--parch-dk);margin-bottom:2.5rem;overflow:hidden;}
+.char-banner{padding:1.4rem 1.6rem;border-bottom:1px solid var(--parch-dk);}
+.char-name{font-family:'Cinzel Decorative',serif;font-size:22px;color:var(--ink);margin-bottom:3px;}
+.char-class{font-family:'Cinzel',serif;font-size:11px;letter-spacing:.15em;color:var(--gold);text-transform:uppercase;margin-bottom:.8rem;}
+.char-body{padding:1.2rem 1.6rem;}
+
+/* SECCIONES DENTRO DE PERSONAJE */
+.sec-lbl{font-family:'Cinzel',serif;font-size:10px;letter-spacing:.15em;color:var(--gold);text-transform:uppercase;border-bottom:.5px solid var(--parch-dk);padding-bottom:.3rem;margin:1.2rem 0 .7rem;}
+.sec-lbl:first-child{margin-top:0}
+
+p.c{font-size:15px;line-height:1.78;color:var(--ink-l);margin-bottom:.6rem;}
+p.c strong{color:var(--ink);font-weight:600;}
+p.c em{color:var(--ink-f);font-style:italic;}
+
+/* STATS GRID */
+.stats-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:.5rem;margin:.7rem 0;}
+.stat-box{border:.5px solid var(--parch-dk);padding:.5rem .3rem;text-align:center;background:rgba(255,255,255,.1);}
+.stat-num{font-family:'Cinzel Decorative',serif;font-size:20px;color:var(--ink);line-height:1;}
+.stat-mod{font-family:'Cinzel',serif;font-size:11px;color:var(--gold);}
+.stat-name{font-family:'Cinzel',serif;font-size:8px;letter-spacing:.08em;color:var(--ink-f);text-transform:uppercase;margin-top:2px;}
+
+/* COMBAT ROW */
+.combat-row{display:grid;grid-template-columns:repeat(3,1fr);gap:.6rem;margin:.6rem 0;}
+.combat-box{border:.5px solid var(--parch-dk);padding:.6rem .8rem;background:rgba(255,255,255,.08);}
+.combat-label{font-family:'Cinzel',serif;font-size:9px;letter-spacing:.1em;color:var(--gold);text-transform:uppercase;margin-bottom:3px;}
+.combat-val{font-family:'Cinzel',serif;font-size:16px;color:var(--ink);font-weight:600;}
+
+/* HABILIDADES */
+.ability-list{list-style:none;margin:.5rem 0;}
+.ability-list li{font-size:14px;line-height:1.65;color:var(--ink-l);padding:.4rem 0;border-bottom:.5px solid rgba(212,192,144,.35);}
+.ability-list li:last-child{border-bottom:none}
+.ability-list strong{color:var(--ink);font-weight:600;}
+
+/* PECULIARIDADES */
+.quirk-list{list-style:none;margin:.5rem 0;}
+.quirk-list li{padding:.5rem 0 .5rem 16px;border-bottom:.5px solid rgba(212,192,144,.35);font-size:14.5px;color:var(--ink-l);line-height:1.6;position:relative;}
+.quirk-list li::before{content:'◆';position:absolute;left:0;color:var(--gold);font-size:8px;top:9px;}
+.quirk-list li:last-child{border-bottom:none}
+
+/* LORE BLOCK */
+.lore{background:rgba(138,106,32,.06);border-left:3px solid var(--gold);border-top:.5px solid var(--parch-dk);border-bottom:.5px solid var(--parch-dk);border-right:.5px solid var(--parch-dk);padding:1rem 1.3rem;margin:1rem 0;font-size:15px;line-height:1.8;color:var(--ink-l);font-style:italic;}
+.lore strong{font-style:normal;color:var(--ink);font-weight:600;}
+
+/* DM BOX */
+.dm-box{background:rgba(122,26,26,.05);border:.5px solid rgba(122,26,26,.25);border-left:3px solid var(--red);padding:1rem 1.3rem;margin:1.2rem 0;}
+.dm-lbl{font-family:'Cinzel',serif;font-size:10px;letter-spacing:.15em;color:var(--red);margin-bottom:6px;}
+.dm-box p,.dm-box li{font-size:14px;line-height:1.7;color:var(--ink-l);}
+.dm-box ul{padding-left:1.1rem;margin-top:.4rem;}
+.dm-box li{margin-bottom:.3rem;}
+
+/* ENCOUNTER */
+.enc-phase{border:.5px solid var(--parch-dk);margin-bottom:1.2rem;}
+.enc-hdr{background:rgba(138,106,32,.08);padding:.8rem 1.1rem;border-bottom:.5px solid var(--parch-dk);}
+.enc-title{font-family:'Cinzel',serif;font-size:13px;font-weight:600;color:var(--ink);letter-spacing:.07em;}
+.enc-body{padding:.9rem 1.1rem;}
+.enc-body p{font-size:14.5px;line-height:1.72;color:var(--ink-l);margin-bottom:.5rem;}
+.enc-body ul{padding-left:1.1rem;margin:.4rem 0;}
+.enc-body li{font-size:14px;line-height:1.65;color:var(--ink-l);margin-bottom:.3rem;}
+
+.back-link{display:block;text-align:center;margin-bottom:1.5rem;}
+.back-link a{font-family:'Cinzel',serif;font-size:11px;letter-spacing:.15em;color:var(--gold-b);text-decoration:none;opacity:.7;}
+.back-link a:hover{opacity:1;}
+
+@media(max-width:640px){.doc{padding:2.5rem 1.8rem;}.stats-grid{grid-template-columns:repeat(3,1fr)}.combat-row{grid-template-columns:1fr 1fr}}
+</style>
+</head>
+<body>
+<div class="doc">
+<div class="back-link"><a href="index.html">← VOLVER A VERATH</a></div>
+<div class="doc-title">Personajes & Sesión 2</div>
+<div class="doc-sub">Fichas completas · Plan de unión · El encuentro que los hará sentir pequeños</div>
+
+<div class="tab-nav">
+  <button class="tab-btn on" onclick="tab('chars',this)">Personajes</button>
+  <button class="tab-btn" onclick="tab('union',this)">Cómo se unen</button>
+  <button class="tab-btn" onclick="tab('encounter',this)">El Encuentro</button>
+</div>
+
+<!-- ══════════════════════════════════════ -->
+<!-- TAB: PERSONAJES -->
+<!-- ══════════════════════════════════════ -->
+<div class="tab-pane on" id="tab-chars">
+
+<!-- AERION -->
+<div class="char-card">
+  <div class="char-banner" style="background:rgba(90,40,10,.04);border-left:4px solid #8a5a20;">
+    <div class="char-name">Aerion</div>
+    <div class="char-class">Elfo · Bardo · Bufón · Colegio de la Burla</div>
+  </div>
+  <div class="char-body">
+
+    <div class="sec-lbl">Descripción física</div>
+    <p class="c">Elfo de complexión delgada y estatura media para su especie — alrededor de 1.75m. Piel color oliva pálido con el ligero tono verdoso característico de los elfos de Ysseval nacidos lejos del bosque. Cabello negro azabache que lleva recogido en un nudo informal del que siempre escapan varios mechones. Orejas puntiagudas visibles. Manos largas con dedos de músico — ágiles, expresivos, que se mueven mientras habla aunque no esté tocando nada.</p>
+    <p class="c">Viste con capas superpuestas de telas de distintos colores y texturas que en conjunto dan la impresión de desorden estudiado: lo que parece descuido es en realidad cada prenda eligida para moverse bien, esconder cosas y no estorbar. Calzado de suela blanda, silenciosa. Siempre lleva al menos tres objetos que no sirven para nada pero que son útiles para trucos.</p>
+    <p class="c"><strong>La máscara:</strong> cubre desde la frente hasta la barbilla, dejando solo los ojos visibles — ojos ámbar dorado, el único rasgo de su cara que se mueve libremente. La máscara tiene la textura de porcelana antigua pero es claramente algo vivo: cambia de expresión sin que Aerion lo decida. Esta noche muestra resignación irónica. Mañana podría mostrar terror. Aerion no elige. La máscara tampoco parece elegir — simplemente <em>sabe</em>.</p>
+
+    <div class="sec-lbl">Estadísticas base (Nivel 3)</div>
+    <div class="stats-grid">
+      <div class="stat-box"><div class="stat-num">10</div><div class="stat-mod">+0</div><div class="stat-name">FUE</div></div>
+      <div class="stat-box"><div class="stat-num">16</div><div class="stat-mod">+3</div><div class="stat-name">DES</div></div>
+      <div class="stat-box"><div class="stat-num">12</div><div class="stat-mod">+1</div><div class="stat-name">CON</div></div>
+      <div class="stat-box"><div class="stat-num">14</div><div class="stat-mod">+2</div><div class="stat-name">INT</div></div>
+      <div class="stat-box"><div class="stat-num">12</div><div class="stat-mod">+1</div><div class="stat-name">SAB</div></div>
+      <div class="stat-box"><div class="stat-num">18</div><div class="stat-mod">+4</div><div class="stat-name">CAR</div></div>
+    </div>
+    <div class="combat-row">
+      <div class="combat-box"><div class="combat-label">PG Máximos</div><div class="combat-val">22</div></div>
+      <div class="combat-box"><div class="combat-label">Clase de Armadura</div><div class="combat-val">13</div></div>
+      <div class="combat-box"><div class="combat-label">Bono Competencia</div><div class="combat-val">+2</div></div>
+    </div>
+
+    <div class="sec-lbl">Habilidades y rasgos</div>
+    <ul class="ability-list">
+      <li><strong>Inspiración Bárdica (d8):</strong> Puede dar un d8 a un aliado para añadir a una tirada. Usos = mod. CAR (4/descanso largo).</li>
+      <li><strong>Palabras de Aliento:</strong> Conjuro de acción adicional que restaura 1d6+4 PG a un aliado en 60 pies.</li>
+      <li><strong>Burla Cortante (Colegio de la Burla):</strong> Al dañar emocionalmente a un enemigo con palabras, impone desventaja en su siguiente ataque. Tirada de salvación CAR CD 14.</li>
+      <li><strong>Expertise:</strong> Doble competencia en Actuación y Persuasión.</li>
+      <li><strong>Conocimiento de Todo:</strong> Puede añadir la mitad de su bono de competencia a cualquier habilidad en la que no sea competente.</li>
+      <li><strong>Conjuros conocidos:</strong> Descarga de Hechizos, Taumaturgia, Amigos, Curar Heridas, Sueño, Detectar Magia, Invisibilidad, Sugestión.</li>
+    </ul>
+
+    <div class="sec-lbl">Personalidad</div>
+    <p class="c">Aerion llena los silencios. No porque le incomoden — los elfos tienen una relación diferente con el silencio que los humanos — sino porque ha aprendido que los silencios en las situaciones equivocadas matan, y que un buen chiste en el momento correcto puede hacer lo que un escudo no puede. Es observador de manera que no resulta obvia: parece que está entreteniendo cuando en realidad está catalogando.</p>
+    <p class="c">La máscara complica su vida social de formas que él ya no intenta explicar. Conocidos que lo ven después de tiempo libre preguntan por qué está tan triste o tan feliz según lo que la máscara muestre ese día, y él responde <em>"así estoy"</em> porque es más fácil que la verdad. Con personas de confianza — si llega a tenerlas — es directamente sobre la máscara: la odia con una claridad que raramente muestra sobre otras cosas.</p>
+
+    <div class="sec-lbl">Peculiaridades</div>
+    <ul class="quirk-list">
+      <li>Cuando está nervioso toca objetos cercanos en secuencia — siempre el mismo orden, siempre tres veces cada uno.</li>
+      <li>No puede mentir sobre su nombre. Puede mentir sobre todo lo demás, pero decir que se llama diferente le produce un malestar físico visible.</li>
+      <li>Recuerda con precisión perfecta cualquier actuación que haya presenciado. Puede reproducirla años después.</li>
+      <li>La máscara a veces muestra emociones que Aerion no reconoce como suyas. Él trata de no pensar en eso.</li>
+      <li>Habla con los objetos que le gustan. No en voz alta si hay gente cerca.</li>
+    </ul>
+
+    <div class="sec-lbl">Misión principal</div>
+    <div class="lore">Quitarse la máscara. No sabe cómo. No sabe quién se la puso ni exactamente cuándo — hay un período de su memoria que es borroso de una manera que él atribuye a la máscara misma. Lo que sabe: la máscara existía antes que él la llevara. Y alguien en Resaca la reconoció con miedo.</div>
+    <div class="dm-box"><div class="dm-lbl">🔒 Solo DM</div><p>La máscara es un artefacto de la Iglesia del Umbral — no un objeto mágico ordinario sino un fragmento de la conciencia distribuida de Lyssavar que tomó forma física. Aerion no la lleva porque quiso. Alguien se la puso mientras dormía hace años. Lyssavar lo observa a través de ella. La persona que la reconoció con miedo en la taberna es un ex sacerdote del Umbral que sabe exactamente qué es.</p></div>
+  </div>
+</div>
+
+<!-- SOLARE -->
+<div class="char-card">
+  <div class="char-banner" style="background:rgba(10,40,80,.04);border-left:4px solid #1a4a8a;">
+    <div class="char-name">Solare</div>
+    <div class="char-class">Humano · Clérigo · Dominio de la Vida · Culto de la Mano Abierta</div>
+  </div>
+  <div class="char-body">
+
+    <div class="sec-lbl">Descripción física</div>
+    <p class="c">Humano de 28 años aparentes, 1.82m, complexión atlética que habla de entrenamiento constante pero no de combate como vocación principal — los músculos de alguien que carga equipo y camina mucho, no los de alguien que pelea por placer. Piel cobriza oscura, característica de los Tharess. Cabello negro muy corto, casi rapado en los lados y ligeramente más largo arriba. Mandíbula definida con una cicatriz delgada que cruza el mentón en diagonal — tiene historia, pero no la cuenta a desconocidos.</p>
+    <p class="c">Ojos marrón oscuro con algo difícil de nombrar adentro: la expresión específica de quien ha visto sufrir a personas que no debían sufrir y lleva eso como peso permanente. No es tristeza exactamente. Es atención — la atención del que sabe que el siguiente momento puede requerir actuar.</p>
+    <p class="c">Viste armadura de cuero reforzado de buena calidad, no lujosa. Sobre ella, una capa con los colores del Culto de la Mano Abierta — verde hoja y blanco hueso — aunque discretamente, sin escudo ni símbolo visible. Lleva una maza funcional al costado y un escudo redondo en la espalda. Sus manos tienen las marcas de alguien que ha curado durante años: pequeñas quemaduras en los nudillos de la mano derecha, la mano que mantiene siempre ligeramente abierta.</p>
+
+    <div class="sec-lbl">Estadísticas base (Nivel 3)</div>
+    <div class="stats-grid">
+      <div class="stat-box"><div class="stat-num">14</div><div class="stat-mod">+2</div><div class="stat-name">FUE</div></div>
+      <div class="stat-box"><div class="stat-num">12</div><div class="stat-mod">+1</div><div class="stat-name">DES</div></div>
+      <div class="stat-box"><div class="stat-num">14</div><div class="stat-mod">+2</div><div class="stat-name">CON</div></div>
+      <div class="stat-box"><div class="stat-num">10</div><div class="stat-mod">+0</div><div class="stat-name">INT</div></div>
+      <div class="stat-box"><div class="stat-num">18</div><div class="stat-mod">+4</div><div class="stat-name">SAB</div></div>
+      <div class="stat-box"><div class="stat-num">13</div><div class="stat-mod">+1</div><div class="stat-name">CAR</div></div>
+    </div>
+    <div class="combat-row">
+      <div class="combat-box"><div class="combat-label">PG Máximos</div><div class="combat-val">27</div></div>
+      <div class="combat-box"><div class="combat-label">Clase de Armadura</div><div class="combat-val">16</div></div>
+      <div class="combat-box"><div class="combat-label">Bono Competencia</div><div class="combat-val">+2</div></div>
+    </div>
+
+    <div class="sec-lbl">Habilidades y rasgos</div>
+    <ul class="ability-list">
+      <li><strong>Discípulo de la Vida:</strong> Sus conjuros de curación restauran PG adicionales = 2 + nivel del conjuro.</li>
+      <li><strong>Preservar la Vida (Canal Divino):</strong> Acción, restaura hasta 15 PG divididos entre criaturas conscientes en 30 pies. No puede llevar a nadie por encima de la mitad de sus PG máx.</li>
+      <li><strong>Intervención Divina:</strong> Desde nivel 10. Por ahora: su dios responde con señales que solo Solare interpreta correctamente.</li>
+      <li><strong>Conjuros preparados (7):</strong> Curar Heridas, Santuario, Escudo de la Fe, Palabra de Curación, Detectar Mal y Bien, Restauración Menor, Luz Espiritual.</li>
+      <li><strong>Mano Abierta (rasgo de trasfondo):</strong> Una vez por semana puede curar a alguien completamente sin costo de conjuro, pero pierde un recuerdo menor durante 1d4 días.</li>
+    </ul>
+
+    <div class="sec-lbl">Personalidad</div>
+    <p class="c">Solare habla poco y escucha mucho. Cuando habla, lo que dice importa — no porque sea dramático sino porque elige sus momentos. Tiene el temple específico de alguien que ha pasado tiempo en situaciones donde el pánico es una opción que no puede permitirse. Eso puede leerse como frialdad desde afuera; adentro es simplemente la forma en que funciona bajo presión.</p>
+    <p class="c">Con Sorra — su diosa — tiene una relación complicada y honesta: cree en ella, sigue sus principios con convicción real, y también le guarda un rencor silencioso que no articula porque le parece irrespetuoso. Sorra desapareció hace 200 años y él tiene que responder preguntas sobre eso regularmente.</p>
+
+    <div class="sec-lbl">Peculiaridades</div>
+    <ul class="quirk-list">
+      <li>Mantiene la mano derecha ligeramente abierta en todo momento — el rasgo físico más claro de su fe, tan integrado que ya no lo nota.</li>
+      <li>Antes de entrar a cualquier espacio nuevo, se detiene un segundo completo en el umbral. No sabe por qué. Lo hace siempre.</li>
+      <li>No puede ver sufrir a un animal sin intervenir. Con personas puede contenerse si el contexto lo requiere. Con animales no.</li>
+      <li>Cuenta las salidas de cada cuarto en que entra. Mentalmente, siempre.</li>
+      <li>Cuando está muy cansado mezcla palabras de su idioma natal Tharess con el Común sin darse cuenta.</li>
+    </ul>
+
+    <div class="dm-box"><div class="dm-lbl">🔒 Solo DM</div><p>Solare hizo el ritual de iniciación del Culto de la Mano Abierta a los 19 años. Perdió el recuerdo de su primer mentor — la persona que lo introdujo a la fe. Sabe que hay un hueco ahí pero no puede acceder a él. Si alguna vez recuperara ese recuerdo, descubriría que su mentor era alguien que sabía que Sorra estaba escondida en Ysseval y fue enviado a encontrarla. Nunca regresó.</p></div>
+  </div>
+</div>
+
+<!-- DRUIDA -->
+<div class="char-card">
+  <div class="char-banner" style="background:rgba(10,40,20,.04);border-left:4px solid #2a6a3a;">
+    <div class="char-name">Nombre pendiente</div>
+    <div class="char-class">Semielfo de Ysseval · Druida · Círculo de la Tierra (Bosque)</div>
+  </div>
+  <div class="char-body">
+
+    <div class="sec-lbl">Descripción física</div>
+    <p class="c">Semielfo de unos 30 años aparentes — que en sangre mixta equivale a algo más, aunque él mismo no sabría decir exactamente cuánto. 1.78m, complexión delgada pero no frágil — la delgadez de quien pasa tiempo al aire libre y come lo que encuentra, no la de quien descuida su cuerpo. Piel verde pálida, más intensa que la de un elfo de ciudad, más cercana a la de un Firbolg joven. Orejas ligeramente puntiagudas, suficiente para que se note pero no tanto como las de un elfo puro.</p>
+    <p class="c">Cabello castaño oscuro con reflejos verdosos, largo hasta los hombros, que lleva sin atar. Constantemente tiene hojas, ramitas o tierra en el pelo — no por descuido sino porque simplemente está cerca de esas cosas todo el tiempo y no le parece relevante quitarlas. Ojos verde claro con un patrón de motas doradas que en la luz correcta hacen pensar en la luz filtrándose entre hojas.</p>
+    <p class="c">Viste ropa de viaje en tonos tierra y verde que probablemente fue de mejor calidad hace años. Lleva un bastón de madera de árbol de Ysseval — no un árbol cualquiera, sino de uno de los que recuerdan, aunque él no lo sabe con certeza. El bastón tiene la textura específica de la madera que ha absorbido mucha magia durante mucho tiempo.</p>
+
+    <div class="sec-lbl">Estadísticas base (Nivel 3)</div>
+    <div class="stats-grid">
+      <div class="stat-box"><div class="stat-num">12</div><div class="stat-mod">+1</div><div class="stat-name">FUE</div></div>
+      <div class="stat-box"><div class="stat-num">14</div><div class="stat-mod">+2</div><div class="stat-name">DES</div></div>
+      <div class="stat-box"><div class="stat-num">13</div><div class="stat-mod">+1</div><div class="stat-name">CON</div></div>
+      <div class="stat-box"><div class="stat-num">12</div><div class="stat-mod">+1</div><div class="stat-name">INT</div></div>
+      <div class="stat-box"><div class="stat-num">18</div><div class="stat-mod">+4</div><div class="stat-name">SAB</div></div>
+      <div class="stat-box"><div class="stat-num">11</div><div class="stat-mod">+0</div><div class="stat-name">CAR</div></div>
+    </div>
+    <div class="combat-row">
+      <div class="combat-box"><div class="combat-label">PG Máximos</div><div class="combat-val">24</div></div>
+      <div class="combat-box"><div class="combat-label">Clase de Armadura</div><div class="combat-val">14</div></div>
+      <div class="combat-box"><div class="combat-label">Bono Competencia</div><div class="combat-val">+2</div></div>
+    </div>
+
+    <div class="sec-lbl">Habilidades y rasgos</div>
+    <ul class="ability-list">
+      <li><strong>Forma Salvaje (2/descanso corto):</strong> Se transforma en bestias CR 1 o menos. Actualmente usa: lobo, oso pardo, águila.</li>
+      <li><strong>Druida del Círculo de la Tierra — Bosque:</strong> Conjuros de círculo siempre preparados: Enredo, Veneno en Spray, Pasar sin Rastro, Piel de Corteza, Llamar al Rayo, Crecer Plantas.</li>
+      <li><strong>Paso por el Bosque:</strong> El terreno difícil natural no lo afecta y no deja rastro a menos que quiera.</li>
+      <li><strong>Conjuros preparados (8):</strong> Curar Heridas, Absorber Elementos, Detectar Magia, Hablar con Animales, Enredo, Pasar sin Rastro, Invocar Animales, Piel de Corteza.</li>
+      <li><strong>Herencia Semielfa:</strong> Ventaja en tiradas de salvación contra encantamientos. Oscurovision 60 pies.</li>
+    </ul>
+
+    <div class="sec-lbl">Personalidad</div>
+    <p class="c">Callado no por timidez sino por economía — dice lo necesario, cuando es necesario. En la naturaleza es completamente diferente: curioso, atento, capaz de pasar horas observando algo que otros no verían en toda una vida. Con personas necesita más tiempo para relajarse, pero cuando lo hace es genuinamente presente.</p>
+    <p class="c">La misión de proteger el bosque de Ysseval no es abstracta para él — es personal de una forma que no sabe exactamente cómo articular. Salió del bosque porque el bosque lo necesitaba fuera, buscando respuestas que no estaban adentro. Cada día que pasa lejos siente el peso de esa distancia.</p>
+
+    <div class="sec-lbl">Peculiaridades</div>
+    <ul class="quirk-list">
+      <li>Habla con plantas. No espera que respondan — pero cuando una responde de alguna manera, lo anota.</li>
+      <li>Siempre sabe exactamente en qué dirección está el norte. No puede explicar cómo.</li>
+      <li>No puede tirar comida. Cualquier resto orgánico que "se desperdiciaría" lo entierra.</li>
+      <li>Su bastón a veces cruje solo en presencia de magia antigua. Él finge que es normal.</li>
+      <li>Duerme cuatro horas en trance élfico aunque solo sea semielfo — herencia que mantiene.</li>
+    </ul>
+
+    <div class="dm-box"><div class="dm-lbl">🔒 Solo DM</div><p>El bastón fue cortado del árbol más viejo de Ysseval — uno de los que guardan memorias del Quiebre. El druida no lo sabe. Yssara, atrapada en su colapso cognitivo, tiene un fragmento de conciencia que fluye hacia el bastón intermitentemente. A veces el druida "siente" cosas que no vivió cuando lo sostiene. Ha atribuido esto a la madera del bosque. No está completamente equivocado.</p></div>
+  </div>
+</div>
+
+<!-- SILAS -->
+<div class="char-card">
+  <div class="char-banner" style="background:rgba(20,10,30,.04);border-left:4px solid #3a1a5a;">
+    <div class="char-name">Silas</div>
+    <div class="char-class">Humano · Pícaro · Archetype: Embaucador Arcano · El Forajido Sombrío</div>
+  </div>
+  <div class="char-body">
+
+    <div class="sec-lbl">Descripción física</div>
+    <p class="c">Humano de aspecto completamente ordinario, que es exactamente el punto. 1.74m, complexión media — ni delgado ni robusto, el tipo de cuerpo que el ojo pasa por alto porque no hay nada que lo detenga. Piel color oliva clara, cabello castaño liso cortado de manera que puede peinarse en múltiples direcciones dependiendo de qué look quiere ese día. Rasgos agradables pero sin rasgos memorables: nariz recta, mandíbula suave, ojos grises que en distintas luces parecen distintos colores sin serlo realmente.</p>
+    <p class="c">La ropa es su herramienta más sofisticada: lleva varias capas que pueden reconfigurarse rápidamente para cambiar de aspecto. La capa exterior actual es marrón común de viajero. Debajo hay al menos dos conjuntos distintos. Sus manos son las únicas partes de su cuerpo que lo delatan a quien sabe mirar: demasiado ágiles, demasiado conscientes de su posición en el espacio. Un ladrón reconocería las manos de otro ladrón.</p>
+    <p class="c">Lleva una daga en el muslo derecho, otra en la espalda baja, y una tercera en un lugar que no menciona. En los bolsillos de las capas interiores hay herramientas de ladrón, tres identidades documentadas en pergamino de calidad y una cantidad de monedas que varía dependiendo de lo que haya ocurrido esa semana.</p>
+
+    <div class="sec-lbl">Estadísticas base (Nivel 3)</div>
+    <div class="stats-grid">
+      <div class="stat-box"><div class="stat-num">10</div><div class="stat-mod">+0</div><div class="stat-name">FUE</div></div>
+      <div class="stat-box"><div class="stat-num">18</div><div class="stat-mod">+4</div><div class="stat-name">DES</div></div>
+      <div class="stat-box"><div class="stat-num">12</div><div class="stat-mod">+1</div><div class="stat-name">CON</div></div>
+      <div class="stat-box"><div class="stat-num">16</div><div class="stat-mod">+3</div><div class="stat-name">INT</div></div>
+      <div class="stat-box"><div class="stat-num">12</div><div class="stat-mod">+1</div><div class="stat-name">SAB</div></div>
+      <div class="stat-box"><div class="stat-num">14</div><div class="stat-mod">+2</div><div class="stat-name">CAR</div></div>
+    </div>
+    <div class="combat-row">
+      <div class="combat-box"><div class="combat-label">PG Máximos</div><div class="combat-val">21</div></div>
+      <div class="combat-box"><div class="combat-label">Clase de Armadura</div><div class="combat-val">15</div></div>
+      <div class="combat-box"><div class="combat-label">Bono Competencia</div><div class="combat-val">+2</div></div>
+    </div>
+
+    <div class="sec-lbl">Habilidades y rasgos</div>
+    <ul class="ability-list">
+      <li><strong>Ataque Furtivo (+2d6):</strong> Daño adicional cuando tiene ventaja o un aliado en melee con el objetivo.</li>
+      <li><strong>Acción Artera:</strong> Acción adicional para: Desenganche, Esconderse o Usar objeto.</li>
+      <li><strong>Esquiva Incorpórea:</strong> Reacción para reducir a la mitad el daño de un ataque que lo impacta.</li>
+      <li><strong>Expertise:</strong> Doble competencia en Sigilo y Juego de Manos.</li>
+      <li><strong>Embaucador Arcano:</strong> Puede lanzar conjuros de mago de 1er y 2do nivel. Conoce: Mano de Mago, Trucos de Prestidigitación, Encantar Persona, Disfrazarse, Invisibilidad.</li>
+      <li><strong>Lengua de Pícaros:</strong> Conoce el argot criminal del Mundo del Medio. Puede comunicar mensajes ocultos en conversación normal.</li>
+    </ul>
+
+    <div class="sec-lbl">Personalidad</div>
+    <p class="c">Silas es agradable de la manera específica en que lo son las personas que han aprendido que ser agradable es más útil que la mayoría de las armas. No finge: genuinamente disfruta de la gente, genuinamente se interesa en las historias de otros, y también calcula constantemente cuánto vale cada pieza de información que recibe y cómo podría usarla.</p>
+    <p class="c">No es cruel. Tiene un código propio — no roba a quien no puede permitírselo, no miente cuando la verdad funciona igual de bien, no deja a compañeros en problemas si puede evitarlo. El código no es rígido ni perfecto, pero existe y lo respeta más de lo que admite.</p>
+
+    <div class="sec-lbl">Peculiaridades</div>
+    <ul class="quirk-list">
+      <li>Evalúa cada cuarto que entra en términos de "cómo saldría si todo saliera mal". Lo hace antes de relajarse.</li>
+      <li>Cuando miente bien, se toca brevemente el lóbulo de la oreja derecha. Solo él lo sabe. Nadie más lo ha notado todavía.</li>
+      <li>Colecciona llaves. No las usa para nada — simplemente las guarda. Tiene 23.</li>
+      <li>Habla con acento diferente dependiendo con quién esté. No siempre es consciente de que lo hace.</li>
+      <li>Tiene una deuda pendiente con alguien del Mundo del Medio que prefiere no mencionar. La menciona cuando bebe demasiado.</li>
+    </ul>
+
+    <div class="dm-box"><div class="dm-lbl">🔒 Solo DM</div><p>La deuda que menciona cuando bebe demasiado es con un intermediario de Drukkaz — específicamente de los Duergar que operan ilegalmente desde las profundidades. La deuda no es de dinero. Es de información: hace tres años, Silas vendió información sobre un cargamento que resultó ser mucho más importante de lo que pensaba. El intermediario quiere la información de vuelta — lo que ella generó, lo que se hizo con ella. Silas no sabe dónde está esa información ahora.</p></div>
+  </div>
+</div>
+
+<!-- BATHRAK -->
+<div class="char-card">
+  <div class="char-banner" style="background:rgba(10,40,30,.04);border-left:4px solid #1a6a4a;">
+    <div class="char-name">Nombre pendiente</div>
+    <div class="char-class">Bathrak · Caminante de Superficie · Explorador / Guardabosques</div>
+  </div>
+  <div class="char-body">
+
+    <div class="sec-lbl">Descripción física</div>
+    <p class="c">Bathrak de 1.48m — alto para su especie, lo que entre los suyos genera bromas que él recibe con calma. Piel verde oliva oscuro con manchas negras irregulares que forman un patrón único: tres manchas grandes en el hombro izquierdo, una serie de puntos pequeños que suben por el cuello derecho, y una marca en la mejilla izquierda con la forma aproximada de una hoja. Esta última es el rasgo por el que los miembros de su círculo lo reconocerían de lejos.</p>
+    <p class="c">Ojos completamente dorados sin pupila visible — en la oscuridad brillan muy levemente. Membranas entre los dedos de manos y pies, visibles cuando los extiende. Branquias en el cuello que se perciben como líneas ligeramente más oscuras cuando está en tierra y que se abren claramente bajo el agua. Lengua larga que asoma brevemente cuando está procesando olores o vibraciones — un reflejo que controla mejor que la mayoría de los Caminantes pero que aparece en momentos de alta concentración.</p>
+    <p class="c">Viste ropa de viaje modificada — prendas de superficie adaptadas para que no rocen las branquias ni interfieran con el movimiento rápido en el agua. Lleva una capa con capucha que usa para cubrir las características más obvias cuando está en zonas donde los Bathrak son completamente desconocidos. Carga un arco corto, una lanza ligera y una bolsa de viaje que pesa menos de lo que debería dado el tiempo que lleva fuera del pantano.</p>
+
+    <div class="sec-lbl">Estadísticas base (Nivel 3)</div>
+    <div class="stats-grid">
+      <div class="stat-box"><div class="stat-num">13</div><div class="stat-mod">+1</div><div class="stat-name">FUE</div></div>
+      <div class="stat-box"><div class="stat-num">17</div><div class="stat-mod">+3</div><div class="stat-name">DES</div></div>
+      <div class="stat-box"><div class="stat-num">14</div><div class="stat-mod">+2</div><div class="stat-name">CON</div></div>
+      <div class="stat-box"><div class="stat-num">13</div><div class="stat-mod">+1</div><div class="stat-name">INT</div></div>
+      <div class="stat-box"><div class="stat-num">16</div><div class="stat-mod">+3</div><div class="stat-name">SAB</div></div>
+      <div class="stat-box"><div class="stat-num">10</div><div class="stat-mod">+0</div><div class="stat-name">CAR</div></div>
+    </div>
+    <div class="combat-row">
+      <div class="combat-box"><div class="combat-label">PG Máximos</div><div class="combat-val">25</div></div>
+      <div class="combat-box"><div class="combat-label">Clase de Armadura</div><div class="combat-val">14</div></div>
+      <div class="combat-box"><div class="combat-label">Bono Competencia</div><div class="combat-val">+2</div></div>
+    </div>
+
+    <div class="sec-lbl">Habilidades y rasgos</div>
+    <ul class="ability-list">
+      <li><strong>Enemigo Predilecto:</strong> Muertos vivientes y aberraciones (lo que atacó a su compañía).</li>
+      <li><strong>Explorador Natural — Pantano:</strong> Ventaja en Percepción e Iniciativa, no puede perderse en terreno pantanoso, doble ritmo normal sin penalización.</li>
+      <li><strong>Estilo de combate — Arquería:</strong> +2 a tiradas de ataque con armas a distancia.</li>
+      <li><strong>Conjuros conocidos:</strong> Curar Heridas, Detectar Magia, Pasar sin Rastro, Hablar con Animales.</li>
+      <li><strong>Rasgos Bathrak:</strong> Anfibiosis, Visión en Oscuridad 18m, Piel del Pantano, Resonancia Bathrak (CD 13), Memoria del Agua.</li>
+      <li><strong>Mimetismo de Superficie (subraza):</strong> Ventaja en Engaño al fingir ser humano solo por voz.</li>
+    </ul>
+
+    <div class="sec-lbl">Personalidad</div>
+    <p class="c">Habla poco en superficie — no por timidez sino porque el idioma Común produce sonidos que su aparato vocal no está diseñado para hacer con fluidez. Cuando habla en Común suena correcto pero con una resonancia ligeramente baja que hace que la gente se pregunte si el cuarto tiene eco. En Bathrak es otro — expresivo, rápido, con humor seco que los de su especie aprecian y que en Común pierde la mayoría de sus matices.</p>
+    <p class="c">La amnesia lo incomoda más de lo que muestra. Los Bathrak tienen una relación con la memoria que hace que perderla sea algo más que inconveniente — es casi una ofensa a la forma en que su cultura entiende la identidad. Está buscando respuestas con la calma deliberada de quien sabe que entrar en pánico no acelera nada.</p>
+
+    <div class="sec-lbl">Peculiaridades</div>
+    <ul class="quirk-list">
+      <li>Cuando está pensando profundamente, la lengua asoma ligeramente — procesa vibraciones en el aire como información adicional.</li>
+      <li>No puede desechar agua. Cualquier recipiente con agua lo trata como algo valioso aunque esté en un puerto.</li>
+      <li>Memoriza a cada persona que conoce por su patrón de vibración al caminar, no por su cara. Puede reconocer a alguien por sus pasos en la oscuridad absoluta.</li>
+      <li>Cuando algo le parece injusto, se queda completamente quieto durante exactamente tres segundos antes de responder. Siempre tres segundos.</li>
+      <li>Lleva un objeto del pantano de Veyrath — una piedra lisa con un patrón de musgo fosilizado. La toca cuando necesita orientarse.</li>
+    </ul>
+
+    <div class="dm-box"><div class="dm-lbl">🔒 Solo DM</div><p>La rana que el Bathrak vio antes de perder la memoria era un miembro de la asociación secreta Bathrak a la que él pertenece — y lo que hacía con ese conjuro era precisamente causarle la amnesia. No para dañarlo, sino para protegerlo: lo que vio antes de eso era algo que no debía recordar todavía. El consejo del círculo sabe exactamente qué le ocurrió. Si se lo dirán o no, y cuándo, es parte del juego político interno de la asociación.</p></div>
+  </div>
+</div>
+
+</div><!-- fin tab-chars -->
+
+<!-- ══════════════════════════════════════ -->
+<!-- TAB: CÓMO SE UNEN -->
+<!-- ══════════════════════════════════════ -->
+<div class="tab-pane" id="tab-union">
+  <div class="lore">El problema no es que los personajes no tengan razón para estar juntos — el problema es que ninguno <strong>sabe todavía que los necesitan juntos</strong>. La sesión 2 resuelve eso en tres movimientos.</div>
+
+  <div class="sec-lbl" style="margin-top:1.5rem">Movimiento 1 — El consejo manda al Bathrak de regreso</div>
+  <p class="c">El Bathrak y el druida llegan al Consejo de Círculos en el pantano de Resaca. Los Guardianes del Agua Quieta los reciben — no de inmediato, hay protocolo, hay silencio, hay el tiempo específico que los Bathrak usan para evaluar si una situación merece urgencia.</p>
+  <p class="c">Lo que el consejo dice sobre la amnesia: <em>"Sabemos qué te ocurrió. No podemos decirte todavía por qué. Lo que sí podemos decirte es que hay personas en la taberna del quinto puente que están conectadas a lo que viste antes de que lo olvidaras. Ve. Observa. Cuando sea el momento correcto, sabrás."</em> Eso es todo lo que dan. El druida puede intentar presionar — no funcionará.</p>
+  <p class="c">Esto los manda exactamente donde están los otros tres. El Bathrak llega con misión (observar). El druida llega por compañía y porque el pantano que rodea la taberna tiene algo en el agua que su bastón reacciona al detectar.</p>
+
+  <div class="sec-lbl">Movimiento 2 — La tabernera que sabe demasiado</div>
+  <p class="c">La tabernera de El Quinto Puente — una mujer Veyrath de unos 60 años llamada <strong>Oshe</strong>, pelo blanco, ojos completamente verdes, que habla como si tuviera todo el tiempo del mundo — ya tiene cinco lugares en una mesa. No una mesa grande — una mesa específica, en el rincón específico donde la luz de las velas crea un círculo de visibilidad exacto que no alcanza las paredes. Cuando llegan todos, los sienta juntos sin preguntar.</p>
+  <p class="c">Si preguntan cómo sabía: <em>"El pantano me lo dijo esta mañana."</em> No elabora. No parece que vaya a elaborar.</p>
+  <p class="c">En el centro de la mesa hay algo que ninguno puso ahí: la misma nota de Vethann que les dejaron, pero en cinco copias idénticas. Una para cada uno. Oshe no sabe nada de eso cuando preguntan. Oshe nunca las ha visto. Las notas tampoco estaban cuando ella preparó la mesa hace diez minutos.</p>
+
+  <div class="sec-lbl">Movimiento 3 — El ex sacerdote y la máscara</div>
+  <p class="c">En el cuarto del fondo hay un hombre viejo que lleva dos días en la taberna sin hablar con nadie. Cuando ve a Aerion entrar — específicamente cuando ve la máscara — se pone de pie tan rápido que tira su silla. Sale. Aerion puede perseguirlo o dejarlo ir.</p>
+  <p class="c">Si lo persigue: el hombre se llama <strong>Drath</strong>, ex sacerdote del Umbral, y tiene la respuesta más completa disponible sobre la máscara que cualquier persona viva. Sabe lo que es. Sabe quién la fabricó. No sabe por qué la tiene Aerion ni cómo llegó a él, y eso lo aterra más que lo que sí sabe.</p>
+  <p class="c">Si no lo persigue: desaparece en el pantano de Resaca y puede volver a aparecer más adelante cuando los personajes estén más desesperados por información.</p>
+
+  <div class="dm-box"><div class="dm-lbl">📋 Resultado natural de la unión</div>
+    <ul>
+      <li>Las cinco notas idénticas de Vethann son el catalizador: ninguno puede ignorar que algo los conecta intencionalmente.</li>
+      <li>La situación con Drath y la máscara crea urgencia inmediata para Aerion.</li>
+      <li>El Bathrak tiene instrucciones del consejo de observar — eso lo mantiene en la mesa aunque no tenga razón personal todavía.</li>
+      <li>Silas está donde está porque algo en la taberna huele a trabajo interesante y ya no puede irse con dignidad.</li>
+      <li>Solare siguió su corazón como Vethann dijo. Su corazón lo trajo aquí. Eso lo incomoda más de lo que muestra.</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════ -->
+<!-- TAB: EL ENCUENTRO -->
+<!-- ══════════════════════════════════════ -->
+<div class="tab-pane" id="tab-encounter">
+  <div class="lore">El momento Sabaody de Verath. No para destruirlos — para mostrarles con precisión quirúrgica lo pequeños que son todavía. El enemigo no los odia. Ni siquiera los considera amenaza. Eso es peor.</div>
+
+  <div class="sec-lbl" style="margin-top:1.5rem">El enemigo: Draven Ossok</div>
+  <p class="c"><strong>Draven Ossok</strong> es un Inquisidor de la Hermandad de la Llama Gris — no un soldado, no un oficial, sino algo más específico y más peligroso: alguien cuyo trabajo es encontrar las cosas que la Hermandad no quiere que existan y hacer que dejen de existir. Lleva 15 años haciéndolo.</p>
+  <p class="c"><strong>Apariencia:</strong> Hombre de unos 45 años aparentes, 1.88m, complexión que hace que la palabra "musculoso" se quede corta — no es volumen sino densidad, la clase de cuerpo que ha sido entrenado para absorber daño y seguir funcionando. Piel gris pálida de Vokrath. Cabello negro con hilos plateados, cortado muy corto. Una sola cicatriz visible — horizontal, cruza ambos labios — que hace que su expresión de reposo parezca siempre ligeramente burlona. Ojos grises exactamente del tono de los Campos Grises de Vokrath: sin calor, evaluadores, pacientes.</p>
+  <p class="c">Viste armadura de placas negras sin emblema visible. Las placas tienen desgaste real — no decorativo. En su espalda lleva una espada a dos manos que parece demasiado grande para usarse con la rapidez con que él la usa. En el muslo izquierdo, una daga que no ha desenvainado frente a ellos. No la necesita.</p>
+
+  <div class="sec-lbl">Sus estadísticas — No para pelear, para que sepan que no pueden</div>
+  <div class="stats-grid">
+    <div class="stat-box"><div class="stat-num">20</div><div class="stat-mod">+5</div><div class="stat-name">FUE</div></div>
+    <div class="stat-box"><div class="stat-num">16</div><div class="stat-mod">+3</div><div class="stat-name">DES</div></div>
+    <div class="stat-box"><div class="stat-num">20</div><div class="stat-mod">+5</div><div class="stat-name">CON</div></div>
+    <div class="stat-box"><div class="stat-num">14</div><div class="stat-mod">+2</div><div class="stat-name">INT</div></div>
+    <div class="stat-box"><div class="stat-num">16</div><div class="stat-mod">+3</div><div class="stat-name">SAB</div></div>
+    <div class="stat-box"><div class="stat-num">12</div><div class="stat-mod">+1</div><div class="stat-name">CAR</div></div>
+  </div>
+  <div class="combat-row">
+    <div class="combat-box"><div class="combat-label">PG</div><div class="combat-val">142</div></div>
+    <div class="combat-box"><div class="combat-label">CA</div><div class="combat-val">19</div></div>
+    <div class="combat-box"><div class="combat-label">Bono ataque</div><div class="combat-val">+9</div></div>
+  </div>
+  <ul class="ability-list" style="margin-top:.8rem">
+    <li><strong>Ataque Múltiple:</strong> Tres ataques por acción. Cada uno hace 2d6+7 de daño cortante.</li>
+    <li><strong>Herida Permanente (recarga 5-6):</strong> Un ataque deja una herida que no puede curarse mágicamente hasta que pase un descanso largo. Si el objetivo ya tiene una herida permanente, queda Incapacitado por 1 turno.</li>
+    <li><strong>Resistencia al daño:</strong> Resistencia a daño de conjuros de nivel 3 o inferior.</li>
+    <li><strong>Inmunidad al miedo.</strong></li>
+    <li><strong>Legado de la Llama Gris:</strong> Las cicatrices de sus rituales le otorgan +2 a todas las tiradas de salvación.</li>
+  </ul>
+
+  <div class="sec-lbl">Cómo ocurre el encuentro</div>
+
+  <div class="enc-phase">
+    <div class="enc-hdr"><div class="enc-title">Fase 1 — La llegada (sin combate)</div></div>
+    <div class="enc-body">
+      <p>Draven entra a la taberna del quinto puente sin anuncio. La conversación de Oshe se detiene mid-frase. El hombre musculoso de la entrada lo deja pasar sin reírse — primera vez que eso ocurre, lo que los personajes que lo hayan visto antes pueden notar.</p>
+      <p>Draven se sienta en la barra. Pide agua — no bebida. Le habla a Oshe en voz baja durante treinta segundos. Oshe no cambia de expresión pero sus manos dejan de moverse. Luego Draven se gira y mira a los cinco en su mesa. Directamente. Sin rodeos.</p>
+      <p><em>"Ustedes estaban ahí cuando Vethann mató al cangrejo."</em> No es una pregunta. <em>"Vethann no mata cosas gratuitamente. Quiere algo de ustedes. Eso me interesa saber."</em></p>
+    </div>
+  </div>
+
+  <div class="enc-phase">
+    <div class="enc-hdr"><div class="enc-title">Fase 2 — La conversación (tensión, sin combate)</div></div>
+    <div class="enc-body">
+      <p>Draven es perfectamente civilizado durante toda la conversación. No amenaza explícitamente. No levanta la voz. Responde preguntas con la paciencia de alguien que tiene todo el tiempo del mundo porque sabe que lo tiene.</p>
+      <p>Lo que quiere saber: qué les dijo Vethann, qué decía el pergamino, si aceptaron la oferta. Lo que ofrece a cambio: nada. No necesita ofrecer nada porque los cinco son nivel 3 y él es lo que es, y todos en la mesa lo saben aunque nadie lo diga.</p>
+      <p>Si algún personaje intenta leer su intención: tirada de Perspicacia CD 18. Éxito: <em>"Este hombre no tiene miedo de nada en esta habitación. Lo sabe. Y está siendo amable porque elegir ser amable le resulta más interesante que no serlo."</em></p>
+    </div>
+  </div>
+
+  <div class="enc-phase">
+    <div class="enc-hdr"><div class="enc-title">Fase 3 — El momento que los hace sentir pequeños</div></div>
+    <div class="enc-body">
+      <p>Si algún personaje intenta atacarlo, intimidarlo mágicamente, o hacer algo hostil: Draven se levanta de la silla, da un paso hacia el que intentó algo, y lo mira. Solo lo mira.</p>
+      <p>Tirada de salvación de SAB CD 16 para ese personaje. Fracaso: queda Asustado durante 1 minuto — no por magia, sino porque algo en la forma en que Draven ocupa el espacio hace que el instinto de supervivencia hable más alto que cualquier otra cosa. Éxito: no queda Asustado, pero sabe con certeza que atacar sería un error mortal.</p>
+      <p>Draven no saca la espada. No hace nada violento. Se sienta de nuevo.</p>
+      <p><em>"Bien. Entonces todavía están decidiendo."</em> Deja una moneda en la barra — el tipo de gesto que cierra una conversación. <em>"Cuando decidan, encontrarán que tenemos intereses que podrían alinearse. O no. En cualquier caso, los estaré mirando."</em></p>
+      <p>Sale. El hombre musculoso de la puerta lo saluda con un gesto de cabeza — respeto, no subordinación. Draven desaparece en Resaca.</p>
+    </div>
+  </div>
+
+  <div class="enc-phase">
+    <div class="enc-hdr"><div class="enc-title">Fase 4 — El golpe real (después de que se va)</div></div>
+    <div class="enc-body">
+      <p>Cinco minutos después de que Draven se va, el Bathrak nota algo: su bolsa de viaje está abierta. La piedra del pantano que siempre lleva — la que usa para orientarse, la que toca cuando necesita recordar de dónde es — no está.</p>
+      <p>Draven la tomó durante la conversación. Sin que nadie lo notara. Sin magia. Solo con la habilidad de alguien que lleva 15 años haciendo esto.</p>
+      <p>No la usará para dañarlos. La usará para rastrearlos si alguna vez necesita hacerlo. Y ellos lo saben ahora. Y no pueden recuperarla sin encontrarlo. Y encontrarlo ahora mismo sería exactamente tan inteligente como parece.</p>
+    </div>
+  </div>
+
+  <div class="dm-box">
+    <div class="dm-lbl">📋 Por qué funciona este encuentro</div>
+    <ul>
+      <li>Draven no los atacó. No los amenazó. Fue perfectamente cortés. Y aun así los cinco saben que estuvieron en presencia de algo que podría haberlos eliminado sin esfuerzo considerable.</li>
+      <li>Tomó algo — no un objeto valioso en términos materiales, sino algo <em>personal</em> del Bathrak. Eso es más inquietante que robar oro.</li>
+      <li>No es el villano final. Es la señal de que el mundo tiene personas en él que llevan años siendo lo que los personajes apenas están empezando a convertirse.</li>
+      <li>Aparecerá de nuevo. En ese momento los personajes estarán más preparados — pero sabrán que él también habrá seguido creciendo.</li>
+    </ul>
+  </div>
+</div>
+
+</div><!-- fin doc -->
+
+<script>
+function tab(id,btn){
+  document.querySelectorAll('.tab-pane').forEach(p=>p.classList.remove('on'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('on'));
+  document.getElementById('tab-'+id).classList.add('on');
+  btn.classList.add('on');
+}
+</script>
+</body>
+</html>

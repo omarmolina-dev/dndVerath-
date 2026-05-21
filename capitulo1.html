@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>VERATH — Capítulo I: La Noche de Resaca</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Cinzel:wght@400;600;700&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet"/>
+
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --ink:#1a1208;--ink-l:#3a2a18;--ink-f:#5a4a38;
+  --parch:#f5ecd7;--parch-d:#e8d9b8;--parch-dk:#d4c090;
+  --gold:#8a6a20;--gold-b:#c9a84c;--red:#7a1a1a;
+}
+html{scroll-behavior:smooth}
+body{
+  background:#1a1006;
+  background-image:radial-gradient(ellipse at 20% 20%,#2a1a08 0%,transparent 55%),radial-gradient(ellipse at 80% 80%,#0a0804 0%,transparent 55%);
+  min-height:100vh;font-family:'Crimson Pro',Georgia,serif;
+  display:flex;justify-content:center;padding:3rem 1.5rem;
+}
+.book{
+  max-width:720px;width:100%;
+  background:var(--parch);
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='.04'/%3E%3C/svg%3E"),
+  linear-gradient(170deg,#faf3e2 0%,#f5ecd7 50%,#ede0c0 100%);
+  padding:5rem 5.5rem;position:relative;
+  box-shadow:0 0 0 1px var(--parch-dk),0 0 0 3px #1a1006,0 8px 60px rgba(0,0,0,.7),inset 0 0 100px rgba(180,140,60,.05);
+}
+.book::before{content:'';position:absolute;inset:18px;border:1px solid var(--parch-dk);pointer-events:none}
+.book::after{content:'';position:absolute;inset:22px;border:.5px solid rgba(138,106,32,.2);pointer-events:none}
+
+/* CAPÍTULO HEADER */
+.ch-ornament{text-align:center;color:var(--gold);font-size:20px;letter-spacing:.4em;opacity:.6;margin-bottom:1rem}
+.ch-label{font-family:'Cinzel',serif;font-size:11px;letter-spacing:.25em;color:var(--gold);text-align:center;text-transform:uppercase;margin-bottom:.4rem}
+.ch-title{font-family:'Cinzel Decorative',serif;font-size:clamp(22px,4vw,34px);font-weight:700;color:var(--ink);text-align:center;line-height:1.2;margin-bottom:.3rem}
+.ch-subtitle{font-family:'Cinzel',serif;font-size:13px;color:var(--ink-f);text-align:center;letter-spacing:.12em;font-style:italic;margin-bottom:2rem}
+.ch-rule{display:flex;align-items:center;gap:10px;justify-content:center;margin:1.2rem 0 2.5rem}
+.ch-rule span{height:1px;width:80px;background:linear-gradient(to right,transparent,var(--gold))}
+.ch-rule span.r{background:linear-gradient(to left,transparent,var(--gold))}
+.ch-diamond{width:7px;height:7px;background:var(--gold);transform:rotate(45deg)}
+
+/* PROSA */
+.drop-cap::first-letter{
+  font-family:'Cinzel Decorative',serif;font-size:4.2em;line-height:.75;
+  float:left;margin-right:.08em;margin-top:.05em;
+  color:var(--ink);font-weight:700;
+}
+p.prose{
+  font-size:17.5px;line-height:1.95;color:var(--ink-l);
+  margin-bottom:1.4rem;text-align:justify;hyphens:auto;
+}
+p.prose em{color:var(--ink);font-style:italic}
+p.prose strong{color:var(--ink);font-weight:600;font-style:normal}
+
+/* SEPARADORES */
+.scene-title{
+  font-family:'Cinzel',serif;font-size:12px;letter-spacing:.18em;color:var(--gold);
+  text-align:center;text-transform:uppercase;margin:2.5rem 0 1.5rem;
+  display:flex;align-items:center;gap:10px;
+}
+.scene-title::before,.scene-title::after{content:'';flex:1;height:.5px;background:var(--parch-dk)}
+
+/* DM BOX */
+.dm-box{
+  background:rgba(122,26,26,.05);
+  border:.5px solid rgba(122,26,26,.25);border-left:3px solid var(--red);
+  padding:1rem 1.3rem;margin:2rem 0;
+}
+
+/* FOOTER */
+.ch-footer{margin-top:4rem;padding-top:1.5rem;border-top:1px solid var(--parch-dk);display:flex;justify-content:space-between}
+.back-link{text-align:center;margin-bottom:1.5rem}
+.back-link a{font-family:'Cinzel',serif;font-size:11px;color:var(--gold-b);text-decoration:none}
+</style>
+</head>
+
+<body>
+<div class="book">
+
+<div class="back-link"><a href="../index.html">← VOLVER A VERATH</a></div>
+
+<div class="ch-ornament">✦ ✦ ✦</div>
+<div class="ch-label">Crónicas de Verath · Año 800 del Quiebre</div>
+<div class="ch-title">La Noche de Resaca</div>
+
+<div class="scene-title">I · El que no debería recordar</div>
+
+<p class="prose drop-cap">El pantano no suelta lo que ama...</p>
+
+<p class="prose">Lo que quedaba en su memoria era fragmentos...</p>
+
+<p class="prose">Usó <em>Detectar Magia</em>...</p>
+
+<p class="prose">Una silueta. Una rana...</p>
+
+<div class="scene-title">II · Los que ya estaban en la taberna</div>
+
+<p class="prose drop-cap"><strong>Aerion</strong> ya estaba dentro de la taberna cuando todo comenzó a volverse importante.</p>
+
+<p class="prose">La máscara reía cuando quería, callaba cuando no debía...</p>
+
+<p class="prose"><strong>Solare</strong>, clérigo que alguna vez intentó entrar al ejército, estaba también allí...</p>
+
+<p class="prose">La druida permanecía cerca, observando más que hablando...</p>
+
+<p class="prose"><strong>Silas</strong> fue el único que no estaba dentro.</p>
+
+<p class="prose">Intentó entrar por la entrada principal con sigilo...</p>
+
+<p class="prose">En la puerta había un hombre musculoso.</p>
+
+<p class="prose">No era guardia. No tenía insignias.</p>
+
+<p class="prose">Solo presencia.</p>
+
+<p class="prose">Se rió durante un minuto completo.</p>
+
+<p class="prose">Aerion imitó la risa desde dentro.</p>
+
+<p class="prose">Y eso fue suficiente.</p>
+
+<p class="prose">El hombre dejó de reír.</p>
+
+<p class="prose">Silas fue permitido acercarse a la entrada.</p>
+
+<p class="prose">Y la sesión terminó ahí.</p>
+
+<div class="scene-title">III · El cangrejo y el dios</div>
+
+<p class="prose">La criatura apareció sin aviso...</p>
+
+<p class="prose">Un guardia murió primero...</p>
+
+<p class="prose">Los intentos de ayuda fueron inútiles...</p>
+
+<p class="prose">Entonces llegó Vethann...</p>
+
+<p class="prose">Y la bestia dejó de existir.</p>
+
+<div class="scene-title">IV · Convergencia</div>
+
+<p class="prose">Cinco destinos alineándose...</p>
+
+<p class="prose">No dentro de una taberna aún.</p>
+
+<p class="prose">En la puerta.</p>
+
+<p class="prose">Donde todo comienza.</p>
+
+<div class="dm-box">
+<p><strong>Nota del DM:</strong> La sesión termina aquí, justo antes de entrar.</p>
+</div>
+
+<div class="ch-footer">
+<span>VERATH · 800</span>
+<span>Capítulo I</span>
+<span>I</span>
+</div>
+
+</div>
+</body>
+</html>
